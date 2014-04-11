@@ -1,0 +1,40 @@
+go,Go,1
+property,Mediterranean Avenue,2,60,brown,2,10,30,90,160,250,30
+communitychest,Community Chest,3
+property,Baltic Avenue,4,60,brown,4,20,60,180,320,450,30
+incometax,Income Tax,5
+railroad,Reading Railroad,6
+property,Oriental Avenue,7,100,lightblue,6,30,90,270,400,550,50
+chance,Chance,8
+property,Vermont Avenue,9,100,lightblue,6,30,90,270,400,550,50
+property,Connecticut Avenue,10,120,lightblue,8,40,100,300,450,600,60
+jail,Jail,11
+property,St. Charles Place,12,140,pink,10,50,150,450,625,750,70
+utility,Electric Company,13,150,75
+property,States Avenue,14,140,pink,10,50,150,450,625,750,70
+property,Virginia Avenue,15,160,pink,12,60,180,500,700,900,80
+railroad,Pennsylvania Railroad,16
+property,St. James Place,17,180,orange,14,70,200,550,750,950,90
+communitychest,Community Chest,18
+property,Tenessee Avenue,19,180,orange,14,70,200,550,750,950,90
+property,New York Avenue,20,200,orange,16,80,220,600,800,1000,100
+free,Free Parking,21
+property,Kentucky Avenue,22,220,red,18,90,250,700,875,1050,110
+chance,Chance,23
+property,Indiana Avenue,24,220,red,18,90,250,700,875,1050,110
+property,Illinois Avenue,25,240,red,20,100,300,750,925,1100,120
+railroad,B. & O. Railroad,26
+property,Atlantic Avenue,27,260,yellow,22,110,330,800,975,1150,130
+property,Ventnor Avenue,28,260,yellow,22,110,330,800,975,1150,130
+utility,Water Works,29,150,75
+property,Marvin Gardens,30,280,yellow,24,120,360,850,1025,1200,140
+GoToJail,Go To Jail,31
+property,Pacific Avenue,32,300,green,26,130,390,900,1100,1275,150
+property,North Carolina Avenue,33,300,green,26,130,390,900,1100,1275,150
+communitychest,Community Chest,34
+property,Pennsylvania Avenue,35,320,green,28,150,450,1000,1200,1400,160
+railroad,Short Line,36
+chance,Chance,37
+property,Park Place,38,350,darkblue,35,175,500,1100,1300,1500,175
+luxurytax,Luxury Tax,39
+property,Boardwalk,40,400,darkblue,50,200,600,1400,1700,2000,200

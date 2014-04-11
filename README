@@ -1,0 +1,10 @@
+Monopoly
+
+This is a project I started in 2013 to create a Monopoly engine. The goals for the project are as follows:
+
+1. To simulate a game of Monopoly between at least two local players as accurately as possible.
+2. To develop a basic GUI that shows the information that's relevant to each player.
+3. To learn and use OOP best practices.
+4. To allow the project to accomade future expansion, such as networked multiplayer, singleplayer, different game boards, etc.
+
+The project is currently unfinished.
