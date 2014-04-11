@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Monopoly
+namespace Monopoly.Tiles
 {
     public class Railroad: Tiles.BoardSpace
     {

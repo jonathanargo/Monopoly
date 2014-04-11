@@ -74,7 +74,6 @@
     <Compile Include="Player.cs" />
     <Compile Include="Entry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BoardSpace_old.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -86,10 +85,15 @@
     <Compile Include="PropertyQuery.Designer.cs">
       <DependentUpon>PropertyQuery.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tiles\Tax.cs" />
+    <Compile Include="Tiles\Chance.cs" />
+    <Compile Include="Tiles\CommunityChest.cs" />
+    <Compile Include="Tiles\FreeParking.cs" />
+    <Compile Include="Tiles\IncomeTax.cs" />
+    <Compile Include="Tiles\LuxuryTax.cs" />
+    <None Include="Old\Tax.cs.old" />
     <Compile Include="Tiles\BoardSpace.cs" />
     <Compile Include="ColorGroup.cs" />
-    <Compile Include="Tiles\DrawCard.cs" />
+    <None Include="Old\DrawCard.cs.old" />
     <Compile Include="Tiles\Go.cs" />
     <Compile Include="Tiles\GoToJail.cs" />
     <Compile Include="Tiles\Jail.cs" />

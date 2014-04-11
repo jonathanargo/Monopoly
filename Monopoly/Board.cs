@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Monopoly
 {
@@ -15,9 +16,11 @@ namespace Monopoly
         public Board()
         {
 
-            //create boardfile reader, read boardfile, create BoardSpaces
+            //create BoardSpaces
             //initialize ColorGroups
             //set Jail
+
+            BoardSpaces = new Tiles.BoardSpace[40];
 
 
         }//Board
@@ -26,6 +29,17 @@ namespace Monopoly
         public Tiles.BoardSpace[] BoardSpaces { get { return mBoardSpaces; } set { mBoardSpaces = value; } }
         public Tiles.Jail Jail { get { return mJail; } private set { mJail = value; } }
 
+
+        //METHODS
+        public override string ToString()
+        {
+            String result = String.Empty;
+            foreach (Tiles.BoardSpace b in BoardSpaces)
+            {
+                result = result + b.ToString() + Environment.NewLine;
+            }//foreach
+            return result;
+        }//ToString
 
 
     }//class Board

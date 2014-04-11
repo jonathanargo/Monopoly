@@ -12,7 +12,7 @@ namespace Monopoly.Tiles
         private int mPosition;
         private String mName;
 
-        protected BoardSpace(int position, String name){
+        public BoardSpace(int position, String name){
             this.Name = name;
             this.Position = position;
         }//Boardspace
@@ -33,6 +33,19 @@ namespace Monopoly.Tiles
             }//set
         }//Position
 
+
+        //PROPERTIES
+
         public String Name { get { return mName; } protected set { mName = value; } }
+
+
+        //METHODS
+
+        public override String ToString()
+        {
+            //return ("Name: " + this.Name + ", Position: " + this.Position);
+            return (this.Position + " Name: " + this.Name);
+        }//ToString
+
     }//class Boardspace
 }

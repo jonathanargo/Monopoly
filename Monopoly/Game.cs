@@ -28,7 +28,7 @@ namespace Monopoly
             Players[0] = new Player(1);
             Players[1] = new Player(2);
 
-            Decks[0] = new Deck(1, DeckType.Chest);
+            Decks[0] = new Deck(1, DeckType.CommunityChest);
             Decks[1] = new Deck(2, DeckType.Chance);
 
         }//Game()       

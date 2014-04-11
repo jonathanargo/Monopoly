@@ -27,15 +27,9 @@ public enum ImprovementLevel
     Hotel
 };
 
-public enum TaxType
-{
-    LuxuryTax,
-    IncomeTax
-};
-
 public enum DeckType
 {
-    Chance,
-    Chest
+    None,
+    CommunityChest,
+    Chance
 };
-

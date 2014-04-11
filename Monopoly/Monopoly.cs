@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using Monopoly.Properties;
+using System.IO;
 
 
 
@@ -77,6 +78,11 @@ namespace Monopoly
 
         private void btnTest_Click(object sender, EventArgs e)
         {
+            BoardfileReader bfreader = new BoardfileReader("Boards\\DefaultBoard.csv");
+            Board newBoard = bfreader.CreateBoard();
+            Debug.WriteLine(newBoard.ToString());
+
+
 
         }//btnTest_click
 

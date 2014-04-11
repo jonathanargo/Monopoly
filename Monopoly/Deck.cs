@@ -38,7 +38,7 @@ namespace Monopoly
             String allDescriptions = Resources.CardDescriptions;
             int cardIDMod = 0; //used to assign correct cardIDs
 
-            if (this.DeckType == DeckType.Chest)
+            if (this.DeckType == DeckType.CommunityChest)
             {
                 Cards = new Card[17]; //wipe deck
                 allDescriptions = allDescriptions.Substring(16, allDescriptions.IndexOf("Chance")); //+14 for 'communitychest', +2 for cr and lf
