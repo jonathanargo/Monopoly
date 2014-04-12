@@ -87,7 +87,7 @@ namespace Monopoly
 
             System.Windows.Forms.MessageBox.Show("Player 1 rolled " + RollResult[0] + " and Player 2 rolled " + RollResult[1] + ", so Player " + (int)ActivePlayer.ID + " goes first.");
 
-        }//StartGame
+        }//StartGame()
 
         public void ChangeActivePlayer()
         {
@@ -98,9 +98,69 @@ namespace Monopoly
                 intActiveID = 0;
             }//if
             ActivePlayer = Players[intActiveID];
-        }//ChangeActivePlayer
+        }//ChangeActivePlayer()
 
-        
+        public void AdvancePlayer(int playerID, int numberOfSpaces)
+        {
+            int finalPosition = Players[playerID].Position + numberOfSpaces;
+
+            //check for >40
+            if (finalPosition > 40)
+            {
+                finalPosition -= 40;
+                //Player has passed Go, so award $200
+                PassGo(playerID);
+            }
+            else if (finalPosition <= 0) //to handle the -3 spaces card
+            {
+                finalPosition += 40;
+            }
+
+            Players[playerID].Position = finalPosition;
+            Land(playerID);
+        }//AdvancePlayer()
+
+        public void AdvancePlayerToPosition(int playerID, int position)
+        {
+            int currentPos = Players[playerID].Position;
+            
+            //if player will need to pass Go
+            if (Players[playerID].Position > position)
+            {
+                PassGo(playerID);
+            }//if
+
+            Players[playerID].Position = position;
+            Land(playerID);
+
+        }//AdvancePlayerToPosition()
+
+        public void ChangeMoney(int playerID, int amount)
+        {
+            Players[playerID].Money += amount;
+            CheckForBankrupt(playerID);
+        }//ChangeMoney()
+
+        public void PassGo(int playerID)
+        {
+            Players[playerID].Money += 200;
+        }//PassGo()
+
+        public void CheckForBankrupt(int playerID)
+        {
+            //check to see if player has < 0 money. If so, mortgage properties
+        }//CheckForBankrupt()
+
+        public void SendToJail(int playerID)
+        {
+            Players[playerID].Position = 11; //don't advancePlayer, don't pass go!
+            Players[playerID].IsJailed = true;
+        }//SendToJail
+
+        public void Land(int playerID)
+        {
+            //logic for what happens when player lands on a space
+        }//Land()
 
     }//class Game
 

@@ -19,7 +19,7 @@ namespace Monopoly
         {
             this.ID = id;
             this.DeckType = type;
-            //ShuffleDeck();
+            ShuffleDeck();
 
         }//Deck()
 
@@ -28,6 +28,7 @@ namespace Monopoly
         public int ID { get { return mID; } private set { mID = value; } }
         public DeckType DeckType { get { return mDecktype; } set { mDecktype = value; } }
         public Card[] Cards { get { return mCards; } set { mCards = value; } }
+        private int TopCardIndex; //represents the top card on the deck, ie the first non-discarded card
 
 
         //METHODS
@@ -75,9 +76,21 @@ namespace Monopoly
             }//for
 
             this.Cards = orderedCards;
+            this.TopCardIndex = 0;
             Debug.WriteLine("Deck has been shuffled.");
 
         }//ShuffleDeck
+
+        public Card DrawCard()
+        {
+            Card topCard = Cards[this.TopCardIndex];
+            this.TopCardIndex++;
+            if (TopCardIndex > Cards.Length - 1)
+            {
+                this.ShuffleDeck();
+            }//if
+            return topCard;
+        }
 
         override public string ToString(){
             String output = "";
@@ -90,21 +103,3 @@ namespace Monopoly
 
     }//Deck
 }
-
-
-/*
-public void DrawCard()
-{
-    bool foundCard = false;
-    int i = 0;
-    while (!foundCard)
-    {
-        if (Cards[i].Discarded == false)
-        {
-            foundCard = true;
-            Cards[i].Discarded = true;
-                    
-        }//if
-    }//while
-}//DrawCard()
-*/

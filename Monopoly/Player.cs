@@ -12,7 +12,8 @@ namespace Monopoly
         private int mID;
         private int mMoney;
         private int mPosition;
-        private Boolean mHasJailFreeCard;
+        private int mJailFreeCards;
+        private Boolean mIsJailed;
         private int mRailroads;
         private int mUtilities;
 
@@ -21,7 +22,7 @@ namespace Monopoly
             this.Money = 1500;
             this.ID = id;
             this.Position = 1;
-            this.HasJailFreeCard = false;
+            this.JailFreeCards = 0;
             this.Railroads = 0;
             this.Utilities = 0;
 
@@ -31,9 +32,10 @@ namespace Monopoly
         //PROPERTIES
         public int ID { get { return mID; } private set { mID = value; } }
         public int Money { get { return mMoney; } set { mMoney = value; } }
-        public Boolean HasJailFreeCard { get { return mHasJailFreeCard; } set { mHasJailFreeCard = value; } }
+        public int JailFreeCards { get { return mJailFreeCards; } set { mJailFreeCards = value; } }
         public int Railroads { get { return mRailroads; } set { mRailroads = value; } }
         public int Utilities { get { return mUtilities; } set { mUtilities = value; } }
+        public Boolean IsJailed { get { return mIsJailed; } set { mIsJailed = value; } }
         public int Position //between 1 and 40        
         {
             get { return mPosition; }
