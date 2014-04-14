@@ -59,7 +59,7 @@ namespace Monopoly
             for(int i = 0; i <= (Cards.Length - 1); i++)
             {
                 String line = reader.ReadLine();
-                orderedCards[i] = new Card(i + 1 + cardIDMod, line);
+                orderedCards[i] = new Card(i + cardIDMod, line);
             }//foreach            
             reader.Close();
             Debug.WriteLine("Deck is now in proper order. Shuffling...");
@@ -88,7 +88,9 @@ namespace Monopoly
             if (TopCardIndex > Cards.Length - 1)
             {
                 this.ShuffleDeck();
+                topCard = Cards[this.TopCardIndex];
             }//if
+            Debug.WriteLine(String.Format("Card was drawn. ID: {0}, Description: {1}", topCard.CardID, topCard.Description));
             return topCard;
         }
 

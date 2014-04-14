@@ -16,7 +16,6 @@ namespace Monopoly
 {
     public partial class Monopoly : Form
     {
-        private GameState mGame;
         private GameLogic mGameLogic;
         private MoneyLogic mMoneyLogic;
         private TileLogic mTileLogic;
@@ -26,8 +25,10 @@ namespace Monopoly
             InitializeComponent();
             ActiveGame = new GameState();
             this.GameLogic = new GameLogic(ref ActiveGame);
-            this.CardLogic = new CardLogic(ref ActiveGame);
             this.MoneyLogic = new MoneyLogic(ref ActiveGame);
+            MoneyLogic cardMoneyLogic = new MoneyLogic(ref ActiveGame); //clone of logic objects for the CardLogic constructor
+            GameLogic cardGameLogic = new GameLogic(ref ActiveGame);    //the card logic deals with both money and player positions, so both were needed
+            this.CardLogic = new CardLogic(ref ActiveGame, ref cardMoneyLogic, ref cardGameLogic);
             this.TileLogic = new TileLogic(ref ActiveGame);
 
         }//Monopoly()
@@ -63,12 +64,11 @@ namespace Monopoly
         }
 
 
-
         private void btnStart_Click(object sender, EventArgs e)
         {
             if (ActiveGame != null)
             {
-                ActiveGame.StartGame();
+                GameLogic.StartGame();
             }
         }//btnStart_Click
 
@@ -83,9 +83,9 @@ namespace Monopoly
             //    c.ForeColor = System.Drawing.Color.Black;
             //}//foreach
 
-            if (ActiveGame.ActivePlayer.ID == 1){
+            if (ActiveGame.ActivePlayerID == 0){
                 lblPlayer1.ForeColor = System.Drawing.Color.Green;
-            } else if (ActiveGame.ActivePlayer.ID == 2){
+            } else if (ActiveGame.ActivePlayerID == 1){
                 lblPlayer2.ForeColor = System.Drawing.Color.Green;
             }//if
 
@@ -93,15 +93,12 @@ namespace Monopoly
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-
-
-
-
+           
         }
 
 
 
 
 
-    }
+    }//Monopoly
 }

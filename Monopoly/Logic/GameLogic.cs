@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Monopoly
 {
@@ -15,22 +16,73 @@ namespace Monopoly
             this.Game = game;
         }//GameLogic
 
-        public GameState Game { get { return mGame; } private set { mGame = value; } }
+        public GameState Game { get { return mGame; } set { mGame = value; } }
 
-        public void GameStateChangeTest()
+        public void Turn()
         {
-            Game.Players[0].Money = 12345;
-        }//GameStateChangeTest
+            int roll = RollDice();
+            bool rollWasDouble = Game.Doubles[Game.ActivePlayerID].LastRollWasDouble;
 
+            if (Game.Players[Game.ActivePlayerID].IsJailed)
+            {
+                if (rollWasDouble)
+                {
+                    ReleaseFromJail(Game.ActivePlayerID);
+                    AdvancePlayer(Game.ActivePlayerID, roll);
+                }//if
+                else 
+                {
+                    //Player remains in jail, does he want to use a GOOJ card? TODO
+                }//else
+            }
+            else if (Game.Doubles[Game.ActivePlayerID].LastThreeWereDoubles()) //if player rolled his third double
+            {
+                SendToJail(Game.ActivePlayerID);
+            }
+            else //player is unjailed and didn't roll his third double
+            {
+                AdvancePlayer(Game.ActivePlayerID, roll);
+            }//else
+
+            if (rollWasDouble && !Game.Players[Game.ActivePlayerID].IsJailed) //if player rolled doubles, but didn't get sent to jail for it..
+            {
+                Turn();
+            }//if
+
+            ChangeActivePlayer(); //will fire after player didn't roll doubles, or is in jail.
+
+        }//Turn() TODO
+
+        public void AdvancePlayer(int playerID, int numberOfSpaces)
+        {
+            int finalPosition = Game.Players[playerID].Position + numberOfSpaces;
+
+            //check for >40
+            if (numberOfSpaces > 79)
+            {
+                System.Windows.Forms.MessageBox.Show("ERROR: Unable to advance player more than 79 spaces.");
+            }
+            else if (finalPosition > 40)
+            {
+                finalPosition = 41 - numberOfSpaces;
+                //Player has passed Go, so award $200
+                PassGo(playerID);
+            }
+            else if (finalPosition <= 0) //to handle the -3 spaces card
+            {
+                Debug.WriteLine("finalPos = {0}, moving backwards by {1}", finalPosition, numberOfSpaces);
+                finalPosition = 41 + numberOfSpaces;
+            }
+
+
+            Game.Players[playerID].Position = finalPosition;
+            Land(playerID);
+        }//AdvancePlayer()
+        
         public void Land(int playerID)
         {
             //logic for what happens when player lands on a space
         }//Land() //TODO
-
-        public void PassGo(int playerID)
-        {
-            Game.Players[playerID].Money += 200;
-        }//PassGo()
 
         public void StartGame()
         {
@@ -64,47 +116,47 @@ namespace Monopoly
 
             if (RollResult[0] > RollResult[1])
             {
-                Game.ActivePlayer = Game.Players[0];
+                Game.ActivePlayerID = 0;
             }
             else
             {
-                Game.ActivePlayer = Game.Players[1];
+                Game.ActivePlayerID = 1;
             }
 
-            System.Windows.Forms.MessageBox.Show("Player 1 rolled " + RollResult[0] + " and Player 2 rolled " + RollResult[1] + ", so Player " + Game.ActivePlayer.ID + " goes first.");
+            System.Windows.Forms.MessageBox.Show("Player 1 rolled " + RollResult[0] + " and Player 2 rolled " + RollResult[1] + ", so Player " + Game.ActivePlayerID + " goes first.");
 
         }//StartGame()
 
         public void ChangeActivePlayer()
         {
-            int intActiveID = Game.ActivePlayer.ID;
+            int intActiveID = Game.ActivePlayerID;
             intActiveID++;
             if (intActiveID > (Game.Players.Count() - 1))
             {
                 intActiveID = 0;
             }//if
-            Game.ActivePlayer = Game.Players[intActiveID];
+            Game.ActivePlayerID = Game.Players[intActiveID].ID;
         }//ChangeActivePlayer()
 
-        public void AdvancePlayer(int playerID, int numberOfSpaces)
+        public int RollDice()
         {
-            int finalPosition = Game.Players[playerID].Position + numberOfSpaces;
+            Random rand = new Random();
+            bool rolledDoubles = false;
+            int roll1, roll2;
 
-            //check for >40
-            if (finalPosition > 40)
-            {
-                finalPosition -= 40;
-                //Player has passed Go, so award $200
-                PassGo(playerID);
-            }
-            else if (finalPosition <= 0) //to handle the -3 spaces card
-            {
-                finalPosition += 40;
-            }
+            roll1 = rand.Next(1, 7);
+            roll2 = rand.Next(1, 8);
 
-            Game.Players[playerID].Position = finalPosition;
-            Land(playerID);
-        }//AdvancePlayer()
+            if (roll1 == roll2)
+            {
+                rolledDoubles = true;
+            }//if
+
+            Game.Doubles[Game.ActivePlayerID].NextDouble(rolledDoubles);
+
+            return roll1 + roll2;
+            //Roll dice
+        }//RollDice() TODO
 
         public void AdvancePlayerToPosition(int playerID, int position)
         //used for handling some cards
@@ -132,11 +184,20 @@ namespace Monopoly
             Game.Players[playerID].Position = position;
         }//AdvancePlayerToPositionCustomPay()
 
+        public void PassGo(int playerID)
+        {
+            Game.Players[playerID].Money += 200;
+        }//PassGo()
+
         public void SendToJail(int playerID)
         {
             Game.Players[playerID].Position = 11; //don't advancePlayer, don't pass go!
             Game.Players[playerID].IsJailed = true;
         }//SendToJail
 
+        public void ReleaseFromJail(int playerID)
+        {
+            Game.Players[playerID].IsJailed = false;
+        }//SendToJail
     }//GameLogic
 }

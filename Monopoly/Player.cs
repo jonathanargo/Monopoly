@@ -45,13 +45,23 @@ namespace Monopoly
                 {
                     mPosition = value - 40;
                     Debug.WriteLine("Player position " + value + " is greater than 40. Position set to " + (value - 40));
-                }//if
-            }
+                }
+                else
+                {
+                    mPosition = value;
+                }//ifelse
+            }//set
         }//Position
 
 
         //METHODS
 
+        public override string ToString()
+        {
+            String result;
+            result = String.Format("ID: {0}, Position: {1}, Money: {2}, Jailed: {3}, JailFreeCards: {4}", this.ID, this.Position, this.Money, this.IsJailed, this.JailFreeCards);
+            return result;
+        }//ToString()
 
 
 
