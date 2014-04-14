@@ -62,10 +62,12 @@
     <Compile Include="Board.cs" />
     <Compile Include="BoardfileReader.cs" />
     <Compile Include="Card.cs" />
-    <Compile Include="CardLogic.cs" />
+    <Compile Include="Logic\CardLogic.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="GameState.cs" />
+    <Compile Include="Logic\GameLogic.cs" />
+    <Compile Include="Logic\MoneyLogic.cs" />
     <Compile Include="Monopoly.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +88,7 @@
     <Compile Include="PropertyQuery.Designer.cs">
       <DependentUpon>PropertyQuery.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\TileLogic.cs" />
     <Compile Include="Tiles\Chance.cs" />
     <Compile Include="Tiles\CommunityChest.cs" />
     <Compile Include="Tiles\FreeParking.cs" />

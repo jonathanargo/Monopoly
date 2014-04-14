@@ -72,7 +72,7 @@ namespace Monopoly
             bool result = true;
             foreach (Tiles.Property p in GroupProperties)
             {
-                if (p.Owner == playerid)
+                if (p.OwnerID == playerid)
                 {
                     result = false;
                 }//if

@@ -10,16 +10,19 @@ namespace Monopoly.Tiles
     {
         private int mMortgageVal;
         private int mCost;
+        private int mOwnerID;
 
         public Utility(int position, String name):base(position, name){
             this.Position = position;
             this.Name = name;
             this.MortgageVal = 75;
             this.Cost = 150;
+            this.OwnerID = -1;
         }//Utility()
 
         public int MortgageVal { get { return mMortgageVal; } private set { mMortgageVal = value; } }
         public int Cost { get { return mCost; } private set { mCost = value; } }
+        public int OwnerID { get { return mOwnerID; } set { mOwnerID = value; } }
 
         public int GetBill(int roll, int utilitiesOwned)
         {

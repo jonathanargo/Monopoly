@@ -8,7 +8,7 @@ namespace Monopoly.Tiles
 {
     public class Property: Tiles.BoardSpace
     {
-        private int mOwner;
+        private int mOwnerID;
         private PropertyColor mColor;
         private Rent mRent;
         private int mMortgageVal;
@@ -20,7 +20,7 @@ namespace Monopoly.Tiles
         {
             this.Position = position;
             this.Name = name;
-            this.Owner = -1; //interpreted as no owner
+            this.OwnerID = -1; //interpreted as no owner
             this.Color = color;
             this.Cost = cost;
             this.Rent = rent;
@@ -30,7 +30,7 @@ namespace Monopoly.Tiles
 
 
         //Public Set
-        public int Owner { get { return mOwner; } set { mOwner = value; } }
+        public int OwnerID { get { return mOwnerID; } set { mOwnerID = value; } }
         public ImprovementLevel ImprovementLevel { get { return mImprovementLvl; } private set { mImprovementLvl = value; } }
 
         //Private Set (immutable)

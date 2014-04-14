@@ -12,24 +12,34 @@ using Monopoly.Properties;
 using System.IO;
 
 
-
 namespace Monopoly
 {
     public partial class Monopoly : Form
     {
-        private Game mGame;
-        
+        private GameState mGame;
+        private GameLogic mGameLogic;
+        private MoneyLogic mMoneyLogic;
+        private TileLogic mTileLogic;
+        private CardLogic mCardLogic;
         public Monopoly()
         {
             InitializeComponent();
-            ActiveGame = new Game();
+            ActiveGame = new GameState();
+            this.GameLogic = new GameLogic(ref ActiveGame);
+            this.CardLogic = new CardLogic(ref ActiveGame);
+            this.MoneyLogic = new MoneyLogic(ref ActiveGame);
+            this.TileLogic = new TileLogic(ref ActiveGame);
+
         }//Monopoly()
 
 
         //PROPERTIES
 
-        public Game ActiveGame { get { return mGame; } set { mGame = value; } }
-
+        public GameState ActiveGame;
+        public GameLogic GameLogic { get { return mGameLogic; } set { mGameLogic = value; } }
+        public TileLogic TileLogic { get { return mTileLogic; } set { mTileLogic = value; } }
+        public MoneyLogic MoneyLogic { get { return mMoneyLogic; } set { mMoneyLogic = value; } }
+        public CardLogic CardLogic { get { return mCardLogic; } set { mCardLogic = value; } }
 
         //METHODS
 
@@ -48,13 +58,18 @@ namespace Monopoly
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ActiveGame = new Game();
+            
 
         }
 
+
+
         private void btnStart_Click(object sender, EventArgs e)
         {
-            ActiveGame.StartGame();
+            if (ActiveGame != null)
+            {
+                ActiveGame.StartGame();
+            }
         }//btnStart_Click
 
         private void IndicateActivePlayer()
@@ -78,13 +93,13 @@ namespace Monopoly
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            BoardfileReader bfreader = new BoardfileReader("Boards\\DefaultBoard.csv");
-            Board newBoard = bfreader.CreateBoard();
-            Debug.WriteLine(newBoard.ToString());
 
 
 
-        }//btnTest_click
+
+        }
+
+
 
 
 
