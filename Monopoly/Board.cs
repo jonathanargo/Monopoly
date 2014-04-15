@@ -20,7 +20,8 @@ namespace Monopoly
             //initialize ColorGroups
             //set Jail
 
-            BoardSpaces = new Tiles.BoardSpace[40];
+            BoardSpaces = new Tiles.BoardSpace[41];
+            BoardSpaces[0] = new Tiles.BoardSpace(0, "ERROR- TILE POSITION 0"); //To make sure there's not any null boardspaces
 
 
         }//Board
@@ -34,10 +35,13 @@ namespace Monopoly
         public override string ToString()
         {
             String result = String.Empty;
+            
             foreach (Tiles.BoardSpace b in BoardSpaces)
             {
                 result = result + b.ToString() + Environment.NewLine;
             }//foreach
+
+            
             return result;
         }//ToString
 

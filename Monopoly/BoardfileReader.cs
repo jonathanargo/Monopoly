@@ -32,7 +32,7 @@ namespace Monopoly
                 stmReader = new StreamReader(mBoardPath);
                 resultBoard = new Board();
                 Debug.WriteLine("Board stream initalized!");
-                for (int i = 0; i <= resultBoard.BoardSpaces.Length - 1; i++)
+                for (int i = 1; i <= resultBoard.BoardSpaces.Length - 1; i++)
                 {
                     line = stmReader.ReadLine();
                     strValues = line.Split(delimitChar);

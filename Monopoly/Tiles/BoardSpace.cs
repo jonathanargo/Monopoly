@@ -21,14 +21,14 @@ namespace Monopoly.Tiles
             get { return mPosition; }
             protected set
             {
-                if ((value >= 1) && (value <= 40))
+                if ((value >= 0) && (value <= 40))
                 {
                     mPosition = value;
                 }
                 else
                 {
                     mPosition = 1;
-                    System.Windows.Forms.MessageBox.Show("Property position can not be greater than 40 or less than 1");
+                    System.Windows.Forms.MessageBox.Show("Property position can not be greater than 40 or less than 0");
                 }//if else
             }//set
         }//Position

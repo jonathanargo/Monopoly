@@ -1,6 +1,5 @@
 C:\Projects\Monopoly\Monopoly\Monopoly\obj\Debug\Monopoly.Monopoly.resources
 C:\Projects\Monopoly\Monopoly\Monopoly\obj\Debug\Monopoly.Properties.Resources.resources
-C:\Projects\Monopoly\Monopoly\Monopoly\obj\Debug\Monopoly.PropertyQuery.resources
 C:\Projects\Monopoly\Monopoly\Monopoly\obj\Debug\Monopoly.csproj.GenerateResource.Cache
 C:\Projects\Monopoly\Monopoly\Monopoly\bin\Debug\Monopoly.exe.config
 C:\Projects\Monopoly\Monopoly\Monopoly\bin\Debug\Monopoly.exe

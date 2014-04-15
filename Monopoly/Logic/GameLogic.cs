@@ -10,14 +10,16 @@ namespace Monopoly
     public class GameLogic
     {
         private GameState mGame;
+        private UI mUI;
 
         public GameLogic(ref GameState game)
         {
             this.Game = game;
+            this.UI = new UI(ref mGame);
         }//GameLogic
 
         public GameState Game { get { return mGame; } set { mGame = value; } }
-
+        private UI UI { get; set;}
         public void Turn()
         {
             int roll = RollDice();
@@ -143,9 +145,11 @@ namespace Monopoly
             Random rand = new Random();
             bool rolledDoubles = false;
             int roll1, roll2;
-
+            
             roll1 = rand.Next(1, 7);
             roll2 = rand.Next(1, 8);
+
+            UI.Display(String.Format("You have rolled a {0} and a {1} ({2})", roll1, roll2, roll1 + roll2), String.Format("Player {0}: Dice Roll", Game.ActivePlayerID + 1));
 
             if (roll1 == roll2)
             {

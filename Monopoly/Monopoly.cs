@@ -20,6 +20,7 @@ namespace Monopoly
         private MoneyLogic mMoneyLogic;
         private TileLogic mTileLogic;
         private CardLogic mCardLogic;
+
         public Monopoly()
         {
             InitializeComponent();
@@ -30,7 +31,7 @@ namespace Monopoly
             GameLogic cardGameLogic = new GameLogic(ref ActiveGame);    //the card logic deals with both money and player positions, so both were needed
             this.CardLogic = new CardLogic(ref ActiveGame, ref cardMoneyLogic, ref cardGameLogic);
             this.TileLogic = new TileLogic(ref ActiveGame);
-
+            this.UI = new UI(ref ActiveGame);
         }//Monopoly()
 
 
@@ -41,6 +42,7 @@ namespace Monopoly
         public TileLogic TileLogic { get { return mTileLogic; } set { mTileLogic = value; } }
         public MoneyLogic MoneyLogic { get { return mMoneyLogic; } set { mMoneyLogic = value; } }
         public CardLogic CardLogic { get { return mCardLogic; } set { mCardLogic = value; } }
+        private UI UI { get; set; }
 
         //METHODS
 
@@ -93,7 +95,12 @@ namespace Monopoly
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-           
+            Debug.WriteLine(ActiveGame.Board.ToString());
+            ActiveGame.Players[0].Position = 4;
+            UI.BuyPropDialogue();
+
+            //TODO test roll message
+
         }
 
 
