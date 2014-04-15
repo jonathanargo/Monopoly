@@ -84,7 +84,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Logic\TileLogic.cs" />
+    <None Include="Old\TileLogic.cs.old" />
     <Compile Include="Tiles\Chance.cs" />
     <Compile Include="Tiles\CommunityChest.cs" />
     <Compile Include="Tiles\FreeParking.cs" />

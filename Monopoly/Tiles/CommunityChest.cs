@@ -9,7 +9,7 @@ namespace Monopoly.Tiles
     class CommunityChest: Tiles.BoardSpace
     {
         public CommunityChest(int position, string name)
-            : base(position, name)
+            : base(position, name, "Community Chest")
         {
             this.Position = position;
             this.Name = name;

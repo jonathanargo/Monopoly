@@ -6,20 +6,21 @@ using System.Threading.Tasks;
 
 namespace Monopoly.Tiles
 {
-    //BoardSpace is used as a superclass for the various tile types, but is also used for Free Parking
-    public class BoardSpace
+    public abstract class BoardSpace
     {
         private int mPosition;
-        private String mName;
 
-        public BoardSpace(int position, String name){
+        public BoardSpace(int position, String name, String spaceType){
             this.Name = name;
             this.Position = position;
+            this.SpaceType = spaceType;
         }//Boardspace
 
+        public String Name { get; protected set; }
+        public String SpaceType { get; protected set; }
         public int Position {
             get { return mPosition; }
-            protected set
+            set
             {
                 if ((value >= 0) && (value <= 40))
                 {
@@ -32,13 +33,7 @@ namespace Monopoly.Tiles
                 }//if else
             }//set
         }//Position
-
-
-        //PROPERTIES
-
-        public String Name { get { return mName; } protected set { mName = value; } }
-
-
+        
         //METHODS
 
         public override String ToString()

@@ -8,7 +8,7 @@ namespace Monopoly.Tiles
 {
     public class IncomeTax: Tiles.BoardSpace
     {
-        public IncomeTax(int position, string name): base(position, name){
+        public IncomeTax(int position, string name): base(position, name, "Income Tax"){
             this.Position = position;
             this.Name = name;
         }//IncomeTax()

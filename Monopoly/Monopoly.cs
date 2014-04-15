@@ -18,19 +18,17 @@ namespace Monopoly
     {
         private GameLogic mGameLogic;
         private MoneyLogic mMoneyLogic;
-        private TileLogic mTileLogic;
         private CardLogic mCardLogic;
 
         public Monopoly()
         {
             InitializeComponent();
             ActiveGame = new GameState();
-            this.GameLogic = new GameLogic(ref ActiveGame);
             this.MoneyLogic = new MoneyLogic(ref ActiveGame);
-            MoneyLogic cardMoneyLogic = new MoneyLogic(ref ActiveGame); //clone of logic objects for the CardLogic constructor
-            GameLogic cardGameLogic = new GameLogic(ref ActiveGame);    //the card logic deals with both money and player positions, so both were needed
-            this.CardLogic = new CardLogic(ref ActiveGame, ref cardMoneyLogic, ref cardGameLogic);
-            this.TileLogic = new TileLogic(ref ActiveGame);
+            MoneyLogic refMoneyLogic = new MoneyLogic(ref ActiveGame); //clone of logic objects for the CardLogic and GameLogic constructor
+            GameLogic refGameLogic = new GameLogic(ref ActiveGame);    //the card logic deals with both money and player positions, so both were needed
+            this.GameLogic = new GameLogic(ref ActiveGame);
+            this.CardLogic = new CardLogic(ref ActiveGame, ref refMoneyLogic, ref refGameLogic);
             this.UI = new UI(ref ActiveGame);
         }//Monopoly()
 
@@ -39,7 +37,6 @@ namespace Monopoly
 
         public GameState ActiveGame;
         public GameLogic GameLogic { get { return mGameLogic; } set { mGameLogic = value; } }
-        public TileLogic TileLogic { get { return mTileLogic; } set { mTileLogic = value; } }
         public MoneyLogic MoneyLogic { get { return mMoneyLogic; } set { mMoneyLogic = value; } }
         public CardLogic CardLogic { get { return mCardLogic; } set { mCardLogic = value; } }
         private UI UI { get; set; }
@@ -95,11 +92,9 @@ namespace Monopoly
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine(ActiveGame.Board.ToString());
-            ActiveGame.Players[0].Position = 4;
-            UI.BuyPropDialogue();
 
-            //TODO test roll message
+
+            
 
         }
 

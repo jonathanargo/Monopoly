@@ -11,17 +11,21 @@ namespace Monopoly
     {
         private GameState mGame;
         private UI mUI;
+        private MoneyLogic MoneyLogic;
 
         public GameLogic(ref GameState game)
         {
             this.Game = game;
             this.UI = new UI(ref mGame);
+            MoneyLogic = new MoneyLogic(ref mGame);
         }//GameLogic
 
         public GameState Game { get { return mGame; } set { mGame = value; } }
         private UI UI { get; set;}
+
         public void Turn()
         {
+            
             int roll = RollDice();
             bool rollWasDouble = Game.Doubles[Game.ActivePlayerID].LastRollWasDouble;
 
@@ -52,6 +56,7 @@ namespace Monopoly
             }//if
 
             ChangeActivePlayer(); //will fire after player didn't roll doubles, or is in jail.
+            
 
         }//Turn() TODO
 
@@ -62,8 +67,8 @@ namespace Monopoly
             //check for >40
             if (numberOfSpaces > 79)
             {
-                System.Windows.Forms.MessageBox.Show("ERROR: Unable to advance player more than 79 spaces.");
-            }
+                UI.Error("Unable to advance the player more than 79 spaces.");
+            }//if
             else if (finalPosition > 40)
             {
                 finalPosition = 41 - numberOfSpaces;
@@ -78,12 +83,45 @@ namespace Monopoly
 
 
             Game.Players[playerID].Position = finalPosition;
-            Land(playerID);
+            Land(Game.Board.BoardSpaces[Game.Players[Game.ActivePlayerID].Position].SpaceType);
         }//AdvancePlayer()
-        
-        public void Land(int playerID)
+
+        public void Land(String spaceType)
         {
-            //logic for what happens when player lands on a space
+            switch (spaceType)
+            {
+                case "Property":
+                    LandProperty();
+                    break;
+                case "Railroad":
+                    LandRailroad();
+                    break;
+                case "Utility":
+                    LandUtility();
+                    break;
+                case "Luxury Tax":
+                    LandLuxTax();
+                    break;
+                case "Income Tax":
+                    LandIncTax();
+                    break;
+                case "Community Chest":
+                    LandComChest();
+                    break;
+                case "Chance":
+                    LandChance();
+                    break;
+                case "Go To Jail":
+                    SendToJail(Game.ActivePlayerID);
+                    break;
+                case "Free Parking": case "Jail": case "Go":
+                    UI.NoAction(spaceType);
+                    break;
+                default:
+                    UI.Display(String.Format("You have landed on a {0} space.", spaceType), spaceType);
+                    break;
+            }//switch            
+            
         }//Land() //TODO
 
         public void StartGame()
@@ -171,7 +209,7 @@ namespace Monopoly
             if (Game.Players[playerID].Position > position) { PassGo(playerID); }//if
 
             Game.Players[playerID].Position = position;
-            Land(playerID);
+            Land(Game.Board.BoardSpaces[position].SpaceType);
 
         }//AdvancePlayerToPosition()
 
@@ -203,5 +241,84 @@ namespace Monopoly
         {
             Game.Players[playerID].IsJailed = false;
         }//SendToJail
+        /*
+        LandProperty();
+                    LandRailroad();
+                    LandUtility();
+                    LandLuxTax();
+                    LandIncTax();
+                    LandComChest();*/
+
+        private void LandProperty()
+        {
+            int spaceIndex = Game.Players[Game.ActivePlayerID].Position;
+            Tiles.Property prop = (Tiles.Property)Game.Board.BoardSpaces[spaceIndex];
+
+            if (prop.OwnerID == -1) //interpreted as no owner
+            {
+                bool buyProp = UI.BuyPropDialogue();
+                if (CanBuyProp())
+                {
+                    bool wantsToBuy = UI.BuyPropDialogue();
+                    if (wantsToBuy)
+                    {
+                        MoneyLogic.BuyProp(prop.Position, Game.ActivePlayerID);
+                    }
+                }
+
+            }
+            
+        }//TODO
+
+        private void LandRailroad()
+        {
+        }//TODO
+
+        private void LandUtility()
+        {
+        }//TODO
+
+        private void LandLuxTax()
+        {
+        }//TODO
+
+        private void LandIncTax()
+        {
+        }//TODO
+
+        private void LandComChest()
+        {
+        }//TODO
+
+        private void LandChance()
+        {
+        }//TODO
+
+        public bool CanBuyProp()
+            //For buying property when it's landed on
+        {
+            Player thisPlayer = Game.Players[Game.ActivePlayerID];
+            Tiles.Property thisProp = (Tiles.Property)Game.Board.BoardSpaces[thisPlayer.Position];            
+            
+            if((thisProp.OwnerID == -1) && (thisPlayer.Money >= thisProp.Cost)) //interpreted as no owner
+            {
+                return true;
+            }           
+
+            return false;
+        }//CanBuyProp()
+
+        public bool CanBuyProp(int buyerID, int cost)
+            //for buying properties from other players
+        {
+            Player buyer = Game.Players[buyerID];
+            Tiles.Property thisProp = (Tiles.Property)Game.Board.BoardSpaces[buyer.Position];
+            if (buyer.Money >= cost)
+            {
+                return true;
+            }
+            return false;
+        }//CanBuyProp(buyerID)
+
     }//GameLogic
 }

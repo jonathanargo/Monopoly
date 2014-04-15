@@ -12,7 +12,7 @@ namespace Monopoly.Tiles
         private List<int> mInmateIDs;
 
         public Jail(int position, String name)
-            : base(position, name)
+            : base(position, name, "Jail")
         {
             this.Position = position;
             this.Name = name;
@@ -46,7 +46,8 @@ namespace Monopoly.Tiles
                 Console.WriteLine("Player " + playerID + " has been jailed.");
             }else
             {
-                Console.WriteLine("Error: Player " + playerID + " is already in jail!");
+                UI ui = new UI();
+                ui.Error(String.Format("Error: Player {0} is already in jail.", playerID + 1));
             }//ifelse
         }//Incarcerate()
 

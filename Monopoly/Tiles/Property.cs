@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Monopoly.Tiles
 {
@@ -16,7 +17,7 @@ namespace Monopoly.Tiles
         private int mCost;
 
         public Property(int position, String name, PropertyColor color, int cost, Rent rent, int mortgageVal)
-            : base(position, name)
+            : base(position, name, "Property")
         {
             this.Position = position;
             this.Name = name;
@@ -51,6 +52,21 @@ namespace Monopoly.Tiles
             result = (result + ", Color: " + this.Color.ToString() + ", Cost: " + this.Cost + ", MortgageVal: " + this.MortgageVal);
             return result;
         }
+
+        public void Improve(int numLevels)
+        {
+            int intCurLevel = (int)this.ImprovementLevel;
+            if (intCurLevel + numLevels <= 5)
+            {
+                this.ImprovementLevel = (ImprovementLevel)intCurLevel + numLevels;
+                Debug.WriteLine("Improvement level set to " + this.ImprovementLevel);
+            }
+            else
+            {
+                UI ui = new UI();
+                ui.Error("Improvement level can not exceed 5.");                
+            }//else
+        }//Improve()
 
     }//class Property: BoardSpace
 }

@@ -10,7 +10,7 @@ namespace Monopoly.Tiles
     class GoToJail: Tiles.BoardSpace
     {
         public GoToJail(int position, String name)
-            : base(position, name)
+            : base(position, name, "Go To Jail")
         {
             //nothing here
         }

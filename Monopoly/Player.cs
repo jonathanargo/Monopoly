@@ -25,6 +25,7 @@ namespace Monopoly
             this.JailFreeCards = 0;
             this.Railroads = 0;
             this.Utilities = 0;
+            this.OwnedProperties = new List<Tiles.Property>();
 
         }//Player
 
@@ -36,6 +37,8 @@ namespace Monopoly
         public int Railroads { get { return mRailroads; } set { mRailroads = value; } }
         public int Utilities { get { return mUtilities; } set { mUtilities = value; } }
         public Boolean IsJailed { get { return mIsJailed; } set { mIsJailed = value; } }
+        public List<Tiles.Property> OwnedProperties { get; private set; }
+
         public int Position //between 1 and 40        
         {
             get { return mPosition; }
@@ -52,7 +55,6 @@ namespace Monopoly
                 }//ifelse
             }//set
         }//Position
-
 
         //METHODS
 

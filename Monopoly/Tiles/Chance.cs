@@ -10,7 +10,7 @@ namespace Monopoly.Tiles
     //just used to distinguish space in Game Logic
     {
         public Chance(int position, String name)
-            : base(position, name)
+            : base(position, name, "Chance")
         {
             this.Position = position;
             this.Name = name;

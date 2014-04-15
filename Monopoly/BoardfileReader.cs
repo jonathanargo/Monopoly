@@ -12,10 +12,12 @@ namespace Monopoly
     class BoardfileReader        
     {
         private String mBoardPath;
+        private UI ui;
 
         public BoardfileReader(String boardPath)
         {
-            mBoardPath = boardPath;    
+            mBoardPath = boardPath;
+            ui = new UI();
         }//BoardfileReader
 
         public Board CreateBoard()
@@ -89,7 +91,7 @@ namespace Monopoly
                             resultBoard.BoardSpaces[i] = new Tiles.FreeParking(intValues[2], strValues[1]);
                             break;
                         default:
-                            MessageBox.Show("Error: unable to determine space type!");
+                            ui.Error("The BoardReader was unable to determine space type!");
                             break;
                     }//switch
 
@@ -100,7 +102,7 @@ namespace Monopoly
             }//try (open streamreader)         
 
             catch (FileNotFoundException ex){
-                MessageBox.Show("Error: Stream couldn't be found: " + ex.Message);
+                ui.Error("Stream couldn't be found.", ex);
                 return null;
             }//catch FileNotFound (streamreader)
 

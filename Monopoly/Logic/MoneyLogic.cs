@@ -53,5 +53,14 @@ namespace Monopoly
 
             }//foreach
         }//CollectFromPlayers
-    }
+
+        public void BuyProp(int propIndex, int playerID)
+        {
+            Tiles.Property thisProp = (Tiles.Property)Game.Board.BoardSpaces[propIndex];
+            thisProp.OwnerID = playerID;
+            Game.Players[playerID].OwnedProperties.Add(thisProp);
+            Game.Players[playerID].Money -= thisProp.Cost;
+        }//BuyProp
+
+    }//MoneyLogic
 }

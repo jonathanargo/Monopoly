@@ -9,7 +9,7 @@ namespace Monopoly.Tiles
     public class FreeParking: Tiles.BoardSpace
     {
         public FreeParking(int position, String name)
-            : base(position, name)
+            : base(position, name, "Free Parking")
         {
             this.Position = position;
             this.Name = name;

@@ -12,7 +12,7 @@ namespace Monopoly.Tiles
         private int mCost;
         private int mOwnerID;
 
-        public Utility(int position, String name):base(position, name){
+        public Utility(int position, String name):base(position, name, "Utility"){
             this.Position = position;
             this.Name = name;
             this.MortgageVal = 75;

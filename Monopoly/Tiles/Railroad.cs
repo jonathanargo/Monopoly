@@ -13,7 +13,7 @@ namespace Monopoly.Tiles
         private int mMortgageVal;
         private int mOwnerID;
 
-        public Railroad(int position, String name): base(position, name)
+        public Railroad(int position, String name): base(position, name, "Railroad")
         {
             this.Position = position;
             this.Name = name;

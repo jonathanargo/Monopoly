@@ -21,7 +21,7 @@ namespace Monopoly
             //set Jail
 
             BoardSpaces = new Tiles.BoardSpace[41];
-            BoardSpaces[0] = new Tiles.BoardSpace(0, "ERROR- TILE POSITION 0"); //To make sure there's not any null boardspaces
+            BoardSpaces[0] = new Tiles.FreeParking(0, "ERROR- TILE POSITION 0"); //To make sure there's not any null boardspaces
 
 
         }//Board
