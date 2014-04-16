@@ -8,14 +8,21 @@ namespace Monopoly
 {
     public class MoneyLogic
     {
-        private GameState mGame;
-        public MoneyLogic(ref GameState game)
+        public MoneyLogic(ref Monopoly monopoly)
         {
-            this.Game = game;
+            this.Monopoly = monopoly;
+            this.IsInitialized = false;
         }//GameLogic
 
-        public GameState Game { get { return mGame; } private set { mGame = value; } }
+        private Monopoly Monopoly { get; set; }
+        private GameState Game { get; set; }
+        public bool IsInitialized { get; private set; }
 
+        public void Initialize()
+        {
+            this.Game = Monopoly.ActiveGame;
+            this.IsInitialized = true;
+        }//Init()
 
         public void PayPlayer(int payerID, int recieverID, int amount)
         {
@@ -59,6 +66,14 @@ namespace Monopoly
             Tiles.Property thisProp = (Tiles.Property)Game.Board.BoardSpaces[propIndex];
             thisProp.OwnerID = playerID;
             Game.Players[playerID].OwnedProperties.Add(thisProp);
+            Game.Players[playerID].Money -= thisProp.Cost;
+        }//BuyProp
+
+        public void BuyRailroad(int rrIndex, int playerID)
+        {
+            Tiles.Property thisProp = (Tiles.Property)Game.Board.BoardSpaces[rrIndex];
+            thisProp.OwnerID = playerID;
+            Game.Players[playerID].Railroads++;
             Game.Players[playerID].Money -= thisProp.Cost;
         }//BuyProp
 

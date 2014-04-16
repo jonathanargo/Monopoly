@@ -13,18 +13,33 @@ namespace Monopoly
         private MoneyLogic mMoneyLogic;
         private GameLogic mGameLogic;
 
-        public CardLogic(ref GameState game, ref MoneyLogic moneyLogic, ref GameLogic gameLogic)
+        public CardLogic(ref Monopoly monopoly)
         {
-            this.Game = game;
-            this.Players = game.Players;
-            this.MoneyLogic = moneyLogic;
-            this.GameLogic = gameLogic;
+            this.Monopoly = monopoly;
+            this.IsInitialized = false;
         }//CardLogic
 
         //PROPERTIES
         public GameState Game { get { return mGame; } set { mGame = value; } }
         public MoneyLogic MoneyLogic { get { return mMoneyLogic; } private set { mMoneyLogic = value; } }
         public GameLogic GameLogic { get { return mGameLogic; } private set { mGameLogic = value; } }
+        private Monopoly Monopoly { get; set; }
+        private UI UI { get; set; }
+        public bool IsInitialized { get; private set; }
+
+        //INITIALIZATION
+        public void Initialize()
+            //called by Monopoly, used to make sure all logic objects
+            //are created, since both CardLogic and GameLogic need
+            //references to each other
+        {
+            this.Game = this.Monopoly.ActiveGame;
+            this.Players = this.Monopoly.ActiveGame.Players;
+            this.GameLogic = this.Monopoly.GameLogic;
+            this.MoneyLogic = this.Monopoly.MoneyLogic;
+            this.UI = this.Monopoly.UI;
+            this.IsInitialized = true;
+        }//Initialize()
 
         //METHODS
         public void HandleCard(Card card, int playerID)

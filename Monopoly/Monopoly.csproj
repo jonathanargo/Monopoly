@@ -63,6 +63,7 @@
     <Compile Include="BoardfileReader.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="DoublesQueue.cs" />
+    <Compile Include="TestFunctions.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="Logic\CardLogic.cs" />
     <Compile Include="Deck.cs" />

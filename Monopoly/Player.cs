@@ -26,18 +26,20 @@ namespace Monopoly
             this.Railroads = 0;
             this.Utilities = 0;
             this.OwnedProperties = new List<Tiles.Property>();
+            this.GameID = this.ID + 1;
 
         }//Player
 
         
         //PROPERTIES
-        public int ID { get { return mID; } private set { mID = value; } }
+        public int ID { get { return mID; } private set { mID = value; } } //represents GameState.Players array index
         public int Money { get { return mMoney; } set { mMoney = value; } }
         public int JailFreeCards { get { return mJailFreeCards; } set { mJailFreeCards = value; } }
         public int Railroads { get { return mRailroads; } set { mRailroads = value; } }
         public int Utilities { get { return mUtilities; } set { mUtilities = value; } }
         public Boolean IsJailed { get { return mIsJailed; } set { mIsJailed = value; } }
         public List<Tiles.Property> OwnedProperties { get; private set; }
+        public int GameID { get; private set; } //represents player number as it appears to user
 
         public int Position //between 1 and 40        
         {
@@ -57,6 +59,17 @@ namespace Monopoly
         }//Position
 
         //METHODS
+
+        public String PropsToString()
+        {
+            String result = String.Empty;
+            foreach (Tiles.Property p in OwnedProperties)
+            {
+                result += p.Name + Environment.NewLine;
+            }//foreach
+
+            return result;
+        }//PropsString
 
         public override string ToString()
         {

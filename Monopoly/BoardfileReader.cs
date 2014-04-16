@@ -50,6 +50,7 @@ namespace Monopoly
                         catch (FormatException ex) 
                         {
                             intValues[j] = 0;
+                            ex.GetType();
                         }//catch
                     }//for
 

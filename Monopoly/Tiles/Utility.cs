@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Monopoly.Tiles
 {
-    class Utility: Tiles.BoardSpace
+    public class Utility: Tiles.BoardSpace
     {
         private int mMortgageVal;
         private int mCost;
@@ -26,7 +26,7 @@ namespace Monopoly.Tiles
 
         public int GetBill(int roll, int utilitiesOwned)
         {
-            if (utilitiesOwned == 2)
+            if (utilitiesOwned > 1)
             {
                 return roll * 10;
             }

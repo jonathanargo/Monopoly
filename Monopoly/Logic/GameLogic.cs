@@ -9,23 +9,38 @@ namespace Monopoly
 {
     public class GameLogic
     {
-        private GameState mGame;
-        private UI mUI;
-        private MoneyLogic MoneyLogic;
-
-        public GameLogic(ref GameState game)
+        public GameLogic(ref Monopoly monopoly)
         {
-            this.Game = game;
-            this.UI = new UI(ref mGame);
-            MoneyLogic = new MoneyLogic(ref mGame);
+            this.Monopoly = monopoly;
+            this.IsInitialized = false;
         }//GameLogic
 
-        public GameState Game { get { return mGame; } set { mGame = value; } }
+        public bool IsInitialized { get; private set; }
+        private Monopoly Monopoly { get; set; }
+        private GameState Game { get; set; }
+        private Player[] Players { get; set; }
+        private CardLogic CardLogic { get; set; }
+        private MoneyLogic MoneyLogic { get; set; }
         private UI UI { get; set;}
 
-        public void Turn()
+
+        //INITIALIZATION
+        public void Initialize()
+        //called by Monopoly, used to make sure all logic objects
+        //are created, since both CardLogic and GameLogic need
+        //references to each other
         {
-            
+            this.Game = this.Monopoly.ActiveGame;
+            this.Players = this.Monopoly.ActiveGame.Players;
+            this.MoneyLogic = this.Monopoly.MoneyLogic;
+            this.CardLogic = this.Monopoly.CardLogic;
+            this.UI = this.Monopoly.UI;
+            this.IsInitialized = true;
+        }//Initialize()
+
+
+        public void Turn()
+        {            
             int roll = RollDice();
             bool rollWasDouble = Game.Doubles[Game.ActivePlayerID].LastRollWasDouble;
 
@@ -88,6 +103,7 @@ namespace Monopoly
 
         public void Land(String spaceType)
         {
+            UI.LandMessage();
             switch (spaceType)
             {
                 case "Property":
@@ -97,7 +113,7 @@ namespace Monopoly
                     LandRailroad();
                     break;
                 case "Utility":
-                    LandUtility();
+                    LandUtility(Game.LastRoll);
                     break;
                 case "Luxury Tax":
                     LandLuxTax();
@@ -118,7 +134,7 @@ namespace Monopoly
                     UI.NoAction(spaceType);
                     break;
                 default:
-                    UI.Display(String.Format("You have landed on a {0} space.", spaceType), spaceType);
+                    UI.Error("Land() unable to determine space type.");
                     break;
             }//switch            
             
@@ -182,12 +198,13 @@ namespace Monopoly
         {
             Random rand = new Random();
             bool rolledDoubles = false;
-            int roll1, roll2;
+            int roll1, roll2, rollSum;
             
             roll1 = rand.Next(1, 7);
             roll2 = rand.Next(1, 8);
+            rollSum = roll1 + roll2;
 
-            UI.Display(String.Format("You have rolled a {0} and a {1} ({2})", roll1, roll2, roll1 + roll2), String.Format("Player {0}: Dice Roll", Game.ActivePlayerID + 1));
+            UI.Display(String.Format("You have rolled a {0} and a {1} ({2})", roll1, roll2, rollSum), String.Format("Player {0}: Dice Roll", Game.ActivePlayerID + 1));
 
             if (roll1 == roll2)
             {
@@ -195,8 +212,9 @@ namespace Monopoly
             }//if
 
             Game.Doubles[Game.ActivePlayerID].NextDouble(rolledDoubles);
+            Game.LastRoll = rollSum;
 
-            return roll1 + roll2;
+            return rollSum;
             //Roll dice
         }//RollDice() TODO
 
@@ -222,7 +240,6 @@ namespace Monopoly
 
             //if player will need to pass Go
             if (Game.Players[playerID].Position > position) { PassGo(playerID); }//if
-
             Game.Players[playerID].Position = position;
         }//AdvancePlayerToPositionCustomPay()
 
@@ -251,32 +268,160 @@ namespace Monopoly
 
         private void LandProperty()
         {
-            int spaceIndex = Game.Players[Game.ActivePlayerID].Position;
-            Tiles.Property prop = (Tiles.Property)Game.Board.BoardSpaces[spaceIndex];
-
-            if (prop.OwnerID == -1) //interpreted as no owner
+            try
             {
-                bool buyProp = UI.BuyPropDialogue();
-                if (CanBuyProp())
+                int spaceIndex = Game.Players[Game.ActivePlayerID].Position;
+                Tiles.Property prop = (Tiles.Property)Game.Board.BoardSpaces[spaceIndex];
+
+                if (prop.OwnerID == -1) 
+                    //interpreted as no owner
                 {
                     bool wantsToBuy = UI.BuyPropDialogue();
-                    if (wantsToBuy)
-                    {
+                    if (wantsToBuy && CanBuyProp())
+                    {                       
                         MoneyLogic.BuyProp(prop.Position, Game.ActivePlayerID);
+                        String message = String.Format("You have bought {0}!", prop.Name);
+                        String caption = String.Format("You bought a property!");
+                        UI.Display(message, caption);
                     }
-                }
-
+                    else if (wantsToBuy && !CanBuyProp())
+                    {
+                        UI.Display("You do not have enough money to buy this property.", "Can't afford property");
+                    }//else
+                    else
+                    //He doesn't want to buy it
+                    {
+                        UI.Display("You don't buy the property.", String.Format("Player {0}: Not buying it", Game.ActivePlayerID + 1));
+                    }
+                }//if
+                else if (prop.OwnerID != Game.ActivePlayerID)
+                    //You must pay rent
+                {
+                    int rent = prop.CurrentRent();
+                    UI.PayPlayer(prop);
+                    MoneyLogic.PayPlayer(Game.ActivePlayerID, prop.OwnerID, rent);
+                }//else if
+                else
+                //You own the property
+                {
+                    String message = "You own this property.";
+                    String caption = String.Format("Player {0}: Your Property", Game.ActivePlayerID + 1);
+                    UI.Display(message, caption);
+                }//else if
+            }
+            catch (InvalidCastException ex)
+            {
+                UI.Error("Invalid cast in GameLogic.LandProperty()", ex);
+            }
+            catch (Exception ex)
+            {
+                UI.UnknownException(ex, "GameLogic.LandProperty()");
             }
             
         }//TODO
 
         private void LandRailroad()
         {
+            int spaceIndex = Game.Board.BoardSpaces[Game.Players[Game.ActivePlayerID].ID].Position;
+            try
+            {
+                Tiles.Railroad thisRR = (Tiles.Railroad)Game.Board.BoardSpaces[spaceIndex];
+
+                if (thisRR.OwnerID == -1)
+                {
+                    bool wantsToBuy = UI.BuyPropDialogue();
+                    if ((wantsToBuy && CanBuyProp()))
+                    {
+                        MoneyLogic.BuyRailroad(thisRR.Position, Game.ActivePlayerID);
+                    }
+                    else if ((wantsToBuy) && (!CanBuyProp()))
+                    {
+                        UI.CantAfford();
+                    }
+                    else
+                    //He doesn't want to buy it
+                    {
+                        UI.Display("You don't buy the railroad", String.Format("Player {0}: Not buying it", Game.ActivePlayerID + 1));
+                    }
+                }
+                else if (thisRR.OwnerID != Game.ActivePlayerID)
+                //Must pay railroad owner
+                {
+                    Player owner = Game.Players[thisRR.OwnerID];
+                    int ownerRRs = owner.Railroads;
+                    int fare = (thisRR.BaseFare * ownerRRs);
+                    UI.PayPlayer(thisRR, fare);
+                    MoneyLogic.PayPlayer(Game.ActivePlayerID, thisRR.OwnerID, fare);
+                }//else if
+                else
+                //This railroad belongs to the player!
+                {
+                    String message = "You own this railroad. No action required.";
+                    String caption = String.Format("Player {0}: Your railroad", Game.ActivePlayerID + 1);
+                    UI.Display(message, caption);
+                }//else
+            }
+            catch (InvalidCastException ex)
+            {
+                UI.Error("Invalid cast in GameLogic.LandRailroad()", ex);
+            }
+            catch (Exception ex)
+            {
+                UI.UnknownException(ex, "GameLogic.LandRailroad()");
+            }
         }//TODO
 
-        private void LandUtility()
+        private void LandUtility(int roll)
         {
-        }//TODO
+            int spaceIndex = Game.Board.BoardSpaces[Game.Players[Game.ActivePlayerID].ID].Position;
+            Tiles.Utility thisUtil;
+            try
+            {
+                thisUtil = (Tiles.Utility)Game.Board.BoardSpaces[spaceIndex];
+                if (thisUtil.OwnerID == -1)
+                {
+                    bool wantsToBuy = UI.BuyPropDialogue();
+                    if ((wantsToBuy && CanBuyProp()))
+                    {
+                        MoneyLogic.BuyRailroad(thisUtil.Position, Game.ActivePlayerID);
+                    }
+                    else if ((wantsToBuy) && (!CanBuyProp()))
+                    {
+                        UI.CantAfford();
+                    }
+                    else
+                    //He doesn't want to buy it
+                    {
+                        UI.Display("You don't buy the ultility.", String.Format("Player {0}: Not buying it", Game.ActivePlayerID + 1));
+                    }
+                }
+                else if (thisUtil.OwnerID != Game.ActivePlayerID)
+                //Must pay utility owner
+                {
+                    Player owner = Game.Players[thisUtil.OwnerID];
+                    int ownerRRs = owner.Railroads;
+                    int utilsOwned = Game.Players[thisUtil.OwnerID].Utilities;
+                    int bill = thisUtil.GetBill(roll, utilsOwned);
+                    UI.PayPlayer(thisUtil, bill);
+                    MoneyLogic.PayPlayer(Game.ActivePlayerID, thisUtil.OwnerID, bill);
+                }//else if
+                else
+                //This utility belongs to the player!
+                {
+                    String message = "You own this utility. No action required.";
+                    String caption = String.Format("Player {0}: Your utility", Game.ActivePlayerID + 1);
+                    UI.Display(message, caption);
+                }//else
+            }//LandUtility(roll)
+            catch (InvalidCastException ex)
+            {
+                UI.Error("Invalid cast in GameLogic.LandUtility()", ex);
+            }
+            catch (Exception ex)
+            {
+                UI.UnknownException(ex, "GameLogic.LandUtility()");
+            }
+        }
 
         private void LandLuxTax()
         {

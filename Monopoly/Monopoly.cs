@@ -19,19 +19,14 @@ namespace Monopoly
         private GameLogic mGameLogic;
         private MoneyLogic mMoneyLogic;
         private CardLogic mCardLogic;
+        private Monopoly refMonopoly;
 
         public Monopoly()
         {
-            InitializeComponent();
-            ActiveGame = new GameState();
-            this.MoneyLogic = new MoneyLogic(ref ActiveGame);
-            MoneyLogic refMoneyLogic = new MoneyLogic(ref ActiveGame); //clone of logic objects for the CardLogic and GameLogic constructor
-            GameLogic refGameLogic = new GameLogic(ref ActiveGame);    //the card logic deals with both money and player positions, so both were needed
-            this.GameLogic = new GameLogic(ref ActiveGame);
-            this.CardLogic = new CardLogic(ref ActiveGame, ref refMoneyLogic, ref refGameLogic);
-            this.UI = new UI(ref ActiveGame);
+            InitializeComponent();            
+            this.GameIsReady = false;
+            this.TestMode = false;
         }//Monopoly()
-
 
         //PROPERTIES
 
@@ -39,9 +34,40 @@ namespace Monopoly
         public GameLogic GameLogic { get { return mGameLogic; } set { mGameLogic = value; } }
         public MoneyLogic MoneyLogic { get { return mMoneyLogic; } set { mMoneyLogic = value; } }
         public CardLogic CardLogic { get { return mCardLogic; } set { mCardLogic = value; } }
-        private UI UI { get; set; }
+        public UI UI { get; set; }
+        public bool GameIsReady { get; private set; }
+        private TestFunctions Test { get; set; }
+        public bool TestMode { get; private set; }
 
         //METHODS
+
+        public void PrepareGame()
+        {
+            ActiveGame = new GameState();
+            this.UI = new UI(ref ActiveGame);
+            IntializeLogic();
+            GameIsReady = true;
+            Debug.WriteLine("Game has been prepared.");
+        }
+
+        public void IntializeLogic()
+        {
+            refMonopoly = this;
+            GameLogic = new GameLogic(ref refMonopoly);
+            CardLogic = new CardLogic(ref refMonopoly);
+            MoneyLogic = new MoneyLogic(ref refMonopoly);
+            GameLogic.Initialize();
+            CardLogic.Initialize();
+            MoneyLogic.Initialize();
+        }//InitializeLogic
+
+        public void SetTestMode()
+        {
+            PrepareGame();
+            refMonopoly = this;
+            Test = new TestFunctions(ref refMonopoly);
+            TestMode = true;
+        }//SetTestMode()
 
         private void Monopoly_Paint(object sender, PaintEventArgs e)
         {
@@ -59,16 +85,20 @@ namespace Monopoly
         private void Form1_Load(object sender, EventArgs e)
         {
             
-
         }
 
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            if (ActiveGame != null)
+            if (GameIsReady)
             {
-                GameLogic.StartGame();
+                //Do stuff (TODO)
             }
+            else
+            {
+                PrepareGame();
+                UI.Error("Game was not ready. Game was prepared. Try again.");
+            }//else
         }//btnStart_Click
 
         private void IndicateActivePlayer()
@@ -80,7 +110,7 @@ namespace Monopoly
 
             //    }
             //    c.ForeColor = System.Drawing.Color.Black;
-            //}//foreach
+            //}//foreach TODO
 
             if (ActiveGame.ActivePlayerID == 0){
                 lblPlayer1.ForeColor = System.Drawing.Color.Green;
@@ -92,11 +122,12 @@ namespace Monopoly
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-
-
-            
-
+            SetTestMode();
+            Debug.WriteLine(GameIsReady);
+            Test.TestPropertyBuying();
         }
+
+        
 
 
 

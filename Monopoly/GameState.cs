@@ -18,7 +18,6 @@ namespace Monopoly
         private int mActivePlayerID;
         private Deck[] mDecks;
         private DoublesQueue[] mDoublesQueues;
-        
 
         public GameState()
         {
@@ -46,6 +45,7 @@ namespace Monopoly
                 mDoublesQueues[i] = new DoublesQueue(new Queue<bool>());
             }//for
 
+            this.LastRoll = 0;
         }//Game()       
 
 
@@ -57,9 +57,22 @@ namespace Monopoly
         public int ActivePlayerID { get { return mActivePlayerID; } set { mActivePlayerID = value; } }        
         public int TurnCount { get { return mTurnCount; } set { mTurnCount = value; } }
         public DoublesQueue[] Doubles { get { return mDoublesQueues; } set { mDoublesQueues = value; } }
+        public int LastRoll { get; set; }
 
         //METHODS
-        
+
+        public Player GetActivePlayer()
+        {
+            Player thisPlayer = this.Players[this.ActivePlayerID];
+            return thisPlayer;
+        }//GetActivePlayer()
+
+        public Tiles.BoardSpace GetActiveTile()
+        {
+            Player thisPlayer = this.GetActivePlayer();
+            Tiles.BoardSpace thisTile = this.Board.BoardSpaces[thisPlayer.Position];
+            return thisTile;
+        }//GetActiveTile()
 
     }//class Game
 
