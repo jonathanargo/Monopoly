@@ -63,6 +63,12 @@
     <Compile Include="BoardfileReader.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="DoublesQueue.cs" />
+    <Compile Include="Forms\TaxDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TaxDialog.Designer.cs">
+      <DependentUpon>TaxDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestFunctions.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="Logic\CardLogic.cs" />
@@ -101,6 +107,9 @@
     <Compile Include="Tiles\Property.cs" />
     <Compile Include="Tiles\Railroad.cs" />
     <Compile Include="Tiles\Utility.cs" />
+    <EmbeddedResource Include="Forms\TaxDialog.resx">
+      <DependentUpon>TaxDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Monopoly.resx">
       <DependentUpon>Monopoly.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -146,6 +155,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CardDescriptions.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\info.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -10,21 +10,21 @@ namespace Monopoly
     public class UI
     {
         private GameState mGame;
-        private bool mHasRef;
 
         public UI()
         {
-            mHasRef = false;
+            this.HasRef = false;
             //Nothing required, just for showing errors and messages
         }
 
         public UI(ref GameState game)
         {
             this.Game = game;
-            mHasRef = true;
+            this.HasRef = true;
         }
 
         public GameState Game { get { return mGame; } private set { mGame = value; } }
+        public bool HasRef { get; set; }
 
         public bool BuyPropDialogue()
         {
@@ -70,6 +70,11 @@ namespace Monopoly
             Error(message);
         }//UnknownException(Exception, location)
 
+        public void UIRefError(String functionName)
+        {
+            Error("Can't call " + functionName + " from an instance of UI that doesn't have a reference to the gamestate!");
+        }//UIRefError
+
         public void LandMessage()
         {
             Player thisPlayer = Game.Players[Game.ActivePlayerID];
@@ -86,9 +91,9 @@ namespace Monopoly
             Display("You can't afford to buy this property!", String.Format("Player {0}: Can't afford property", Game.ActivePlayerID + 1));
         }//CantAfford()
 
-        public void PayPlayer(Tiles.Property prop)
+        public void UIPayPlayer(Tiles.Property prop)
         {
-            if (mHasRef == true)
+            if (HasRef)
             {
                     int rent = prop.CurrentRent();
                     String message = String.Format("You pay player {0} ${1} for landing on {2}.", prop.OwnerID + 1, rent, prop.Name);
@@ -97,13 +102,13 @@ namespace Monopoly
             }//if
             else
             {
-                Error("PayPlayer(Tiles.Property) can't be called by an instance of UI that wasn't passed a game!");
+                UIRefError("UIPayPlayer()");
             }//else
         }//PlayPlayer(Tiles.Property)
 
-        public void PayPlayer(Tiles.Railroad thisRR, int fare)
+        public void UIPayPlayer(Tiles.Railroad thisRR, int fare)
         {
-            if (mHasRef == true)
+            if (HasRef)
             {
                 String message = String.Format("You pay player {0} ${1} for landing on {2}.", thisRR.OwnerID + 1, fare, thisRR.Name);
                 String caption = String.Format("Player {0}: Pay Railroad Fare", Game.ActivePlayerID + 1);
@@ -111,13 +116,13 @@ namespace Monopoly
             }//if
             else
             {
-                Error("PayPlayer(Tiles.Utility) can't be called by an instance of UI that wasn't passed a game!");
+                UIRefError("UIPayPlayer()");
             }//else
         }//PlayPlayer(Tiles.Railroad)
 
-        public void PayPlayer(Tiles.Utility thisUtil, int bill)
+        public void UIPayPlayer(Tiles.Utility thisUtil, int bill)
         {
-            if (mHasRef == true)
+            if (HasRef)
             {
                 String message = String.Format("You pay player {0} ${1} for landing on {2}.", thisUtil.OwnerID + 1, bill, thisUtil.Name);
                 String caption = String.Format("Player {0}: Pay Utility Bill", Game.ActivePlayerID + 1);
@@ -125,8 +130,37 @@ namespace Monopoly
             }//if
             else
             {
-                Error("PayPlayer(Tiles.Utility) can't be called by an instance of UI that wasn't passed a game!");
+                UIRefError("UIPayPlayer(Tiles.Utility)");
             }//else
         }//PlayPlayer(Tiles.Railroad)
+
+        public String MakeCaption(int playerGameNumber, String caption)
+        {
+            return String.Format("Player {0}: {1}", playerGameNumber, caption);
+        }//MakeCaption()
+
+        public TaxChoice ShowTaxDialog(int playerID)
+        {
+            if (HasRef)
+            {
+                Form taxForm = new TaxDialog();
+                DialogResult result = taxForm.ShowDialog();
+                    //TODO- clean this up. There's almost certainly a better way of handling it.
+                if (result == DialogResult.OK)
+                {
+                    return TaxChoice.TenPercent;
+                }
+                else
+                {
+                    return TaxChoice.TwoHundred;
+                }//if-else
+            }//if
+            else
+            {
+                UIRefError("ShowTaxDialog");
+                return TaxChoice.Error;
+            }//else
+        }//ShowTaxDialog
+
     }//UI
 }

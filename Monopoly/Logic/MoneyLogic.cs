@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Monopoly
 {
@@ -33,6 +34,7 @@ namespace Monopoly
         public void ChangeMoney(int playerID, int amount)
         {
             Game.Players[playerID].Money += amount;
+            Debug.WriteLine(String.Format("Changed player {0}'s money by {1} dollars", playerID + 1, amount));
             CheckForBankrupt(playerID);
         }//ChangeMoney()
 
@@ -76,6 +78,14 @@ namespace Monopoly
             Game.Players[playerID].Railroads++;
             Game.Players[playerID].Money -= thisProp.Cost;
         }//BuyProp
+
+        public void TaxTenPercent(Player thisPlayer)
+        {
+            double amt = thisPlayer.Money * .10;
+            int intAmt = -1 * (int)Math.Ceiling(amt);
+            ChangeMoney(thisPlayer.ID, intAmt);
+        }//TaxTenPercent
+
 
     }//MoneyLogic
 }

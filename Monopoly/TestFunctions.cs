@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace Monopoly
 {
@@ -17,7 +18,7 @@ namespace Monopoly
             this.MoneyLogic = monopoly.MoneyLogic;
             this.CardLogic = monopoly.CardLogic;
             this.UI = monopoly.UI;            
-        }
+        }//TestFunctions()
 
         private Monopoly Monopoly { get; set; }
         private GameState ActiveGame { get; set; }
@@ -48,5 +49,34 @@ namespace Monopoly
             Debug.WriteLine("");
             Debug.WriteLine(player2stats);
         }//TestPropertyBuying()
-    }
+
+        public void TestError()
+        {
+            UI.Error("error message");
+        }//TestError()
+
+        public void TestTaxForm()
+        {
+            TaxDialog form = new TaxDialog();
+            DialogResult result = form.ShowDialog(Monopoly);
+            switch (result)
+            {
+                case DialogResult.OK:
+                    Debug.WriteLine("10% was selected");
+                    break;
+                case DialogResult.Cancel:
+                    Debug.WriteLine("$200 was selected");
+                    break;
+            }//switch
+        }
+
+        public void TestIncomeTax()
+        {
+            Player player1 = ActiveGame.Players[0];
+            player1.Position = 1;
+            GameLogic.AdvancePlayer(player1.ID, 4); //puts the player on income tax
+            Debug.WriteLine("player1 stats: " + player1.ToString());
+        }//TestIncomeTax()
+
+    }//TestFunctions
 }

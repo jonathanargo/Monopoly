@@ -34,4 +34,11 @@ public enum DeckType
     Chance
 };
 
+public enum TaxChoice
+{
+    Error,
+    TenPercent,
+    TwoHundred
+};
+
 

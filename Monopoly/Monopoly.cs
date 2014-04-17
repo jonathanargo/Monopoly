@@ -101,6 +101,11 @@ namespace Monopoly
             }//else
         }//btnStart_Click
 
+        private void OpenDialog(Form form)
+        {
+            form.ShowDialog(this);
+        }//OpenDialog        
+
         private void IndicateActivePlayer()
         {
             //foreach (Control c in Controls)
@@ -122,16 +127,16 @@ namespace Monopoly
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            SetTestMode();
-            Debug.WriteLine(GameIsReady);
-            Test.TestPropertyBuying();
-        }
-
-        
-
-
-
-
+            if (!TestMode)
+            {
+                SetTestMode();
+            }
+            Test.TestIncomeTax();
+            //Test.TestPropertyBuying();
+            //Test.TestError();
+            //Test.TestTaxForm();
+            
+        }//btnTest_Click()
 
     }//Monopoly
 }

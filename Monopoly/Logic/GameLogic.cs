@@ -298,7 +298,7 @@ namespace Monopoly
                     //You must pay rent
                 {
                     int rent = prop.CurrentRent();
-                    UI.PayPlayer(prop);
+                    UI.UIPayPlayer(prop);
                     MoneyLogic.PayPlayer(Game.ActivePlayerID, prop.OwnerID, rent);
                 }//else if
                 else
@@ -350,7 +350,7 @@ namespace Monopoly
                     Player owner = Game.Players[thisRR.OwnerID];
                     int ownerRRs = owner.Railroads;
                     int fare = (thisRR.BaseFare * ownerRRs);
-                    UI.PayPlayer(thisRR, fare);
+                    UI.UIPayPlayer(thisRR, fare);
                     MoneyLogic.PayPlayer(Game.ActivePlayerID, thisRR.OwnerID, fare);
                 }//else if
                 else
@@ -402,7 +402,7 @@ namespace Monopoly
                     int ownerRRs = owner.Railroads;
                     int utilsOwned = Game.Players[thisUtil.OwnerID].Utilities;
                     int bill = thisUtil.GetBill(roll, utilsOwned);
-                    UI.PayPlayer(thisUtil, bill);
+                    UI.UIPayPlayer(thisUtil, bill);
                     MoneyLogic.PayPlayer(Game.ActivePlayerID, thisUtil.OwnerID, bill);
                 }//else if
                 else
@@ -421,14 +421,32 @@ namespace Monopoly
             {
                 UI.UnknownException(ex, "GameLogic.LandUtility()");
             }
-        }
+        }//LandUtility()
 
         private void LandLuxTax()
         {
-        }//TODO
+            Player thisPlayer = Game.Players[Game.ActivePlayerID];
+            MoneyLogic.ChangeMoney(thisPlayer.ID, -75);
+            UI.Display("You must pay the bank 75$!", UI.MakeCaption(thisPlayer.GameID, "Pay Luxury Tax"));
+        }//LandLuxTax()
 
         private void LandIncTax()
         {
+            Debug.WriteLine("Player has landed on Income Tax");
+            Player thisPlayer = Game.Players[Game.ActivePlayerID];
+            TaxChoice choice = UI.ShowTaxDialog(thisPlayer.ID);
+            if (choice == TaxChoice.TenPercent)
+            {
+                MoneyLogic.TaxTenPercent(thisPlayer);
+            }//if
+            else if (choice == TaxChoice.TwoHundred)
+            {
+                MoneyLogic.ChangeMoney(thisPlayer.ID, -200);
+            }//else if
+            else
+            {
+                UI.Error("Unable to determine tax type!");
+            }//else
         }//TODO
 
         private void LandComChest()
