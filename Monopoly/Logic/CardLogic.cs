@@ -45,10 +45,15 @@ namespace Monopoly
         public void HandleCard(Card card, int playerID)
         //Contains cases for handling all cards
         {
+            String cardType = String.Empty;
+            if (card.CardID < 17) { cardType = "Community Chest"; }
+            else { cardType = "Chance"; }
+            UI.CardMessage(card.Description, cardType);
+
             switch (card.CardID)
             {
                 case 0://Advance to Go
-                    Players[playerID].Position = 1;
+                    GameLogic.AdvancePlayerToPosition(playerID, 1);
                     break;
                 case 1://Collect 75$
                     MoneyLogic.CollectFromBank(playerID, 75);

@@ -122,10 +122,10 @@ namespace Monopoly
                     LandIncTax();
                     break;
                 case "Community Chest":
-                    LandComChest();
+                    LandCard(0);
                     break;
                 case "Chance":
-                    LandChance();
+                    LandCard(1);
                     break;
                 case "Go To Jail":
                     SendToJail(Game.ActivePlayerID);
@@ -258,13 +258,6 @@ namespace Monopoly
         {
             Game.Players[playerID].IsJailed = false;
         }//SendToJail
-        /*
-        LandProperty();
-                    LandRailroad();
-                    LandUtility();
-                    LandLuxTax();
-                    LandIncTax();
-                    LandComChest();*/
 
         private void LandProperty()
         {
@@ -447,15 +440,14 @@ namespace Monopoly
             {
                 UI.Error("Unable to determine tax type!");
             }//else
-        }//TODO
+        }//LandIncTax()
 
-        private void LandComChest()
+        private void LandCard(int deckID)
+            //Handles both Chance and Comm. Chest
         {
-        }//TODO
-
-        private void LandChance()
-        {
-        }//TODO
+            Card thisCard = Game.Decks[deckID].DrawCard();
+            CardLogic.HandleCard(thisCard, Game.ActivePlayerID);
+        }
 
         public bool CanBuyProp()
             //For buying property when it's landed on

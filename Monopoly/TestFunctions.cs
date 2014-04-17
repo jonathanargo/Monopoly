@@ -78,5 +78,20 @@ namespace Monopoly
             Debug.WriteLine("player1 stats: " + player1.ToString());
         }//TestIncomeTax()
 
+        public void TestCards()
+        {
+            ActiveGame.SetState();
+            Player player1 = ActiveGame.Players[0];
+            Player player2 = ActiveGame.Players[1];
+
+            ActiveGame.ActivePlayerID = 0;
+            GameLogic.AdvancePlayer(player1.ID, 2); //places on CommChest
+            ActiveGame.ActivePlayerID = 1;
+            GameLogic.AdvancePlayer(player2.ID, 22); //places on Chance
+
+            Debug.WriteLine(player1.ToString());
+            Debug.WriteLine(player2.ToString());
+        }//TestCards()
+
     }//TestFunctions
 }

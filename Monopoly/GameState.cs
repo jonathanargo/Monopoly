@@ -21,31 +21,7 @@ namespace Monopoly
 
         public GameState()
         {
-            this.Board = new Board();
-            this.Players = new Player[2];
-            this.Decks = new Deck[2];
-
-            TurnCount = 1;
-            ActivePlayerID = 0;
-
-            Players[0] = new Player(0);
-            Players[1] = new Player(1);
-
-            Decks[0] = new Deck(1, DeckType.CommunityChest);
-            Decks[1] = new Deck(2, DeckType.Chance);
-
-            BoardfileReader reader = new BoardfileReader("Boards\\DefaultBoard.csv");
-            Board = reader.CreateBoard();
-
-            //Create an array of queues for each player. This will be used to hold a boolean for 
-            //the last three rolls, representing if it was a double.
-            mDoublesQueues = new DoublesQueue[Players.Length]; 
-            for (int i = 0; i <= Players.Length - 1; i++)
-            {
-                mDoublesQueues[i] = new DoublesQueue(new Queue<bool>());
-            }//for
-
-            this.LastRoll = 0;
+            SetState();
         }//Game()       
 
 
@@ -73,6 +49,37 @@ namespace Monopoly
             Tiles.BoardSpace thisTile = this.Board.BoardSpaces[thisPlayer.Position];
             return thisTile;
         }//GetActiveTile()
+
+        public void SetState()
+            //Used as both the constructor and a publicly callable function to reset the state of the game
+        {
+            this.Board = new Board();
+            this.Players = new Player[2];
+            this.Decks = new Deck[2];
+
+            TurnCount = 1;
+            ActivePlayerID = 0;
+
+            Players[0] = new Player(0);
+            Players[1] = new Player(1);
+
+            Decks[0] = new Deck(1, DeckType.CommunityChest);
+            Decks[1] = new Deck(2, DeckType.Chance);
+
+            BoardfileReader reader = new BoardfileReader("Boards\\DefaultBoard.csv");
+            Board = reader.CreateBoard();
+
+            //Create an array of queues for each player. This will be used to hold a boolean for 
+            //the last three rolls, representing if it was a double.
+            mDoublesQueues = new DoublesQueue[Players.Length];
+            for (int i = 0; i <= Players.Length - 1; i++)
+            {
+                mDoublesQueues[i] = new DoublesQueue(new Queue<bool>());
+            }//for
+
+            this.LastRoll = 0;
+        }//SetState()
+
 
     }//class Game
 

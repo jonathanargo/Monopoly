@@ -131,7 +131,8 @@ namespace Monopoly
             {
                 SetTestMode();
             }
-            Test.TestIncomeTax();
+            Test.TestCards();
+            //Test.TestIncomeTax();
             //Test.TestPropertyBuying();
             //Test.TestError();
             //Test.TestTaxForm();

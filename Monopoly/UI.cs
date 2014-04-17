@@ -162,5 +162,10 @@ namespace Monopoly
             }//else
         }//ShowTaxDialog
 
+        public void CardMessage(String message, String deckType)
+        {
+            Display(message, MakeCaption(Game.ActivePlayerID + 1, "Draw " + deckType));
+        }//CardMessage()
+
     }//UI
 }
