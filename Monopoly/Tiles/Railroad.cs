@@ -6,32 +6,19 @@ using System.Threading.Tasks;
 
 namespace Monopoly.Tiles
 {
-    public class Railroad: Tiles.BoardSpace
+    public class Railroad: Tiles.BuyableSpace
     {
-        private int mCost;
-        private int mFare;
-        private int mMortgageVal;
-        private int mOwnerID;
-
-        public Railroad(int position, String name): base(position, name, "Railroad")
+        public Railroad(int position, String name): base(position, name, 200, 100, "Railroad")
         {
-            this.Position = position;
-            this.Name = name;
-            this.Cost = 200;
-            this.BaseFare = 25;
-            this.MortgageVal = 100;
-            this.mOwnerID = -1; //interpreted as no owner
+            BaseFare = 25;
         }//Railroad()
 
-        //PROPERTIES
-        //Immutable
-        public int Cost { get { return mCost; } private set { mCost = value; } }
-        public int BaseFare { get { return mFare; } private set { mFare = value; } }
-        public int MortgageVal { get { return mMortgageVal; } private set { mMortgageVal = value; } }
-        //Mutable
-        public int OwnerID { get { return mOwnerID; } set { mOwnerID = value; } }
+        public int BaseFare { get; private set; }
 
-        //public int CurrentFare() { return 0; }
+        public override string ToString()
+        {
+            return base.ToString();
+        }//ToString()
 
-    }
+    }//Railroad
 }
