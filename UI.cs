@@ -176,5 +176,12 @@ namespace Monopoly
             Display(message, MakeCaption(Game.ActivePlayerID + 1, "Draw " + deckType));
         }//CardMessage()
 
+        public void BoughtSpace(Player player, Tiles.BuyableSpace space)
+        {
+            String msg = String.Format("You bought {0}!", space.Name);
+            String cap = MakeCaption(player.GameID, "Bought a tile!");
+            Display(msg, cap);
+        }//BoughtSpace
+
     }//UI
 }

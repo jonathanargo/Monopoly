@@ -191,31 +191,27 @@ namespace Monopoly
         {
             int currentPos = Players[playerID].Position;
             int utilPos;
-            int roll1, roll2;
-            Random rand = new Random();
 
             if ((currentPos < 13) || (currentPos >= 29)) { utilPos = 13; }
             else { utilPos = 29; }//ifelse
             GameLogic.AdvanceToPosCustom(playerID, utilPos);
-            roll1 = rand.Next(1, 7);
-            roll2 = rand.Next(1,7);
-            GameLogic.LandUtility(roll1 + roll2, true);
+            GameLogic.LandBuyable(true);
+            
         }//AdvanceToUtility()
 
         public void AdvanceToRailroad(int playerID)
         {
             int currentPos = Players[playerID].Position;
             int rrPos;
-
-            //rr positions are at 6, 16, 26, 36
-
+            
+            //Railroad positions are at 6, 16, 26, 36
             if ((currentPos >= 36) || (currentPos < 6)) { rrPos = 6; }
             else if (currentPos < 16) { rrPos = 16; }
             else if (currentPos < 26) { rrPos = 26; }
             else { rrPos = 36; } 
 
             GameLogic.AdvanceToPosCustom(playerID, rrPos);
-            GameLogic.LandRailroad(true);
+            GameLogic.LandBuyable(true);
         }//AdvanceToUtility()
 
     }//CardLogic
