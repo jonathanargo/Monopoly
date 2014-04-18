@@ -106,12 +106,16 @@ namespace Monopoly
             }//else
         }//PlayPlayer(Tiles.Property)
 
-        public void UIPayPlayer(Tiles.Railroad thisRR, int fare)
+        public void UIPayPlayer(Tiles.Railroad thisRR, int fare, bool fromCard)
         {
             if (HasRef)
             {
                 String message = String.Format("You pay player {0} ${1} for landing on {2}.", thisRR.OwnerID + 1, fare, thisRR.Name);
                 String caption = String.Format("Player {0}: Pay Railroad Fare", Game.ActivePlayerID + 1);
+                if (fromCard)
+                {
+                    message += Environment.NewLine + "You pay double, per the card.";
+                }
                 Display(message, caption);
             }//if
             else
@@ -120,12 +124,17 @@ namespace Monopoly
             }//else
         }//PlayPlayer(Tiles.Railroad)
 
-        public void UIPayPlayer(Tiles.Utility thisUtil, int bill)
+        public void UIPayPlayer(Tiles.Utility thisUtil, int bill, bool fromCard)
         {
             if (HasRef)
             {
                 String message = String.Format("You pay player {0} ${1} for landing on {2}.", thisUtil.OwnerID + 1, bill, thisUtil.Name);
                 String caption = String.Format("Player {0}: Pay Utility Bill", Game.ActivePlayerID + 1);
+                if (fromCard)
+                {
+                    message += Environment.NewLine;
+                    message += String.Format("You pay ten times your dice roll of {0}, per the card.", bill/10);
+                }//if
                 Display(message, caption);
             }//if
             else

@@ -70,6 +70,8 @@
       <DependentUpon>TaxDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="TestFunctions.cs" />
+    <Compile Include="Tiles\BuyableSpace.cs" />
+    <Compile Include="Tiles\Property.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="Logic\CardLogic.cs" />
     <Compile Include="Deck.cs" />
@@ -91,20 +93,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Old\TileLogic.cs.old" />
     <Compile Include="Tiles\Chance.cs" />
     <Compile Include="Tiles\CommunityChest.cs" />
     <Compile Include="Tiles\FreeParking.cs" />
     <Compile Include="Tiles\IncomeTax.cs" />
     <Compile Include="Tiles\LuxuryTax.cs" />
-    <None Include="Old\Tax.cs.old" />
     <Compile Include="Tiles\BoardSpace.cs" />
     <Compile Include="ColorGroup.cs" />
-    <None Include="Old\DrawCard.cs.old" />
     <Compile Include="Tiles\Go.cs" />
     <Compile Include="Tiles\GoToJail.cs" />
     <Compile Include="Tiles\Jail.cs" />
-    <Compile Include="Tiles\Property.cs" />
     <Compile Include="Tiles\Railroad.cs" />
     <Compile Include="Tiles\Utility.cs" />
     <EmbeddedResource Include="Forms\TaxDialog.resx">
@@ -161,6 +159,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="img\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Old\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -93,5 +93,58 @@ namespace Monopoly
             Debug.WriteLine(player2.ToString());
         }//TestCards()
 
+        public void TestRRUtilCards()
+        {
+            //create two players, p1 advances to nearest railroad and buys it
+            //p2 advances to nearest rr and must pay doubles
+            //reset state
+            //p1 advances to nearest utility and buys it
+            //p2 advances to nearest utility and must pay 10X roll
+
+            Player player1 = ActiveGame.Players[0];
+            Player player2 = ActiveGame.Players[1];
+            Card testRRCard = new Card(20, "Advance to RR");
+            Card testUtilCard = new Card(19, "Advance to Util");
+
+            ActiveGame.ActivePlayerID = 0;
+            CardLogic.HandleCard(testRRCard, 0);
+            ActiveGame.ActivePlayerID = 1;
+            CardLogic.HandleCard(testRRCard, 1);
+            DebugPlayerInfo(player1, player2);
+
+            ActiveGame.SetState(); //reset state
+            player1 = ActiveGame.Players[0];
+            player2 = ActiveGame.Players[1];
+
+            ActiveGame.ActivePlayerID = 0;
+            CardLogic.HandleCard(testUtilCard, 0);
+            ActiveGame.ActivePlayerID = 1;
+            CardLogic.HandleCard(testUtilCard, 1);
+            DebugPlayerInfo(player1, player2);
+
+            //TODO: Test currently fails. Think it has something to do with the ActivePlayer position at the start of the game.
+        }//TestRRUtilCards
+
+        public void DebugPlayerInfo(Player player1)
+        {
+            Debug.WriteLine("Player 1 info: " + player1.ToString());
+        }//DebugPlayerInfo(Player)
+
+        public void DebugPlayerInfo(Player player1, Player player2)
+        {
+            Debug.WriteLine("Player 1 info: " + player1.ToString());
+            Debug.WriteLine("Player 2 info: " + player2.ToString());
+        }//DebugPlayerInfo(player, player)
+
+        public void TestNewPropClass()
+        {
+            Tiles.Property prop = new Tiles.Property(5, "testprop", PropertyColor.Brown, 5, new Rent(1, 2, 3, 4, 5, 6), 7);
+            Debug.WriteLine(prop.ToString());
+            Tiles.BuyableSpace buyablespace = prop;
+            Debug.WriteLine("buyspace cost: " + buyablespace.Cost);
+            Tiles.BoardSpace boardspace = prop;
+            Debug.WriteLine("boardspace name: " + boardspace.Name);
+        }//TODO Delete
+
     }//TestFunctions
 }

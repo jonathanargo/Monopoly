@@ -7,17 +7,14 @@ using System.Diagnostics;
 
 namespace Monopoly.Tiles
 {
-    public class Property: Tiles.BoardSpace
+    public class Property : Tiles.BuyableSpace
     {
-        private int mOwnerID;
         private PropertyColor mColor;
         private Rent mRent;
-        private int mMortgageVal;
         private ImprovementLevel mImprovementLvl;
-        private int mCost;
 
         public Property(int position, String name, PropertyColor color, int cost, Rent rent, int mortgageVal)
-            : base(position, name, "Property")
+            : base(position, name, cost, mortgageVal, "Property")
         {
             this.Position = position;
             this.Name = name;
@@ -31,28 +28,17 @@ namespace Monopoly.Tiles
 
 
         //Public Set
-        public int OwnerID { get { return mOwnerID; } set { mOwnerID = value; } }
         public ImprovementLevel ImprovementLevel { get { return mImprovementLvl; } private set { mImprovementLvl = value; } }
 
         //Private Set (immutable)
         public PropertyColor Color { get { return mColor; } private set { mColor = value; } }
         public Rent Rent { get { return mRent; } private set { mRent = value; } }
-        public int MortgageVal { get { return mMortgageVal; } private set { mMortgageVal = value; } }
-        public int Cost { get { return mCost; } private set { mCost = value; } }
 
         public int CurrentRent()
         {
             return this.Rent.GetRentLevel(ImprovementLevel);
         }//CurrentRent
-
-
-        public override string ToString()
-        {
-            String result = base.ToString();
-            result = (result + ", Color: " + this.Color.ToString() + ", Cost: " + this.Cost + ", MortgageVal: " + this.MortgageVal);
-            return result;
-        }
-
+                
         public void Improve(int numLevels)
         {
             int intCurLevel = (int)this.ImprovementLevel;
@@ -64,9 +50,16 @@ namespace Monopoly.Tiles
             else
             {
                 UI ui = new UI();
-                ui.Error("Improvement level can not exceed 5.");                
+                ui.Error("Improvement level can not exceed 5.");
             }//else
         }//Improve()
+
+        public override string ToString()
+        {
+            String result = base.ToString();
+            result += String.Format(", Color: {0}, CurrentRent: {1}, ImprovementLevel: {2}", Color, CurrentRent(), ImprovementLevel);
+            return result;
+        }//ToString()
 
     }//class Property: BoardSpace
 }
