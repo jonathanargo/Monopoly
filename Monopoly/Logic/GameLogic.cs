@@ -270,14 +270,14 @@ namespace Monopoly
                     //interpreted as no owner
                 {
                     bool wantsToBuy = UI.BuyPropDialogue();
-                    if (wantsToBuy && CanBuySpace())
+                    if (wantsToBuy && CanBuySpace(prop))
                     {                       
                         MoneyLogic.BuyProp(prop.Position, Game.ActivePlayerID);
                         String message = String.Format("You have bought {0}!", prop.Name);
                         String caption = String.Format("You bought a property!");
                         UI.Display(message, caption);
                     }
-                    else if (wantsToBuy && !CanBuySpace())
+                    else if (wantsToBuy && !CanBuySpace(prop))
                     {
                         UI.Display("You do not have enough money to buy this property.", "Can't afford property");
                     }//else
@@ -311,7 +311,7 @@ namespace Monopoly
                 UI.UnknownException(ex, "GameLogic.LandProperty()");
             }
             
-        }//TODO
+        }//TODO Merge LandUtil, LandProp, and LandRR, as now they share a "buyable" base class
 
         public void LandRailroad(bool fromCard)
             //fromCard is used to handle the Advance to nearest Railroad card, since
@@ -325,11 +325,11 @@ namespace Monopoly
                 if (thisRR.OwnerID == -1)
                 {
                     bool wantsToBuy = UI.BuyPropDialogue();
-                    if ((wantsToBuy && CanBuySpace()))
+                    if ((wantsToBuy && CanBuySpace(thisRR)))
                     {
-                        MoneyLogic.BuyRailroad(thisRR.Position, Game.ActivePlayerID);
+                        MoneyLogic.BuySpace(thisRR.Position, Game.ActivePlayerID);
                     }
-                    else if ((wantsToBuy) && (!CanBuySpace()))
+                    else if ((wantsToBuy) && (!CanBuySpace(thisRR)))
                     {
                         UI.CantAfford();
                     }
@@ -345,7 +345,7 @@ namespace Monopoly
                     Player owner = Game.Players[thisRR.OwnerID];
                     int ownerRRs = owner.Railroads;
                     int fare = (thisRR.BaseFare * ownerRRs);
-                    if (fromCard) { fare *= 2; }
+                    if (fromCard) { fare *= 2; } //for special Go To Nearest RR card
                     UI.UIPayPlayer(thisRR, fare, fromCard);
                     MoneyLogic.PayPlayer(Game.ActivePlayerID, thisRR.OwnerID, fare);
                 }//else if
@@ -380,11 +380,11 @@ namespace Monopoly
                 if (thisUtil.OwnerID == -1)
                 {
                     bool wantsToBuy = UI.BuyPropDialogue();
-                    if ((wantsToBuy && CanBuySpace()))
+                    if (wantsToBuy && CanBuySpace(thisUtil))
                     {
-                        MoneyLogic.BuyRailroad(thisUtil.Position, Game.ActivePlayerID);
+                        MoneyLogic.BuySpace(thisUtil.Position, Game.ActivePlayerID);
                     }
-                    else if ((wantsToBuy) && (!CanBuySpace()))
+                    else if (wantsToBuy && (!CanBuySpace(thisUtil)))
                     {
                         UI.CantAfford();
                     }
@@ -400,7 +400,7 @@ namespace Monopoly
                     Player owner = Game.Players[thisUtil.OwnerID];
                     int ownerRRs = owner.Railroads;
                     int utilsOwned = Game.Players[thisUtil.OwnerID].Utilities;
-                    if (fromCard) { utilsOwned = 2; }//if
+                    if (fromCard) { utilsOwned = 2; }//for Go To Nearest Utility card
                     int bill = thisUtil.GetBill(roll, utilsOwned);
                     UI.UIPayPlayer(thisUtil, bill, fromCard);
                     MoneyLogic.PayPlayer(Game.ActivePlayerID, thisUtil.OwnerID, bill);
@@ -456,43 +456,21 @@ namespace Monopoly
             CardLogic.HandleCard(thisCard, Game.ActivePlayerID);
         }
 
-        public bool CanBuySpace()
+        public bool CanBuySpace(Tiles.BuyableSpace thisSpace)
             //For buying property when it's landed on
-        {/*
-            Player thisPlayer = Game.Players[Game.ActivePlayerID];
-            String type = space.GetType().ToString();
-            bool result;
-
-            switch(type)
-            {
-                case "Monopoly.Tiles.Property":
-                    result = CanBuyProp((Tiles.Property)space, thisPlayer);
-                    break;
-                case "Monopoly.Tiles.Railroad":
-                    result = CanBuyRR((Tiles.Railroad)space, thisPlayer);
-                    break;
-                case "Monopoly.Tiles.Utility":
-                    result = CanBuyUtil((Tiles.Railroad)space, thisPlayer);
-            }
-                        
-            */
-            return true;
-        }//CanBuySpace(BoardSpace)
-
-        private bool CanBuyProp(Tiles.Property thisProp, Player thisPlayer)
         {
-            if ((thisProp.OwnerID == -1) && (thisPlayer.Money >= thisProp.Cost)) //interpreted as no owner
+            if ((thisSpace.OwnerID == -1) && (Game.GetActivePlayer().Money >= thisSpace.Cost))
             {
                 return true;
             }
             return false;
-        }//CanBuyProp
+        }//CanBuySpace(BuyableSpace)
 
         public bool CanAffordSpace(int buyerID, int cost)
             //for buying properties from other players
         {
             Player buyer = Game.Players[buyerID];
-            Tiles.Property thisProp = (Tiles.Property)Game.Board.BoardSpaces[buyer.Position];
+            Tiles.BuyableSpace thisProp = (Tiles.BuyableSpace)Game.Board.BoardSpaces[buyer.Position];
             if (buyer.Money >= cost)
             {
                 return true;

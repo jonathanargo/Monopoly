@@ -15,7 +15,7 @@ namespace Monopoly.Tiles
             this.OwnerID = -1;
             this.Cost = cost;
             this.MortgageVal = mortgageVal;
-            this.SpaceType = spaceType;
+            this.SpaceType = spaceType; //TODO: Change to enum, messy
         }//BuyableSpace()
 
         public int OwnerID { get; set; }

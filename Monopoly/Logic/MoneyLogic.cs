@@ -69,7 +69,7 @@ namespace Monopoly
             thisProp.OwnerID = playerID;
             Game.Players[playerID].OwnedProperties.Add(thisProp);
             Game.Players[playerID].Money -= thisProp.Cost;
-        }//BuyProp
+        }//TODO: Remove, irrelevant
 
         public void BuyRailroad(int rrIndex, int playerID)
         {
@@ -77,7 +77,28 @@ namespace Monopoly
             thisProp.OwnerID = playerID;
             Game.Players[playerID].Railroads++;
             Game.Players[playerID].Money -= thisProp.Cost;
-        }//BuyProp
+        }//TODO: Remove, irrelevant
+
+        public void BuySpace(int spaceIndex, int playerID)
+        {
+            Tiles.BuyableSpace thisSpace = (Tiles.BuyableSpace)Game.Board.BoardSpaces[spaceIndex];
+            thisSpace.OwnerID = playerID;
+            if (thisSpace.SpaceType == "Property")
+            {
+                Tiles.Property thisProp = (Tiles.Property)thisSpace;
+                Game.Players[playerID].OwnedProperties.Add(thisProp);
+            }
+            else if (thisSpace.SpaceType == "Utility")
+            {
+                Game.Players[playerID].Utilities++;
+            }
+            else
+            {
+                Game.Players[playerID].Railroads++;
+            }//if-else
+
+            Game.Players[playerID].Money -= thisSpace.Cost;
+        }//BuySpace
 
         public void TaxTenPercent(Player thisPlayer)
         {
