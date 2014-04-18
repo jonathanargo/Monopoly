@@ -123,7 +123,7 @@ namespace Monopoly
                 lblPlayer2.ForeColor = System.Drawing.Color.Green;
             }//if
 
-        }//IndicateActivePlayer
+        }//IndicateActivePlayer TODO
 
         private void btnTest_Click(object sender, EventArgs e)
         {
@@ -132,8 +132,10 @@ namespace Monopoly
                 SetTestMode();
             }
 
-            Test.TestRRUtilCards();           
+            Test.TestRRUtilCards();    
         }//btnTest_Click()
 
     }//Monopoly
 }
+
+//TODO: Find out why it's not printing debug info for buying properties
