@@ -38,9 +38,19 @@ namespace Monopoly
             this.IsInitialized = true;
         }//Initialize()
 
+        public void GameFlow()
+        {
+            UI.UIDebug("GameFlow()");
+            while (!Game.IsOver)
+            {
+                Turn();
+                Game.TurnCount++;
+            }
+        }//GameFlow()
 
         public void Turn()
-        {            
+        {
+            UI.UIDebug("Turn()");
             int roll = RollDice();
             bool rollWasDouble = Game.Doubles[Game.ActivePlayerID].LastRollWasDouble;
 
@@ -54,6 +64,15 @@ namespace Monopoly
                 else 
                 {
                     //Player remains in jail, does he want to use a GOOJ card? TODO
+                    if ((Game.GetActivePlayer().JailFreeCards > 0) && (UI.JailCardDialog()))
+                    {
+                        ReleaseFromJail(Game.ActivePlayerID);
+                        Turn();
+                    }
+                    else
+                    {
+                        UI.Display("You remain in jail.", UI.MakeCaption(Game.ActivePlayerID + 1, "Still in Jail"));
+                    }
                 }//else
             }
             else if (Game.Doubles[Game.ActivePlayerID].LastThreeWereDoubles()) //if player rolled his third double
@@ -77,6 +96,7 @@ namespace Monopoly
 
         public void AdvancePlayer(int playerID, int numberOfSpaces)
         {
+            UI.UIDebug("AdvancePlayer()");
             int finalPosition = Game.Players[playerID].Position + numberOfSpaces;
 
             //check for >40
@@ -103,6 +123,7 @@ namespace Monopoly
 
         public void Land(String spaceType)
         {
+            UI.UIDebug("Land()");
             UI.LandMessage();
             switch (spaceType)
             {
@@ -136,10 +157,7 @@ namespace Monopoly
 
         public void StartGame()
         {
-            int[] Roll = new int[2];
-            int[] RollResult = new int[2];
-            Random mRand = new Random();
-
+            UI.UIDebug("StartGame()");
             foreach (Deck d in Game.Decks)
             {
                 d.ShuffleDeck(); //initalized cards in each deck
@@ -151,20 +169,19 @@ namespace Monopoly
                 p.Position = 1;
             }//foreach
 
-            RollResult[0] = 0;
-            RollResult[1] = 0;
+            int roll1 = RollDiceStart();
+            int roll2 = RollDiceStart();
 
-            while (RollResult[0] == RollResult[1]) //reroll if both players get same result
+            while (roll1 == roll2) //reroll if both players get same result
             {
                 for (int i = 0; i <= 1; i++)
                 {
-                    Roll[0] = mRand.Next(1, 7);
-                    Roll[1] = mRand.Next(1, 7);
-                    RollResult[i] = Roll.Sum();
+                    roll1 = RollDice();
+                    roll2 = RollDice();
                 }//for
             }//while
 
-            if (RollResult[0] > RollResult[1])
+            if (roll1 > roll2)
             {
                 Game.ActivePlayerID = 0;
             }
@@ -173,12 +190,13 @@ namespace Monopoly
                 Game.ActivePlayerID = 1;
             }
 
-            System.Windows.Forms.MessageBox.Show("Player 1 rolled " + RollResult[0] + " and Player 2 rolled " + RollResult[1] + ", so Player " + Game.ActivePlayerID + " goes first.");
-
+            System.Windows.Forms.MessageBox.Show("Player 1 rolled " + roll1 + " and Player 2 rolled " + roll2 + ", so Player " + Game.ActivePlayerID + " goes first.");
+            GameFlow();
         }//StartGame()
 
         public void ChangeActivePlayer()
         {
+            UI.UIDebug("ChangeActivePlayer()");
             int intActiveID = Game.ActivePlayerID;
             intActiveID++;
             if (intActiveID > (Game.Players.Count() - 1))
@@ -190,6 +208,7 @@ namespace Monopoly
 
         public int RollDice()
         {
+            UI.UIDebug("RollDice()");
             Random rand = new Random();
             bool rolledDoubles = false;
             int roll1, roll2, rollSum;
@@ -198,7 +217,7 @@ namespace Monopoly
             roll2 = rand.Next(1, 8);
             rollSum = roll1 + roll2;
 
-            UI.Display(String.Format("You have rolled a {0} and a {1} ({2})", roll1, roll2, rollSum), String.Format("Player {0}: Dice Roll", Game.ActivePlayerID + 1));
+            UI.Display(String.Format("You have rolled a {0} and a {1} ({2})", roll1, roll2, rollSum), UI.MakeCaption(Game.GetActivePlayer().GameID, "Dice Roll"));
 
             if (roll1 == roll2)
             {
@@ -209,8 +228,20 @@ namespace Monopoly
             Game.LastRoll = rollSum;
 
             return rollSum;
-            //Roll dice
-        }//RollDice() TODO
+        }//RollDice()
+
+        public int RollDiceStart()
+        {
+            UI.UIDebug("RollDiceStart()");
+            Random rand = new Random();
+            int roll1, roll2, rollSum;
+
+            roll1 = rand.Next(1, 7);
+            roll2 = rand.Next(1, 8);
+            rollSum = roll1 + roll2;
+
+            return rollSum;
+        }//RollDiceStart()
 
         public void AdvancePlayerToPosition(int playerID, int position)
         //used for handling some cards
@@ -244,17 +275,20 @@ namespace Monopoly
 
         public void SendToJail(int playerID)
         {
+            UI.UIDebug("SendToJail()");
             Game.Players[playerID].Position = 11; //don't advancePlayer, don't pass go!
             Game.Players[playerID].IsJailed = true;
         }//SendToJail
 
         public void ReleaseFromJail(int playerID)
         {
+            UI.UIDebug("ReleaseFromJail()");
             Game.Players[playerID].IsJailed = false;
         }//SendToJail
 
         public void LandBuyable(bool fromCard)
         {
+            UI.UIDebug("LandBuyable()");
             int spaceIndex = Game.GetActivePlayer().Position;
             try
             {
@@ -338,6 +372,7 @@ namespace Monopoly
         private void LandCard(int deckID)
             //Handles both Chance and Comm. Chest
         {
+            UI.UIDebug("LandCard()");
             Card thisCard = Game.Decks[deckID].DrawCard();
             CardLogic.HandleCard(thisCard, Game.ActivePlayerID);
         }
@@ -400,7 +435,12 @@ namespace Monopoly
             return false;
         }//CanBuyProp(buyerID)
 
-        
+        public void EndGame(int winnerID)
+        {
+            Game.WinnerID = winnerID;
+            Game.IsOver = true;
+            //TODO: possibly disable controls?
+        }
 
     }//GameLogic
 }

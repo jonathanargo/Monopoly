@@ -27,6 +27,7 @@ namespace Monopoly
             this.Utilities = 0;
             this.OwnedProperties = new List<Tiles.Property>();
             this.GameID = this.ID + 1;
+            this.Lost = false;
 
         }//Player
 
@@ -40,6 +41,7 @@ namespace Monopoly
         public Boolean IsJailed { get { return mIsJailed; } set { mIsJailed = value; } }
         public List<Tiles.Property> OwnedProperties { get; private set; }
         public int GameID { get; private set; } //represents player number as it appears to user
+        public bool Lost { get; set; }
 
         public int Position //between 1 and 40        
         {

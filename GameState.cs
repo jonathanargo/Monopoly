@@ -34,7 +34,8 @@ namespace Monopoly
         public int TurnCount { get { return mTurnCount; } set { mTurnCount = value; } }
         public DoublesQueue[] Doubles { get { return mDoublesQueues; } set { mDoublesQueues = value; } }
         public int LastRoll { get; set; }
-
+        public bool IsOver { get; set; }
+        public int WinnerID { get; set; }
         //METHODS
 
         public Player GetActivePlayer()
@@ -78,6 +79,7 @@ namespace Monopoly
             }//for
 
             this.LastRoll = 0;
+            IsOver = false;
         }//SetState()
 
 

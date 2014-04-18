@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Monopoly
 {
@@ -183,5 +184,30 @@ namespace Monopoly
             Display(msg, cap);
         }//BoughtSpace
 
+        public void GameOver(Player winner)
+        {
+            String msg = String.Format("Congratulations, player {0}, you win!", winner.GameID);
+            String cap = "Game Over!";
+            Display(msg, cap);
+        }//GameOver
+
+        public bool JailCardDialog()
+        {
+            String msg = "Would you like to use your Get Out of Jail Free card?";
+            String cap = MakeCaption(Game.ActivePlayerID + 1, "Use Card?");
+            DialogResult result = MessageBox.Show(Monopoly.ActiveForm, msg, cap, MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+            switch (result)
+            {
+                case DialogResult.Yes:
+                    return true;
+                default:
+                    return false;
+            }//switch
+        }//bool
+
+        public void UIDebug(String location)
+        {
+            Debug.WriteLine(location);
+        }
     }//UI
 }

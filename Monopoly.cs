@@ -92,7 +92,7 @@ namespace Monopoly
         {
             if (GameIsReady)
             {
-                //Do stuff (TODO)
+                GameLogic.StartGame();
             }
             else
             {
@@ -108,20 +108,8 @@ namespace Monopoly
 
         private void IndicateActivePlayer()
         {
-            //foreach (Control c in Controls)
-            //{
-            //    if (c.GetType == Label)
-            //    {
-
-            //    }
-            //    c.ForeColor = System.Drawing.Color.Black;
-            //}//foreach TODO
-
-            if (ActiveGame.ActivePlayerID == 0){
-                lblPlayer1.ForeColor = System.Drawing.Color.Green;
-            } else if (ActiveGame.ActivePlayerID == 1){
-                lblPlayer2.ForeColor = System.Drawing.Color.Green;
-            }//if
+            //going to color the player's box green
+            //TODO
 
         }//IndicateActivePlayer TODO
 
@@ -132,7 +120,7 @@ namespace Monopoly
                 SetTestMode();
             }
 
-            Test.TestRRUtilCards();    
+            Test.TestJailCard(); 
         }//btnTest_Click()
 
     }//Monopoly

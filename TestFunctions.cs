@@ -154,5 +154,23 @@ namespace Monopoly
             Debug.WriteLine(thisRR.ToString());
         }
 
+        public void TestJailCard()
+        {
+            ActiveGame.ActivePlayerID = 0;
+            Player activePlayer = ActiveGame.GetActivePlayer();
+            Card jailFreeCard = new Card(23, "Get out of Jail Free");
+            Card jailCard = new Card(25, "Go to Jail");
+            CardLogic.HandleCard(jailFreeCard, 0);
+            CardLogic.HandleCard(jailCard, 0);
+            GameLogic.Turn();
+        }//TestJailCard()
+
+        /*TODO: 
+         * Test get out of Jail Card logic in game flow
+         * Test bankruptcy
+         * 
+         * 
+         * */
+
     }//TestFunctions
 }

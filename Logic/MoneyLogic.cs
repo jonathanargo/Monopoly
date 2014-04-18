@@ -29,6 +29,7 @@ namespace Monopoly
         {
             ChangeMoney(payerID, -1 * amount);
             ChangeMoney(recieverID, amount);
+            CheckForBankrupt(payerID);
         }//PayPlayer
 
         public void ChangeMoney(int playerID, int amount)
@@ -40,8 +41,22 @@ namespace Monopoly
 
         public void CheckForBankrupt(int playerID)
         {
-            //check to see if player has < 0 money. If so, mortgage properties
-        }//CheckForBankrupt() //TODO
+            //TODO: Current accomodates only two players, need to expand when adding more players
+            
+            if (Game.Players[playerID].Money <= 0)
+            {
+                Player winner = Game.Players[0];
+                foreach (Player p in Game.Players)
+                {
+                    if (p.ID != playerID)
+                    {
+                        winner = p;
+                    }//if
+                }//foreach
+                Monopoly.GameLogic.EndGame(winner.ID);
+            }//if
+            
+        }//CheckForBankrupt() //TODO: Handle mortgages
 
         public void CollectFromBank(int playerID, int amount)
         {
@@ -54,10 +69,10 @@ namespace Monopoly
         {
             foreach (Player p in Game.Players)
             {
-                if (p.ID != Game.Players[playerID].ID)
+                if (p.ID != playerID)
                 {
-                    p.Money -= amount;
-                    Game.Players[playerID].Money += amount;
+                    ChangeMoney(playerID, amount);
+                    ChangeMoney(p.ID, amount * -1);
                 }//if
 
             }//foreach
@@ -67,8 +82,8 @@ namespace Monopoly
         {
             Tiles.Property thisProp = (Tiles.Property)Game.Board.BoardSpaces[propIndex];
             thisProp.OwnerID = playerID;
+            ChangeMoney(playerID, thisProp.Cost * -1);
             Game.Players[playerID].OwnedProperties.Add(thisProp);
-            Game.Players[playerID].Money -= thisProp.Cost;
         }//TODO: Remove, irrelevant
 
         public void BuyRailroad(int rrIndex, int playerID)
