@@ -59,7 +59,7 @@
             this.lblPlayer1.AutoSize = true;
             this.lblPlayer1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPlayer1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblPlayer1.Location = new System.Drawing.Point(183, 29);
+            this.lblPlayer1.Location = new System.Drawing.Point(129, 12);
             this.lblPlayer1.Name = "lblPlayer1";
             this.lblPlayer1.Size = new System.Drawing.Size(91, 25);
             this.lblPlayer1.TabIndex = 4;
@@ -69,7 +69,7 @@
             // 
             this.lblPlayer2.AutoSize = true;
             this.lblPlayer2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayer2.Location = new System.Drawing.Point(483, 29);
+            this.lblPlayer2.Location = new System.Drawing.Point(429, 12);
             this.lblPlayer2.Name = "lblPlayer2";
             this.lblPlayer2.Size = new System.Drawing.Size(91, 25);
             this.lblPlayer2.TabIndex = 5;
@@ -98,7 +98,7 @@
             // P1Money
             // 
             this.P1Money.AutoSize = true;
-            this.P1Money.Location = new System.Drawing.Point(185, 78);
+            this.P1Money.Location = new System.Drawing.Point(131, 61);
             this.P1Money.Name = "P1Money";
             this.P1Money.Size = new System.Drawing.Size(42, 13);
             this.P1Money.TabIndex = 9;
@@ -107,7 +107,7 @@
             // P2Money
             // 
             this.P2Money.AutoSize = true;
-            this.P2Money.Location = new System.Drawing.Point(485, 78);
+            this.P2Money.Location = new System.Drawing.Point(431, 61);
             this.P2Money.Name = "P2Money";
             this.P2Money.Size = new System.Drawing.Size(42, 13);
             this.P2Money.TabIndex = 10;
@@ -116,7 +116,7 @@
             // P1MoneyOut
             // 
             this.P1MoneyOut.AutoSize = true;
-            this.P1MoneyOut.Location = new System.Drawing.Point(261, 78);
+            this.P1MoneyOut.Location = new System.Drawing.Point(207, 61);
             this.P1MoneyOut.Name = "P1MoneyOut";
             this.P1MoneyOut.Size = new System.Drawing.Size(22, 13);
             this.P1MoneyOut.TabIndex = 11;
@@ -125,7 +125,7 @@
             // P1PosOut
             // 
             this.P1PosOut.AutoSize = true;
-            this.P1PosOut.Location = new System.Drawing.Point(261, 102);
+            this.P1PosOut.Location = new System.Drawing.Point(207, 85);
             this.P1PosOut.Name = "P1PosOut";
             this.P1PosOut.Size = new System.Drawing.Size(22, 13);
             this.P1PosOut.TabIndex = 14;
@@ -134,7 +134,7 @@
             // P1Pos
             // 
             this.P1Pos.AutoSize = true;
-            this.P1Pos.Location = new System.Drawing.Point(185, 102);
+            this.P1Pos.Location = new System.Drawing.Point(131, 85);
             this.P1Pos.Name = "P1Pos";
             this.P1Pos.Size = new System.Drawing.Size(47, 13);
             this.P1Pos.TabIndex = 13;
@@ -143,7 +143,7 @@
             // P2Pos
             // 
             this.P2Pos.AutoSize = true;
-            this.P2Pos.Location = new System.Drawing.Point(485, 102);
+            this.P2Pos.Location = new System.Drawing.Point(431, 85);
             this.P2Pos.Name = "P2Pos";
             this.P2Pos.Size = new System.Drawing.Size(47, 13);
             this.P2Pos.TabIndex = 15;
@@ -152,7 +152,7 @@
             // P1gooj
             // 
             this.P1gooj.AutoSize = true;
-            this.P1gooj.Location = new System.Drawing.Point(185, 125);
+            this.P1gooj.Location = new System.Drawing.Point(131, 108);
             this.P1gooj.Name = "P1gooj";
             this.P1gooj.Size = new System.Drawing.Size(69, 13);
             this.P1gooj.TabIndex = 17;
@@ -161,7 +161,7 @@
             // P1GoojOut
             // 
             this.P1GoojOut.AutoSize = true;
-            this.P1GoojOut.Location = new System.Drawing.Point(261, 125);
+            this.P1GoojOut.Location = new System.Drawing.Point(207, 108);
             this.P1GoojOut.Name = "P1GoojOut";
             this.P1GoojOut.Size = new System.Drawing.Size(22, 13);
             this.P1GoojOut.TabIndex = 18;
@@ -170,7 +170,7 @@
             // P2GoojOut
             // 
             this.P2GoojOut.AutoSize = true;
-            this.P2GoojOut.Location = new System.Drawing.Point(567, 125);
+            this.P2GoojOut.Location = new System.Drawing.Point(513, 108);
             this.P2GoojOut.Name = "P2GoojOut";
             this.P2GoojOut.Size = new System.Drawing.Size(22, 13);
             this.P2GoojOut.TabIndex = 21;
@@ -179,7 +179,7 @@
             // P2PosOut
             // 
             this.P2PosOut.AutoSize = true;
-            this.P2PosOut.Location = new System.Drawing.Point(567, 102);
+            this.P2PosOut.Location = new System.Drawing.Point(513, 85);
             this.P2PosOut.Name = "P2PosOut";
             this.P2PosOut.Size = new System.Drawing.Size(22, 13);
             this.P2PosOut.TabIndex = 20;
@@ -188,7 +188,7 @@
             // P2MoneyOut
             // 
             this.P2MoneyOut.AutoSize = true;
-            this.P2MoneyOut.Location = new System.Drawing.Point(567, 78);
+            this.P2MoneyOut.Location = new System.Drawing.Point(513, 61);
             this.P2MoneyOut.Name = "P2MoneyOut";
             this.P2MoneyOut.Size = new System.Drawing.Size(22, 13);
             this.P2MoneyOut.TabIndex = 19;
@@ -197,7 +197,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(485, 125);
+            this.label1.Location = new System.Drawing.Point(431, 108);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(69, 13);
             this.label1.TabIndex = 22;
@@ -206,7 +206,7 @@
             // lablel1
             // 
             this.lablel1.AutoSize = true;
-            this.lablel1.Location = new System.Drawing.Point(185, 155);
+            this.lablel1.Location = new System.Drawing.Point(131, 138);
             this.lablel1.Name = "lablel1";
             this.lablel1.Size = new System.Drawing.Size(91, 13);
             this.lablel1.TabIndex = 23;
@@ -215,7 +215,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(485, 155);
+            this.label2.Location = new System.Drawing.Point(431, 138);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(91, 13);
             this.label2.TabIndex = 24;
@@ -224,7 +224,7 @@
             // P1OwnedPropsOut
             // 
             this.P1OwnedPropsOut.FormattingEnabled = true;
-            this.P1OwnedPropsOut.Location = new System.Drawing.Point(188, 185);
+            this.P1OwnedPropsOut.Location = new System.Drawing.Point(134, 168);
             this.P1OwnedPropsOut.Name = "P1OwnedPropsOut";
             this.P1OwnedPropsOut.Size = new System.Drawing.Size(140, 95);
             this.P1OwnedPropsOut.TabIndex = 25;
@@ -232,7 +232,7 @@
             // P2OwnedPropsOut
             // 
             this.P2OwnedPropsOut.FormattingEnabled = true;
-            this.P2OwnedPropsOut.Location = new System.Drawing.Point(488, 185);
+            this.P2OwnedPropsOut.Location = new System.Drawing.Point(434, 168);
             this.P2OwnedPropsOut.Name = "P2OwnedPropsOut";
             this.P2OwnedPropsOut.Size = new System.Drawing.Size(140, 95);
             this.P2OwnedPropsOut.TabIndex = 26;
@@ -242,7 +242,7 @@
             this.lbxOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxOutput.FormattingEnabled = true;
             this.lbxOutput.ItemHeight = 16;
-            this.lbxOutput.Location = new System.Drawing.Point(188, 351);
+            this.lbxOutput.Location = new System.Drawing.Point(134, 334);
             this.lbxOutput.Name = "lbxOutput";
             this.lbxOutput.Size = new System.Drawing.Size(440, 148);
             this.lbxOutput.TabIndex = 27;
@@ -250,7 +250,7 @@
             // lblOutput
             // 
             this.lblOutput.AutoSize = true;
-            this.lblOutput.Location = new System.Drawing.Point(140, 351);
+            this.lblOutput.Location = new System.Drawing.Point(86, 334);
             this.lblOutput.Name = "lblOutput";
             this.lblOutput.Size = new System.Drawing.Size(39, 13);
             this.lblOutput.TabIndex = 28;
@@ -258,17 +258,18 @@
             // 
             // btnDebug
             // 
-            this.btnDebug.Location = new System.Drawing.Point(12, 73);
+            this.btnDebug.Location = new System.Drawing.Point(12, 70);
             this.btnDebug.Name = "btnDebug";
             this.btnDebug.Size = new System.Drawing.Size(75, 23);
             this.btnDebug.TabIndex = 29;
             this.btnDebug.Text = "Debug";
             this.btnDebug.UseVisualStyleBackColor = true;
+            this.btnDebug.Click += new System.EventHandler(this.btnDebug_Click);
             // 
             // btnRoll
             // 
             this.btnRoll.Enabled = false;
-            this.btnRoll.Location = new System.Drawing.Point(188, 316);
+            this.btnRoll.Location = new System.Drawing.Point(134, 299);
             this.btnRoll.Name = "btnRoll";
             this.btnRoll.Size = new System.Drawing.Size(75, 23);
             this.btnRoll.TabIndex = 30;
@@ -280,7 +281,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(753, 523);
+            this.ClientSize = new System.Drawing.Size(715, 503);
             this.Controls.Add(this.btnRoll);
             this.Controls.Add(this.btnDebug);
             this.Controls.Add(this.lblOutput);

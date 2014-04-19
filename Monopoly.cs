@@ -118,13 +118,6 @@ namespace Monopoly
             form.ShowDialog(this);
         }//OpenDialog        
 
-        private void IndicateActivePlayer()
-        {
-            //going to color the player's box green
-            //TODO
-
-        }//IndicateActivePlayer TODO
-
         private void btnTest_Click(object sender, EventArgs e)
         {
             if (!TestMode)
@@ -162,8 +155,8 @@ namespace Monopoly
 
             if (p1.Railroads > 0) { P1OwnedPropsOut.Items.Add("Railroads: " + p1.Railroads); }
             if (p1.Utilities > 0) { P1OwnedPropsOut.Items.Add("Utilities: " + p1.Utilities); }
-            if (p2.Railroads > 0) { P2OwnedPropsOut.Items.Add("Railroads: " + p1.Railroads); }
-            if (p2.Utilities > 0) { P2OwnedPropsOut.Items.Add("Utilities: " + p1.Utilities); }
+            if (p2.Railroads > 0) { P2OwnedPropsOut.Items.Add("Railroads: " + p2.Railroads); }
+            if (p2.Utilities > 0) { P2OwnedPropsOut.Items.Add("Utilities: " + p2.Utilities); }
         }//SyncPlayerStats()
 
         private void btnRoll_Click(object sender, EventArgs e)
@@ -189,7 +182,31 @@ namespace Monopoly
         public void DisableRollButton()
         {
             btnRoll.Enabled = false;
+        }
+
+        private void btnDebug_Click(object sender, EventArgs e)
+        {
+            Monopoly thisRef = this;
+            DebuggingForm debug = new DebuggingForm(ref thisRef);
+            debug.Show();
         }//DisableRollButton()
+
+        public void IndicateActivePlayer()
+        {
+            //Set the label of the active player to green
+            //TODO: use system colors rather than hard-coded values
+            if (ActiveGame.ActivePlayerID == 0)
+            {
+                lblPlayer1.ForeColor = Color.Green;
+                lblPlayer2.ForeColor = Color.Black;
+            }
+            else
+            {
+                lblPlayer1.ForeColor = Color.Black;
+                lblPlayer2.ForeColor = Color.Green;
+            }
+            this.Refresh();
+        }//IndicateActivePlayer
 
     }//Monopoly
 }

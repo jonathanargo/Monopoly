@@ -155,48 +155,7 @@ namespace Monopoly
             }//switch
 
             UI.UpdateStats();            
-        }//Land() //TODO
-
-        /*
-        public void StartGame()
-        {
-            UI.UIDebug("StartGame()");
-            foreach (Deck d in Game.Decks)
-            {
-                d.ShuffleDeck(); //initalized cards in each deck
-            }//foreach
-
-            foreach (Player p in Game.Players)
-            {
-                p.Money = 1500;
-                p.Position = 1;
-            }//foreach
-
-            int roll1 = RollDiceStart();
-            int roll2 = RollDiceStart();
-
-            while (roll1 == roll2) //reroll if both players get same result
-            {
-                for (int i = 0; i <= 1; i++)
-                {
-                    roll1 = RollDice();
-                    roll2 = RollDice();
-                }//for
-            }//while
-
-            if (roll1 > roll2)
-            {
-                Game.ActivePlayerID = 0;
-            }
-            else
-            {
-                Game.ActivePlayerID = 1;
-            }
-
-            System.Windows.Forms.MessageBox.Show("Player 1 rolled " + roll1 + " and Player 2 rolled " + roll2 + ", so Player " + Game.ActivePlayerID + " goes first.");
-            //GameFlow();
-        }//StartGame()
-         * */
+        }//Land()
 
         public void StartGame()
         {
@@ -213,13 +172,13 @@ namespace Monopoly
             }//foreach
             UI.UpdateStats();
             UI.DisplayNoCaption("Each player will roll to see who goes first. Player 1, you start.");
+            UI.ActivePlayerChanged();
             MonopolyRef.DisableStartButton();
             MonopolyRef.EnableRollButton();
         }
 
         public void ChangeActivePlayer()
         {
-            UI.UIDebug("ChangeActivePlayer()");
             int intActiveID = Game.ActivePlayerID;
             intActiveID++;
             if (intActiveID > (Game.Players.Count() - 1))
@@ -227,6 +186,7 @@ namespace Monopoly
                 intActiveID = 0;
             }//if
             Game.ActivePlayerID = Game.Players[intActiveID].ID;
+            UI.ActivePlayerChanged();
         }//ChangeActivePlayer()
 
         public void Roll() //called every time the roll button is pressed
@@ -253,6 +213,7 @@ namespace Monopoly
                 Game.StartingRolls[0] = roll;                
                 UI.DisplayNoCaption("Player 1 has rolled a " + roll);
                 UI.DisplayNoCaption("Player 2, now you roll.");
+                ChangeActivePlayer();
                 MonopolyRef.EnableRollButton();
             }
             else if (Game.StartingRolls[1] == 0) //Player 1 has already rolled
@@ -266,13 +227,15 @@ namespace Monopoly
                     Game.StartingRolls[0] = 0;
                     Game.StartingRolls[1] = 0;
                     UI.DisplayNoCaption("Both players have rolled a " + roll + ", so they'll both roll again");
+                    ChangeActivePlayer();
                     MonopolyRef.EnableRollButton();
                 }
                 else //not the same roll
                 {
-                    int firstPlayer = 0;
-                    if (Game.StartingRolls[1] > Game.StartingRolls[0]) { firstPlayer = 1; }
-                    Game.ActivePlayerID = firstPlayer;
+                    int firstTurnPlayer = 0;
+                    if (Game.StartingRolls[1] > Game.StartingRolls[0]) { firstTurnPlayer = 1; }
+                    Game.ActivePlayerID = firstTurnPlayer;
+                    UI.ActivePlayerChanged();
                     UI.DisplayNoCaption(String.Format("Player 1 rolled a {0} and Player 2 rolled a {1}, so Player {2} will go first!",
                         Game.StartingRolls[0], Game.StartingRolls[1], Game.ActivePlayerID + 1));
                     Game.IsStarted = true;

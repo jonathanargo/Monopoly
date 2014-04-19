@@ -240,6 +240,11 @@ namespace Monopoly
         public void UIDebug(String location)
         {
             Debug.WriteLine(location);
-        }
+        }//UIDebug
+
+        public void ActivePlayerChanged()
+        {
+            MonopolyRef.IndicateActivePlayer();
+        }//ActivePlayerChange
     }//UI
 }
