@@ -28,31 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnRoll1 = new System.Windows.Forms.Button();
-            this.btnRoll2 = new System.Windows.Forms.Button();
             this.lblPlayer1 = new System.Windows.Forms.Label();
             this.lblPlayer2 = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
             this.btnTest = new System.Windows.Forms.Button();
+            this.P1Money = new System.Windows.Forms.Label();
+            this.P2Money = new System.Windows.Forms.Label();
+            this.P1MoneyOut = new System.Windows.Forms.Label();
+            this.P1PosOut = new System.Windows.Forms.Label();
+            this.P1Pos = new System.Windows.Forms.Label();
+            this.P2Pos = new System.Windows.Forms.Label();
+            this.P1gooj = new System.Windows.Forms.Label();
+            this.P1GoojOut = new System.Windows.Forms.Label();
+            this.P3GoojOut = new System.Windows.Forms.Label();
+            this.P2PosOut = new System.Windows.Forms.Label();
+            this.P2MoneyOut = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lablel1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.P1OwnedPropsOut = new System.Windows.Forms.ListBox();
+            this.P2OwnedPropsOut = new System.Windows.Forms.ListBox();
+            this.lbxOutput = new System.Windows.Forms.ListBox();
+            this.lblOutput = new System.Windows.Forms.Label();
+            this.btnDebug = new System.Windows.Forms.Button();
+            this.btnRoll = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // btnRoll1
-            // 
-            this.btnRoll1.Location = new System.Drawing.Point(22, 96);
-            this.btnRoll1.Name = "btnRoll1";
-            this.btnRoll1.Size = new System.Drawing.Size(75, 23);
-            this.btnRoll1.TabIndex = 0;
-            this.btnRoll1.Text = "Roll";
-            this.btnRoll1.UseVisualStyleBackColor = true;
-            // 
-            // btnRoll2
-            // 
-            this.btnRoll2.Location = new System.Drawing.Point(653, 96);
-            this.btnRoll2.Name = "btnRoll2";
-            this.btnRoll2.Size = new System.Drawing.Size(75, 23);
-            this.btnRoll2.TabIndex = 2;
-            this.btnRoll2.Text = "Roll";
-            this.btnRoll2.UseVisualStyleBackColor = true;
             // 
             // lblPlayer1
             // 
@@ -77,7 +77,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(22, 382);
+            this.btnStart.Location = new System.Drawing.Point(12, 12);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 7;
@@ -87,7 +87,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(666, 387);
+            this.btnTest.Location = new System.Drawing.Point(12, 41);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(75, 23);
             this.btnTest.TabIndex = 8;
@@ -95,20 +95,216 @@
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
+            // P1Money
+            // 
+            this.P1Money.AutoSize = true;
+            this.P1Money.Location = new System.Drawing.Point(185, 78);
+            this.P1Money.Name = "P1Money";
+            this.P1Money.Size = new System.Drawing.Size(42, 13);
+            this.P1Money.TabIndex = 9;
+            this.P1Money.Text = "Money:";
+            // 
+            // P2Money
+            // 
+            this.P2Money.AutoSize = true;
+            this.P2Money.Location = new System.Drawing.Point(485, 78);
+            this.P2Money.Name = "P2Money";
+            this.P2Money.Size = new System.Drawing.Size(42, 13);
+            this.P2Money.TabIndex = 10;
+            this.P2Money.Text = "Money:";
+            // 
+            // P1MoneyOut
+            // 
+            this.P1MoneyOut.AutoSize = true;
+            this.P1MoneyOut.Location = new System.Drawing.Point(261, 78);
+            this.P1MoneyOut.Name = "P1MoneyOut";
+            this.P1MoneyOut.Size = new System.Drawing.Size(22, 13);
+            this.P1MoneyOut.TabIndex = 11;
+            this.P1MoneyOut.Text = "out";
+            // 
+            // P1PosOut
+            // 
+            this.P1PosOut.AutoSize = true;
+            this.P1PosOut.Location = new System.Drawing.Point(261, 102);
+            this.P1PosOut.Name = "P1PosOut";
+            this.P1PosOut.Size = new System.Drawing.Size(22, 13);
+            this.P1PosOut.TabIndex = 14;
+            this.P1PosOut.Text = "out";
+            // 
+            // P1Pos
+            // 
+            this.P1Pos.AutoSize = true;
+            this.P1Pos.Location = new System.Drawing.Point(185, 102);
+            this.P1Pos.Name = "P1Pos";
+            this.P1Pos.Size = new System.Drawing.Size(47, 13);
+            this.P1Pos.TabIndex = 13;
+            this.P1Pos.Text = "Position:";
+            // 
+            // P2Pos
+            // 
+            this.P2Pos.AutoSize = true;
+            this.P2Pos.Location = new System.Drawing.Point(485, 102);
+            this.P2Pos.Name = "P2Pos";
+            this.P2Pos.Size = new System.Drawing.Size(47, 13);
+            this.P2Pos.TabIndex = 15;
+            this.P2Pos.Text = "Position:";
+            // 
+            // P1gooj
+            // 
+            this.P1gooj.AutoSize = true;
+            this.P1gooj.Location = new System.Drawing.Point(185, 125);
+            this.P1gooj.Name = "P1gooj";
+            this.P1gooj.Size = new System.Drawing.Size(69, 13);
+            this.P1gooj.TabIndex = 17;
+            this.P1gooj.Text = "GOOJ Cards:";
+            // 
+            // P1GoojOut
+            // 
+            this.P1GoojOut.AutoSize = true;
+            this.P1GoojOut.Location = new System.Drawing.Point(261, 125);
+            this.P1GoojOut.Name = "P1GoojOut";
+            this.P1GoojOut.Size = new System.Drawing.Size(22, 13);
+            this.P1GoojOut.TabIndex = 18;
+            this.P1GoojOut.Text = "out";
+            // 
+            // P3GoojOut
+            // 
+            this.P3GoojOut.AutoSize = true;
+            this.P3GoojOut.Location = new System.Drawing.Point(567, 125);
+            this.P3GoojOut.Name = "P3GoojOut";
+            this.P3GoojOut.Size = new System.Drawing.Size(22, 13);
+            this.P3GoojOut.TabIndex = 21;
+            this.P3GoojOut.Text = "out";
+            // 
+            // P2PosOut
+            // 
+            this.P2PosOut.AutoSize = true;
+            this.P2PosOut.Location = new System.Drawing.Point(567, 102);
+            this.P2PosOut.Name = "P2PosOut";
+            this.P2PosOut.Size = new System.Drawing.Size(22, 13);
+            this.P2PosOut.TabIndex = 20;
+            this.P2PosOut.Text = "out";
+            // 
+            // P2MoneyOut
+            // 
+            this.P2MoneyOut.AutoSize = true;
+            this.P2MoneyOut.Location = new System.Drawing.Point(567, 78);
+            this.P2MoneyOut.Name = "P2MoneyOut";
+            this.P2MoneyOut.Size = new System.Drawing.Size(22, 13);
+            this.P2MoneyOut.TabIndex = 19;
+            this.P2MoneyOut.Text = "out";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(485, 125);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(69, 13);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "GOOJ Cards:";
+            // 
+            // lablel1
+            // 
+            this.lablel1.AutoSize = true;
+            this.lablel1.Location = new System.Drawing.Point(185, 155);
+            this.lablel1.Name = "lablel1";
+            this.lablel1.Size = new System.Drawing.Size(91, 13);
+            this.lablel1.TabIndex = 23;
+            this.lablel1.Text = "Owned Properties";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(485, 155);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(91, 13);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "Owned Properties";
+            // 
+            // P1OwnedPropsOut
+            // 
+            this.P1OwnedPropsOut.FormattingEnabled = true;
+            this.P1OwnedPropsOut.Location = new System.Drawing.Point(188, 185);
+            this.P1OwnedPropsOut.Name = "P1OwnedPropsOut";
+            this.P1OwnedPropsOut.Size = new System.Drawing.Size(140, 95);
+            this.P1OwnedPropsOut.TabIndex = 25;
+            // 
+            // P2OwnedPropsOut
+            // 
+            this.P2OwnedPropsOut.FormattingEnabled = true;
+            this.P2OwnedPropsOut.Location = new System.Drawing.Point(488, 185);
+            this.P2OwnedPropsOut.Name = "P2OwnedPropsOut";
+            this.P2OwnedPropsOut.Size = new System.Drawing.Size(140, 95);
+            this.P2OwnedPropsOut.TabIndex = 26;
+            // 
+            // lbxOutput
+            // 
+            this.lbxOutput.FormattingEnabled = true;
+            this.lbxOutput.Location = new System.Drawing.Point(188, 351);
+            this.lbxOutput.Name = "lbxOutput";
+            this.lbxOutput.Size = new System.Drawing.Size(440, 160);
+            this.lbxOutput.TabIndex = 27;
+            // 
+            // lblOutput
+            // 
+            this.lblOutput.AutoSize = true;
+            this.lblOutput.Location = new System.Drawing.Point(140, 351);
+            this.lblOutput.Name = "lblOutput";
+            this.lblOutput.Size = new System.Drawing.Size(39, 13);
+            this.lblOutput.TabIndex = 28;
+            this.lblOutput.Text = "Output";
+            // 
+            // btnDebug
+            // 
+            this.btnDebug.Location = new System.Drawing.Point(12, 73);
+            this.btnDebug.Name = "btnDebug";
+            this.btnDebug.Size = new System.Drawing.Size(75, 23);
+            this.btnDebug.TabIndex = 29;
+            this.btnDebug.Text = "Debug";
+            this.btnDebug.UseVisualStyleBackColor = true;
+            // 
+            // btnRoll
+            // 
+            this.btnRoll.Location = new System.Drawing.Point(188, 316);
+            this.btnRoll.Name = "btnRoll";
+            this.btnRoll.Size = new System.Drawing.Size(75, 23);
+            this.btnRoll.TabIndex = 30;
+            this.btnRoll.Text = "Roll!";
+            this.btnRoll.UseVisualStyleBackColor = true;
+            this.btnRoll.Click += new System.EventHandler(this.btnRoll_Click);
+            // 
             // Monopoly
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(753, 422);
+            this.ClientSize = new System.Drawing.Size(753, 523);
+            this.Controls.Add(this.btnRoll);
+            this.Controls.Add(this.btnDebug);
+            this.Controls.Add(this.lblOutput);
+            this.Controls.Add(this.lbxOutput);
+            this.Controls.Add(this.P2OwnedPropsOut);
+            this.Controls.Add(this.P1OwnedPropsOut);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lablel1);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.P3GoojOut);
+            this.Controls.Add(this.P2PosOut);
+            this.Controls.Add(this.P2MoneyOut);
+            this.Controls.Add(this.P1GoojOut);
+            this.Controls.Add(this.P1gooj);
+            this.Controls.Add(this.P2Pos);
+            this.Controls.Add(this.P1PosOut);
+            this.Controls.Add(this.P1Pos);
+            this.Controls.Add(this.P1MoneyOut);
+            this.Controls.Add(this.P2Money);
+            this.Controls.Add(this.P1Money);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.lblPlayer2);
             this.Controls.Add(this.lblPlayer1);
-            this.Controls.Add(this.btnRoll2);
-            this.Controls.Add(this.btnRoll1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Monopoly";
-            this.Text = "Form1";
+            this.Text = "Monopoly";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Monopoly_Paint);
             this.ResumeLayout(false);
@@ -118,12 +314,30 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnRoll1;
-        private System.Windows.Forms.Button btnRoll2;
         private System.Windows.Forms.Label lblPlayer1;
         private System.Windows.Forms.Label lblPlayer2;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Label P1Money;
+        private System.Windows.Forms.Label P2Money;
+        private System.Windows.Forms.Label P1MoneyOut;
+        private System.Windows.Forms.Label P1PosOut;
+        private System.Windows.Forms.Label P1Pos;
+        private System.Windows.Forms.Label P2Pos;
+        private System.Windows.Forms.Label P1gooj;
+        private System.Windows.Forms.Label P1GoojOut;
+        private System.Windows.Forms.Label P3GoojOut;
+        private System.Windows.Forms.Label P2PosOut;
+        private System.Windows.Forms.Label P2MoneyOut;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lablel1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ListBox P1OwnedPropsOut;
+        private System.Windows.Forms.ListBox P2OwnedPropsOut;
+        private System.Windows.Forms.ListBox lbxOutput;
+        private System.Windows.Forms.Label lblOutput;
+        private System.Windows.Forms.Button btnDebug;
+        private System.Windows.Forms.Button btnRoll;
 
 
     }

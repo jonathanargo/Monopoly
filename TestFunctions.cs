@@ -165,6 +165,11 @@ namespace Monopoly
             GameLogic.Turn();
         }//TestJailCard()
 
+        public void TestUI()
+        {
+            UI.Display("test");
+        }//testUi
+
         /*TODO: 
          * Test get out of Jail Card logic in game flow
          * Test bankruptcy

@@ -71,7 +71,7 @@ namespace Monopoly
                     }
                     else
                     {
-                        UI.Display("You remain in jail.", UI.MakeCaption(Game.ActivePlayerID + 1, "Still in Jail"));
+                        UI.Display("You remain in jail.");
                     }
                 }//else
             }
@@ -146,7 +146,7 @@ namespace Monopoly
                     SendToJail(Game.ActivePlayerID);
                     break;
                 case "Free Parking": case "Jail": case "Go":
-                    UI.NoAction(spaceType);
+                    UI.NoAction(Game.GetActiveTile().Name);
                     break;
                 default:
                     UI.Error("Land() unable to determine space type.");
@@ -217,7 +217,7 @@ namespace Monopoly
             roll2 = rand.Next(1, 8);
             rollSum = roll1 + roll2;
 
-            UI.Display(String.Format("You have rolled a {0} and a {1} ({2})", roll1, roll2, rollSum), UI.MakeCaption(Game.GetActivePlayer().GameID, "Dice Roll"));
+            UI.Display(String.Format("You have rolled a {0} and a {1} ({2})", roll1, roll2, rollSum));
 
             if (roll1 == roll2)
             {
@@ -306,12 +306,12 @@ namespace Monopoly
                     }//if
                     else if (wantsToBuy && !CanBuySpace(space))
                     {
-                        UI.Display("You do not have enough money to buy this property.", "Can't afford property");
+                        UI.Display("You do not have enough money to buy this property.");
                     }//else-if
                     else 
                         //doesn't want to buy
                     {
-                        UI.Display("You don't buy the property.", String.Format("Player {0}: Not buying it", Game.ActivePlayerID + 1));
+                        UI.Display("You don't buy the property.");
                     }//else
                 }//if
                 else if (space.OwnerID != Game.ActivePlayerID)
@@ -333,8 +333,7 @@ namespace Monopoly
                 //You own the property
                 {
                     String message = "You own this tile.";
-                    String caption = UI.MakeCaption(Game.GetActivePlayer().GameID, "Your Tile");
-                    UI.Display(message, caption);
+                    UI.Display(message);
                 }//else if
             }//try
             catch (InvalidCastException ex)
@@ -347,7 +346,7 @@ namespace Monopoly
         {
             Player thisPlayer = Game.Players[Game.ActivePlayerID];
             MoneyLogic.ChangeMoney(thisPlayer.ID, -75);
-            UI.Display("You must pay the bank 75$!", UI.MakeCaption(thisPlayer.GameID, "Pay Luxury Tax"));
+            UI.Display("You must pay the bank 75$!");
         }//LandLuxTax()
 
         private void LandIncTax()

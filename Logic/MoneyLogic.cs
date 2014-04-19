@@ -13,11 +13,13 @@ namespace Monopoly
         {
             this.Monopoly = monopoly;
             this.IsInitialized = false;
+            this.UI = new UI(ref monopoly);
         }//GameLogic
 
         private Monopoly Monopoly { get; set; }
         private GameState Game { get; set; }
         public bool IsInitialized { get; private set; }
+        private UI UI { get; set; }
 
         public void Initialize()
         {
@@ -30,12 +32,13 @@ namespace Monopoly
             ChangeMoney(payerID, -1 * amount);
             ChangeMoney(recieverID, amount);
             CheckForBankrupt(payerID);
+            UI.Display(String.Format("Player {0} paid Player {1} {2} dollars.", payerID + 1, recieverID + 1, amount));
         }//PayPlayer
 
         public void ChangeMoney(int playerID, int amount)
         {
             Game.Players[playerID].Money += amount;
-            Debug.WriteLine(String.Format("Changed player {0}'s money by {1} dollars", playerID + 1, amount));
+            UI.BankExchange(amount);
             CheckForBankrupt(playerID);
         }//ChangeMoney()
 
@@ -61,6 +64,8 @@ namespace Monopoly
         public void CollectFromBank(int playerID, int amount)
         {
             Game.Players[playerID].Money += amount;
+            UI.BankExchange(amount);
+            CheckForBankrupt(playerID);
         }//CollectFromBank
 
         public void CollectFromOtherPlayers(int playerID, int amount)
@@ -78,21 +83,6 @@ namespace Monopoly
             }//foreach
         }//CollectFromPlayers
 
-        public void BuyProp(int propIndex, int playerID)
-        {
-            Tiles.Property thisProp = (Tiles.Property)Game.Board.BoardSpaces[propIndex];
-            thisProp.OwnerID = playerID;
-            ChangeMoney(playerID, thisProp.Cost * -1);
-            Game.Players[playerID].OwnedProperties.Add(thisProp);
-        }//TODO: Remove, irrelevant
-
-        public void BuyRailroad(int rrIndex, int playerID)
-        {
-            Tiles.Property thisProp = (Tiles.Property)Game.Board.BoardSpaces[rrIndex];
-            thisProp.OwnerID = playerID;
-            Game.Players[playerID].Railroads++;
-            Game.Players[playerID].Money -= thisProp.Cost;
-        }//TODO: Remove, irrelevant
 
         public void BuySpace(int spaceIndex, int playerID)
         {
@@ -112,7 +102,7 @@ namespace Monopoly
                 Game.Players[playerID].Railroads++;
             }//if-else
 
-            Game.Players[playerID].Money -= thisSpace.Cost;
+            ChangeMoney(playerID, thisSpace.Cost * -1);
         }//BuySpace
 
         public void TaxTenPercent(Player thisPlayer)

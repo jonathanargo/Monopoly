@@ -59,7 +59,7 @@ namespace Monopoly
                     MoneyLogic.CollectFromBank(playerID, 75);
                     break;
                 case 2://Pay $50
-                    MoneyLogic.CollectFromBank(playerID, -50); //need to check for bankruptcy
+                    MoneyLogic.CollectFromBank(playerID, -50);
                     break;
                 case 3://Get out of jail free
                     Players[playerID].JailFreeCards++;
@@ -184,7 +184,7 @@ namespace Monopoly
             }//foreach
 
             costToPlayer = -1 * ((numHouses * perHouse) + (numHotels * perHotel));
-            MoneyLogic.CollectFromBank(playerID, costToPlayer);
+            MoneyLogic.ChangeMoney(playerID, costToPlayer);
         }//StreetRepairs
 
         public void AdvanceToUtility(int playerID)

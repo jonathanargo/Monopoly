@@ -18,14 +18,23 @@ namespace Monopoly
             //Nothing required, just for showing errors and messages
         }
 
-        public UI(ref GameState game)
+        public UI(ref Monopoly monopoly)
         {
-            this.Game = game;
+            this.MonopolyRef = monopoly;
+            this.Game = MonopolyRef.ActiveGame;
             this.HasRef = true;
-        }
+        }//UI
 
-        public GameState Game { get { return mGame; } private set { mGame = value; } }
+        private Monopoly MonopolyRef { get; set; }
+        private GameState Game { get; set; }
         public bool HasRef { get; set; }
+
+        public void Display(String message)
+        {
+            String caption = String.Format("Player {0}: ", Game.GetActivePlayer().GameID);
+            MonopolyRef.HandleOutput(caption + message);
+
+        }//DisplayMessage
 
         public bool BuyPropDialogue()
         {
@@ -38,68 +47,34 @@ namespace Monopoly
                 return false;
         }//BuyPropDialogue
 
-        public void Display(String message, String caption)
+        public void NoAction(String spaceName)
         {
-            MessageBox.Show(message, caption);
-        }//DisplayMessage
-
-        public void NoAction(String spaceType)
-        {
-            MessageBox.Show(String.Format("You have laneded on {0}. Enjoy your stay!", spaceType), String.Format("Player {0}: {1}", Game.ActivePlayerID + 1, spaceType));
+            String message = String.Format("You have laneded on {0}. Enjoy your stay!", spaceName);
+            Display(message);
         }//NoAction
-
-        public void Error(String message)
-        {
-            message = "ERROR: " + message;
-            MessageBox.Show(Monopoly.ActiveForm, message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }//Error
-
-        public void Error(String message, Exception ex)
-        {
-            message = "ERROR: " + message + Environment.NewLine + Environment.NewLine + ex.Message;
-            MessageBox.Show(Monopoly.ActiveForm, message,  ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }//Error
-
-        public void UnknownException(Exception ex)
-        {
-            Error("Unknown Excpetion: " + ex.Message);
-        }//UnknownException(Exception)
-
-        public void UnknownException(Exception ex, String location)
-        {
-            String message = String.Format("Unknown error in {0}: {1}", location, ex.Message);
-            Error(message);
-        }//UnknownException(Exception, location)
-
-        public void UIRefError(String functionName)
-        {
-            Error("Can't call " + functionName + " from an instance of UI that doesn't have a reference to the gamestate!");
-        }//UIRefError
 
         public void LandMessage()
         {
-            Player thisPlayer = Game.Players[Game.ActivePlayerID];
-            Tiles.BoardSpace thisTile = Game.Board.BoardSpaces[thisPlayer.Position];
+            Player thisPlayer = Game.GetActivePlayer();
+            Tiles.BoardSpace thisTile = Game.GetActiveTile();
             String message = String.Format("You have landed on {0}", thisTile.Name);
-            String caption = String.Format("Player {0}: Landed on {1}", thisPlayer.ID + 1, thisTile.Name);
-            Display(message, caption);
+            Display(message);
         }//LandMessage()
 
         public void CantAfford()
         {
             Player thisPlayer = Game.Players[Game.ActivePlayerID];
             Tiles.BoardSpace thisTile = Game.Board.BoardSpaces[thisPlayer.Position];
-            Display("You can't afford to buy this property!", String.Format("Player {0}: Can't afford property", Game.ActivePlayerID + 1));
+            Display("You can't afford to buy this property!");
         }//CantAfford()
 
         public void UIPayPlayer(Tiles.Property prop)
         {
             if (HasRef)
             {
-                    int rent = prop.CurrentRent();
-                    String message = String.Format("You pay player {0} ${1} for landing on {2}.", prop.OwnerID + 1, rent, prop.Name);
-                    String caption = String.Format("Player {0}: Pay Rent", Game.ActivePlayerID + 1);
-                    Display(message, caption);                                
+                int rent = prop.CurrentRent();
+                String message = String.Format("You pay player {0} ${1} for landing on {2}.", prop.OwnerID + 1, rent, prop.Name);
+                Display(message);
             }//if
             else
             {
@@ -112,12 +87,11 @@ namespace Monopoly
             if (HasRef)
             {
                 String message = String.Format("You pay player {0} ${1} for landing on {2}.", thisRR.OwnerID + 1, fare, thisRR.Name);
-                String caption = String.Format("Player {0}: Pay Railroad Fare", Game.ActivePlayerID + 1);
                 if (fromCard)
                 {
-                    message += Environment.NewLine + "You pay double, per the card.";
+                    message += " You pay double, per the card.";
                 }
-                Display(message, caption);
+                Display(message);
             }//if
             else
             {
@@ -130,13 +104,11 @@ namespace Monopoly
             if (HasRef)
             {
                 String message = String.Format("You pay player {0} ${1} for landing on {2}.", thisUtil.OwnerID + 1, bill, thisUtil.Name);
-                String caption = String.Format("Player {0}: Pay Utility Bill", Game.ActivePlayerID + 1);
                 if (fromCard)
                 {
-                    message += Environment.NewLine;
-                    message += String.Format("You pay ten times your dice roll of {0}, per the card.", bill/10);
+                    message += String.Format(" You pay ten times your dice roll of {0}, per the card.", bill/10);
                 }//if
-                Display(message, caption);
+                Display(message);
             }//if
             else
             {
@@ -144,10 +116,17 @@ namespace Monopoly
             }//else
         }//PlayPlayer(Tiles.Railroad)
 
-        public String MakeCaption(int playerGameNumber, String caption)
+        public void BankExchange(int amount)
         {
-            return String.Format("Player {0}: {1}", playerGameNumber, caption);
-        }//MakeCaption()
+            String message;
+            if (amount <= 0)
+            {
+                message = String.Format("Bank collected {0} dollars from Player {1}", amount, Game.GetActivePlayer().GameID);
+            } else 
+            {
+                message = String.Format("Bank gave {0} dollars to Player {1}", amount, Game.GetActivePlayer().GameID);
+            }//if-else
+        }//BankExchange();
 
         public TaxChoice ShowTaxDialog(int playerID)
         {
@@ -174,27 +153,25 @@ namespace Monopoly
 
         public void CardMessage(String message, String deckType)
         {
-            Display(message, MakeCaption(Game.ActivePlayerID + 1, "Draw " + deckType));
+            Display(String.Format("Draw {0} card", deckType));
         }//CardMessage()
 
         public void BoughtSpace(Player player, Tiles.BuyableSpace space)
         {
             String msg = String.Format("You bought {0}!", space.Name);
-            String cap = MakeCaption(player.GameID, "Bought a tile!");
-            Display(msg, cap);
+            Display(msg);
         }//BoughtSpace
 
         public void GameOver(Player winner)
         {
             String msg = String.Format("Congratulations, player {0}, you win!", winner.GameID);
-            String cap = "Game Over!";
-            Display(msg, cap);
+            Display(msg);
         }//GameOver
 
         public bool JailCardDialog()
         {
             String msg = "Would you like to use your Get Out of Jail Free card?";
-            String cap = MakeCaption(Game.ActivePlayerID + 1, "Use Card?");
+            String cap = String.Format("Player {0}: Use Card?", Game.GetActivePlayer().GameID);
             DialogResult result = MessageBox.Show(Monopoly.ActiveForm, msg, cap, MessageBoxButtons.YesNo,MessageBoxIcon.Question);
             switch (result)
             {
@@ -204,6 +181,34 @@ namespace Monopoly
                     return false;
             }//switch
         }//bool
+
+        public void Error(String message)
+        {
+            message = "ERROR: " + message;
+            MessageBox.Show(Monopoly.ActiveForm, message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }//Error
+
+        public void Error(String message, Exception ex)
+        {
+            message = "ERROR: " + message + Environment.NewLine + Environment.NewLine + ex.Message;
+            MessageBox.Show(Monopoly.ActiveForm, message, ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }//Error
+
+        public void UnknownException(Exception ex)
+        {
+            Error("Unknown Excpetion: " + ex.Message);
+        }//UnknownException(Exception)
+
+        public void UnknownException(Exception ex, String location)
+        {
+            String message = String.Format("Unknown error in {0}: {1}", location, ex.Message);
+            Error(message);
+        }//UnknownException(Exception, location)
+
+        public void UIRefError(String functionName)
+        {
+            Error("Can't call " + functionName + " from an instance of UI that doesn't have a reference to the gamestate!");
+        }//UIRefError
 
         public void UIDebug(String location)
         {

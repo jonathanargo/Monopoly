@@ -43,8 +43,9 @@ namespace Monopoly
 
         public void PrepareGame()
         {
+            refMonopoly = this;
             ActiveGame = new GameState();
-            this.UI = new UI(ref ActiveGame);
+            this.UI = new UI(ref refMonopoly);
             IntializeLogic();
             GameIsReady = true;
             Debug.WriteLine("Game has been prepared.");
@@ -71,6 +72,9 @@ namespace Monopoly
 
         private void Monopoly_Paint(object sender, PaintEventArgs e)
         {
+            /*
+             * //This draws two rectangles that were once going to display the space each player was on, but it's no longer necessary
+             * TODO: Clean up
             System.Drawing.Graphics graphicsObj;
             graphicsObj = this.CreateGraphics();
             Pen myPen = new Pen(System.Drawing.Color.Black, 2);
@@ -79,6 +83,7 @@ namespace Monopoly
             graphicsObj.DrawLine(myPen, 375, 20, 375, 400); //the division between the players
             rect = new Rectangle(425, 75, 200, 250);
             graphicsObj.DrawRectangle(myPen, rect); //player 2's rectangle
+             * */
 
         }//Paint
 
@@ -119,9 +124,26 @@ namespace Monopoly
             {
                 SetTestMode();
             }
+            //Items to be tested:
+            Test.TestUI();
+        }
 
-            Test.TestJailCard(); 
-        }//btnTest_Click()
+        public void HandleOutput(String output)
+        {
+            lbxOutput.Items.Add(output);
+            lbxOutput.SelectedIndex = lbxOutput.Items.Count - 1;
+        }
+
+        public void SyncPlayerStats()
+        {
+
+        }
+
+        private void btnRoll_Click(object sender, EventArgs e)
+        {
+            //TODO roll when pressed
+        }
+
 
     }//Monopoly
 }
