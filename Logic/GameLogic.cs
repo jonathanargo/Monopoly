@@ -11,12 +11,12 @@ namespace Monopoly
     {
         public GameLogic(ref Monopoly monopoly)
         {
-            this.Monopoly = monopoly;
+            this.MonopolyRef = monopoly;
             this.IsInitialized = false;
         }//GameLogic
 
         public bool IsInitialized { get; private set; }
-        private Monopoly Monopoly { get; set; }
+        private Monopoly MonopolyRef { get; set; }
         private GameState Game { get; set; }
         private Player[] Players { get; set; }
         private CardLogic CardLogic { get; set; }
@@ -30,28 +30,27 @@ namespace Monopoly
         //are created, since both CardLogic and GameLogic need
         //references to each other
         {
-            this.Game = this.Monopoly.ActiveGame;
-            this.Players = this.Monopoly.ActiveGame.Players;
-            this.MoneyLogic = this.Monopoly.MoneyLogic;
-            this.CardLogic = this.Monopoly.CardLogic;
-            this.UI = this.Monopoly.UI;
+            this.Game = this.MonopolyRef.ActiveGame;
+            this.Players = this.MonopolyRef.ActiveGame.Players;
+            this.MoneyLogic = this.MonopolyRef.MoneyLogic;
+            this.CardLogic = this.MonopolyRef.CardLogic;
+            this.UI = this.MonopolyRef.UI;
             this.IsInitialized = true;
         }//Initialize()
 
         public void GameFlow()
-        {
+        {/*
             UI.UIDebug("GameFlow()");
             while (!Game.IsOver)
             {
                 Turn();
                 Game.TurnCount++;
-            }
+            }*/
+            //disabled while game flow is being worked on
         }//GameFlow()
 
-        public void Turn()
+        public void Turn(int roll)
         {
-            UI.UIDebug("Turn()");
-            int roll = RollDice();
             bool rollWasDouble = Game.Doubles[Game.ActivePlayerID].LastRollWasDouble;
 
             if (Game.Players[Game.ActivePlayerID].IsJailed)
@@ -63,11 +62,11 @@ namespace Monopoly
                 }//if
                 else 
                 {
-                    //Player remains in jail, does he want to use a GOOJ card? TODO
+                    //Player remains in jail, does he want to use a GOOJ card? TODO buggy
                     if ((Game.GetActivePlayer().JailFreeCards > 0) && (UI.JailCardDialog()))
                     {
                         ReleaseFromJail(Game.ActivePlayerID);
-                        Turn();
+                        Turn(roll);
                     }
                     else
                     {
@@ -84,14 +83,16 @@ namespace Monopoly
                 AdvancePlayer(Game.ActivePlayerID, roll);
             }//else
 
-            if (rollWasDouble && !Game.Players[Game.ActivePlayerID].IsJailed) //if player rolled doubles, but didn't get sent to jail for it..
+            if (!rollWasDouble || Game.GetActivePlayer().IsJailed)
             {
-                Turn();
+                //Only go to next player if the player didn't roll doubles, unless
+                //the player got sent to jail for rolling doubles.
+                ChangeActivePlayer();
             }//if
 
-            ChangeActivePlayer(); //will fire after player didn't roll doubles, or is in jail.
-            
-
+            UI.UpdateStats();
+            UI.PromptTurn();
+            MonopolyRef.EnableRollButton();
         }//Turn()
 
         public void AdvancePlayer(int playerID, int numberOfSpaces)
@@ -151,10 +152,12 @@ namespace Monopoly
                 default:
                     UI.Error("Land() unable to determine space type.");
                     break;
-            }//switch            
-            
+            }//switch
+
+            UI.UpdateStats();            
         }//Land() //TODO
 
+        /*
         public void StartGame()
         {
             UI.UIDebug("StartGame()");
@@ -191,8 +194,28 @@ namespace Monopoly
             }
 
             System.Windows.Forms.MessageBox.Show("Player 1 rolled " + roll1 + " and Player 2 rolled " + roll2 + ", so Player " + Game.ActivePlayerID + " goes first.");
-            GameFlow();
+            //GameFlow();
         }//StartGame()
+         * */
+
+        public void StartGame()
+        {
+            UI.UIDebug("StartGame(): Game is starting...");
+            foreach (Deck d in Game.Decks)
+            {
+                d.ShuffleDeck(); //initalized cards in each deck
+            }//foreach
+
+            foreach (Player p in Game.Players)
+            {
+                p.Money = 1500;
+                p.Position = 1;
+            }//foreach
+            UI.UpdateStats();
+            UI.DisplayNoCaption("Each player will roll to see who goes first. Player 1, you start.");
+            MonopolyRef.DisableStartButton();
+            MonopolyRef.EnableRollButton();
+        }
 
         public void ChangeActivePlayer()
         {
@@ -205,6 +228,59 @@ namespace Monopoly
             }//if
             Game.ActivePlayerID = Game.Players[intActiveID].ID;
         }//ChangeActivePlayer()
+
+        public void Roll() //called every time the roll button is pressed
+        {
+            MonopolyRef.DisableRollButton();
+
+            if (Game.IsStarted)
+            {
+                int roll = RollDice();
+                Turn(roll);
+            }//if
+            else
+            {
+                RollOff();
+            }//else
+        }//Roll()
+
+        public void RollOff()
+            //called by Roll() when roll-off hasn't been completed
+        {
+            int roll = RollDiceStart();
+            if (Game.StartingRolls[0] == 0) //Player 1 hasn't rolled to see who goes first
+            {                
+                Game.StartingRolls[0] = roll;                
+                UI.DisplayNoCaption("Player 1 has rolled a " + roll);
+                UI.DisplayNoCaption("Player 2, now you roll.");
+                MonopolyRef.EnableRollButton();
+            }
+            else if (Game.StartingRolls[1] == 0) //Player 1 has already rolled
+            {
+                Game.StartingRolls[1] = roll;
+                UI.DisplayNoCaption("Player 2 has rolled a " + roll);
+
+                if (Game.StartingRolls[0] == Game.StartingRolls[1])
+                {
+                    //reset the roll-off to the start
+                    Game.StartingRolls[0] = 0;
+                    Game.StartingRolls[1] = 0;
+                    UI.DisplayNoCaption("Both players have rolled a " + roll + ", so they'll both roll again");
+                    MonopolyRef.EnableRollButton();
+                }
+                else //not the same roll
+                {
+                    int firstPlayer = 0;
+                    if (Game.StartingRolls[1] > Game.StartingRolls[0]) { firstPlayer = 1; }
+                    Game.ActivePlayerID = firstPlayer;
+                    UI.DisplayNoCaption(String.Format("Player 1 rolled a {0} and Player 2 rolled a {1}, so Player {2} will go first!",
+                        Game.StartingRolls[0], Game.StartingRolls[1], Game.ActivePlayerID + 1));
+                    Game.IsStarted = true;
+                    MonopolyRef.EnableRollButton();
+                    UI.PromptTurn();
+                }//else
+            }//else if
+        }//RollOff()
 
         public int RollDice()
         {

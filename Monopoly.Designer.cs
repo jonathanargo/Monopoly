@@ -40,7 +40,7 @@
             this.P2Pos = new System.Windows.Forms.Label();
             this.P1gooj = new System.Windows.Forms.Label();
             this.P1GoojOut = new System.Windows.Forms.Label();
-            this.P3GoojOut = new System.Windows.Forms.Label();
+            this.P2GoojOut = new System.Windows.Forms.Label();
             this.P2PosOut = new System.Windows.Forms.Label();
             this.P2MoneyOut = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -167,14 +167,14 @@
             this.P1GoojOut.TabIndex = 18;
             this.P1GoojOut.Text = "out";
             // 
-            // P3GoojOut
+            // P2GoojOut
             // 
-            this.P3GoojOut.AutoSize = true;
-            this.P3GoojOut.Location = new System.Drawing.Point(567, 125);
-            this.P3GoojOut.Name = "P3GoojOut";
-            this.P3GoojOut.Size = new System.Drawing.Size(22, 13);
-            this.P3GoojOut.TabIndex = 21;
-            this.P3GoojOut.Text = "out";
+            this.P2GoojOut.AutoSize = true;
+            this.P2GoojOut.Location = new System.Drawing.Point(567, 125);
+            this.P2GoojOut.Name = "P2GoojOut";
+            this.P2GoojOut.Size = new System.Drawing.Size(22, 13);
+            this.P2GoojOut.TabIndex = 21;
+            this.P2GoojOut.Text = "out";
             // 
             // P2PosOut
             // 
@@ -239,10 +239,12 @@
             // 
             // lbxOutput
             // 
+            this.lbxOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxOutput.FormattingEnabled = true;
+            this.lbxOutput.ItemHeight = 16;
             this.lbxOutput.Location = new System.Drawing.Point(188, 351);
             this.lbxOutput.Name = "lbxOutput";
-            this.lbxOutput.Size = new System.Drawing.Size(440, 160);
+            this.lbxOutput.Size = new System.Drawing.Size(440, 148);
             this.lbxOutput.TabIndex = 27;
             // 
             // lblOutput
@@ -265,6 +267,7 @@
             // 
             // btnRoll
             // 
+            this.btnRoll.Enabled = false;
             this.btnRoll.Location = new System.Drawing.Point(188, 316);
             this.btnRoll.Name = "btnRoll";
             this.btnRoll.Size = new System.Drawing.Size(75, 23);
@@ -287,7 +290,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lablel1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.P3GoojOut);
+            this.Controls.Add(this.P2GoojOut);
             this.Controls.Add(this.P2PosOut);
             this.Controls.Add(this.P2MoneyOut);
             this.Controls.Add(this.P1GoojOut);
@@ -326,7 +329,7 @@
         private System.Windows.Forms.Label P2Pos;
         private System.Windows.Forms.Label P1gooj;
         private System.Windows.Forms.Label P1GoojOut;
-        private System.Windows.Forms.Label P3GoojOut;
+        private System.Windows.Forms.Label P2GoojOut;
         private System.Windows.Forms.Label P2PosOut;
         private System.Windows.Forms.Label P2MoneyOut;
         private System.Windows.Forms.Label label1;

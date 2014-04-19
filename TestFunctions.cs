@@ -162,7 +162,7 @@ namespace Monopoly
             Card jailCard = new Card(25, "Go to Jail");
             CardLogic.HandleCard(jailFreeCard, 0);
             CardLogic.HandleCard(jailCard, 0);
-            GameLogic.Turn();
+            GameLogic.Turn(GameLogic.RollDice());
         }//TestJailCard()
 
         public void TestUI()

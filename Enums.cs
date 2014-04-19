@@ -41,4 +41,11 @@ public enum TaxChoice
     TwoHundred
 };
 
+public enum RollState
+{
+    StartGame,
+    P1Start,
+    P2Start,
+    NormalRolls
+};
 

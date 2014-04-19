@@ -18,7 +18,7 @@ namespace Monopoly
         private int mActivePlayerID;
         private Deck[] mDecks;
         private DoublesQueue[] mDoublesQueues;
-
+        
         public GameState()
         {
             SetState();
@@ -36,6 +36,9 @@ namespace Monopoly
         public int LastRoll { get; set; }
         public bool IsOver { get; set; }
         public int WinnerID { get; set; }
+        public RollState RollState { get; set; }
+        public bool IsStarted { get; set; }
+        public int[] StartingRolls { get; set; }
         //METHODS
 
         public Player GetActivePlayer()
@@ -80,7 +83,11 @@ namespace Monopoly
 
             this.LastRoll = 0;
             IsOver = false;
-        }//SetState()
+            IsStarted = false;
+            StartingRolls = new int[2];
+            StartingRolls[0] = 0;
+            StartingRolls[1] = 0;
+        }//SetState()   
 
 
     }//class Game

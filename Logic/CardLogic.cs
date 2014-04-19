@@ -45,10 +45,8 @@ namespace Monopoly
         public void HandleCard(Card card, int playerID)
         //Contains cases for handling all cards
         {
-            String cardType = String.Empty;
-            if (card.CardID < 17) { cardType = "Community Chest"; }
-            else { cardType = "Chance"; }
-            UI.CardMessage(card.Description, cardType);
+            
+            UI.CardDrawn(card);
 
             switch (card.CardID)
             {

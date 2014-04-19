@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using Monopoly.Properties;
 using System.IO;
+using System.Timers;
 
 
 namespace Monopoly
@@ -24,7 +25,7 @@ namespace Monopoly
         public Monopoly()
         {
             InitializeComponent();            
-            this.GameIsReady = false;
+            this.ReadyToStart = false;
             this.TestMode = false;
         }//Monopoly()
 
@@ -35,7 +36,7 @@ namespace Monopoly
         public MoneyLogic MoneyLogic { get { return mMoneyLogic; } set { mMoneyLogic = value; } }
         public CardLogic CardLogic { get { return mCardLogic; } set { mCardLogic = value; } }
         public UI UI { get; set; }
-        public bool GameIsReady { get; private set; }
+        public bool ReadyToStart { get; private set; }
         private TestFunctions Test { get; set; }
         public bool TestMode { get; private set; }
 
@@ -47,7 +48,7 @@ namespace Monopoly
             ActiveGame = new GameState();
             this.UI = new UI(ref refMonopoly);
             IntializeLogic();
-            GameIsReady = true;
+            ReadyToStart = true;
             Debug.WriteLine("Game has been prepared.");
         }
 
@@ -89,13 +90,19 @@ namespace Monopoly
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            PrepareGame();
+            P1GoojOut.Text = String.Empty;
+            P1MoneyOut.Text = String.Empty;
+            P1PosOut.Text = String.Empty;
+            P2GoojOut.Text = String.Empty;
+            P2MoneyOut.Text = String.Empty;
+            P2PosOut.Text = String.Empty;
         }
 
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            if (GameIsReady)
+            if (ReadyToStart)
             {
                 GameLogic.StartGame();
             }
@@ -132,18 +139,57 @@ namespace Monopoly
         {
             lbxOutput.Items.Add(output);
             lbxOutput.SelectedIndex = lbxOutput.Items.Count - 1;
-        }
+        }//HandleOutput
 
         public void SyncPlayerStats()
         {
-            //TODO show player stats
-        }
+            Player p1 = ActiveGame.Players[0];
+            Player p2 = ActiveGame.Players[1];
+
+            P1MoneyOut.Text = p1.Money.ToString();
+            P1PosOut.Text = String.Format("{0}: {1}", p1.Position, ActiveGame.Board.BoardSpaces[p1.Position].Name);
+            P1GoojOut.Text = p1.JailFreeCards.ToString();
+
+            P2MoneyOut.Text = p2.Money.ToString();
+            P2PosOut.Text = String.Format("{0}: {1}", p2.Position, ActiveGame.Board.BoardSpaces[p2.Position].Name);
+            P2GoojOut.Text = p2.JailFreeCards.ToString();
+
+            P1OwnedPropsOut.Items.Clear();
+            P2OwnedPropsOut.Items.Clear();
+
+            foreach(Tiles.BuyableSpace p in p1.OwnedProperties) { P1OwnedPropsOut.Items.Add(p.Name); }
+            foreach (Tiles.BuyableSpace p in p2.OwnedProperties) { P2OwnedPropsOut.Items.Add(p.Name); }
+
+            if (p1.Railroads > 0) { P1OwnedPropsOut.Items.Add("Railroads: " + p1.Railroads); }
+            if (p1.Utilities > 0) { P1OwnedPropsOut.Items.Add("Utilities: " + p1.Utilities); }
+            if (p2.Railroads > 0) { P2OwnedPropsOut.Items.Add("Railroads: " + p1.Railroads); }
+            if (p2.Utilities > 0) { P2OwnedPropsOut.Items.Add("Utilities: " + p1.Utilities); }
+        }//SyncPlayerStats()
 
         private void btnRoll_Click(object sender, EventArgs e)
         {
-            //TODO roll when pressed
+            GameLogic.Roll();
         }
 
+        public void EnableStartButton()
+        {
+            btnStart.Enabled = true;
+        }//EnableStartButton()
+
+        public void DisableStartButton()
+        {
+            btnStart.Enabled = false;
+        }//DisableStartButton()
+        
+        public void EnableRollButton()
+        {
+            btnRoll.Enabled = true;
+        }//EnableRollButton()
+
+        public void DisableRollButton()
+        {
+            btnRoll.Enabled = false;
+        }//DisableRollButton()
 
     }//Monopoly
 }

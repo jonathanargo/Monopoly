@@ -10,8 +10,6 @@ namespace Monopoly
 {
     public class UI
     {
-        private GameState mGame;
-
         public UI()
         {
             this.HasRef = false;
@@ -33,8 +31,18 @@ namespace Monopoly
         {
             String caption = String.Format("Player {0}: ", Game.GetActivePlayer().GameID);
             MonopolyRef.HandleOutput(caption + message);
-
         }//DisplayMessage
+
+        public void DisplayNoCaption(String message)
+        {
+            MonopolyRef.HandleOutput(message);
+        }//DisplayNoHeader
+
+        public void DisplayPopup(String message, String boxCaption)
+        {
+            Display(message);
+            MessageBox.Show(message, String.Format("Player {0}: {1}", Game.GetActivePlayer().GameID, boxCaption));
+        }//DisplayPopup
 
         public bool BuyPropDialogue()
         {
@@ -74,7 +82,7 @@ namespace Monopoly
             {
                 int rent = prop.CurrentRent();
                 String message = String.Format("You pay player {0} ${1} for landing on {2}.", prop.OwnerID + 1, rent, prop.Name);
-                Display(message);
+                DisplayPopup(message, "Pay Opponent");
             }//if
             else
             {
@@ -91,7 +99,7 @@ namespace Monopoly
                 {
                     message += " You pay double, per the card.";
                 }
-                Display(message);
+                DisplayPopup(message, "Pay Opponent");
             }//if
             else
             {
@@ -108,7 +116,7 @@ namespace Monopoly
                 {
                     message += String.Format(" You pay ten times your dice roll of {0}, per the card.", bill/10);
                 }//if
-                Display(message);
+                DisplayPopup(message, "Pay Opponent");
             }//if
             else
             {
@@ -126,7 +134,26 @@ namespace Monopoly
             {
                 message = String.Format("Bank gave {0} dollars to Player {1}", amount, Game.GetActivePlayer().GameID);
             }//if-else
+            Debug.WriteLine(message);
         }//BankExchange();
+
+        public void PromptTurn()
+        {
+            DisplayNoCaption(String.Format("Player {0}, it's your turn", Game.GetActivePlayer().GameID));
+        }
+
+        public void CardDrawn(Card card)
+        {
+            String deck;
+            if (card.CardID > 16) { deck = "Chance"; }//if
+            else { deck = "Community Chest"; }
+
+            Display("You draw a " + deck + " card.");
+
+            String cap = String.Format("Player {0}: {1}", Game.GetActivePlayer().GameID, deck);
+            String msg = "You drew a card. " + Environment.NewLine + "It says: " + card.Description;
+            DisplayPopup(msg, cap);
+        }//CardDrawn()
 
         public TaxChoice ShowTaxDialog(int playerID)
         {
@@ -151,11 +178,6 @@ namespace Monopoly
             }//else
         }//ShowTaxDialog
 
-        public void CardMessage(String message, String deckType)
-        {
-            Display(String.Format("Draw {0} card", deckType));
-        }//CardMessage()
-
         public void BoughtSpace(Player player, Tiles.BuyableSpace space)
         {
             String msg = String.Format("You bought {0}!", space.Name);
@@ -165,8 +187,13 @@ namespace Monopoly
         public void GameOver(Player winner)
         {
             String msg = String.Format("Congratulations, player {0}, you win!", winner.GameID);
-            Display(msg);
+            DisplayPopup(msg, "You win!!!");
         }//GameOver
+
+        public void UpdateStats()
+        {
+            MonopolyRef.SyncPlayerStats();
+        }//UpdateStats()
 
         public bool JailCardDialog()
         {
