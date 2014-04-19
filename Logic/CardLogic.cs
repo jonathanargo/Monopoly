@@ -63,8 +63,7 @@ namespace Monopoly
                     Players[playerID].JailFreeCards++;
                     break;
                 case 4://Go to jail
-                    Players[playerID].IsJailed = true;
-                    Players[playerID].Position = 11;
+                    GameLogic.SendToJail(playerID);
                     break;
                 case 5: //collect 10 from each player
                     MoneyLogic.CollectFromOtherPlayers(playerID, 10);
