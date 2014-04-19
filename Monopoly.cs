@@ -136,7 +136,7 @@ namespace Monopoly
 
         public void SyncPlayerStats()
         {
-
+            //TODO show player stats
         }
 
         private void btnRoll_Click(object sender, EventArgs e)
