@@ -103,6 +103,7 @@ namespace Monopoly
             }//if-else
 
             ChangeMoney(playerID, thisSpace.Cost * -1);
+            UI.UpdateStats();
         }//BuySpace
 
         public void TaxTenPercent(Player thisPlayer)
