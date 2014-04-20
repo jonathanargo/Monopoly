@@ -95,6 +95,9 @@ namespace Monopoly
         {
             UI.UIDebug(String.Format("Advancing player {0} by {1} spaces", playerID + 1, numberOfSpaces));
             int finalPosition = Game.Players[playerID].Position + numberOfSpaces;
+            int firstPosition = Game.Players[playerID].Position;
+            Tiles.BoardSpace startSpace = Game.Board.BoardSpaces[firstPosition];
+            Tiles.BoardSpace endSpace = Game.Board.BoardSpaces[finalPosition];
 
             //check for >40
             if (numberOfSpaces > 79)
@@ -113,6 +116,8 @@ namespace Monopoly
             }
 
             Game.Players[playerID].Position = finalPosition;
+            UI.UIDebug(String.Format("Player {0} was moved {1} spaces from {2}({3}) to {4}({5})", playerID + 1, 
+                numberOfSpaces, firstPosition, startSpace.Name, finalPosition, endSpace.Name));
             Land(Game.Board.BoardSpaces[Game.Players[Game.ActivePlayerID].Position].SpaceType);
         }//AdvancePlayer()
 

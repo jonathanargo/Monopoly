@@ -18,7 +18,6 @@ namespace Monopoly
 
         public UI(ref Monopoly monopoly)
         {
-            Debug.WriteLine("UI(ref Monopoly) fired");
             this.MonopolyRef = monopoly;
             this.Game = MonopolyRef.ActiveGame;
             this.HasRef = true;
@@ -293,7 +292,6 @@ namespace Monopoly
         public void ActivePlayerChanged()
         {
             MonopolyRef.IndicateActivePlayer();
-            Debug.WriteLine(HasRef);
         }//ActivePlayerChange
 
         public void WriteToLog(String message)
