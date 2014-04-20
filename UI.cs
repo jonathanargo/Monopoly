@@ -150,7 +150,7 @@ namespace Monopoly
             String message;
             if (amount <= 0)
             {
-                message = String.Format("Bank collected {0} dollars from Player {1}", amount, Game.GetActivePlayer().GameID);
+                message = String.Format("Bank collected {0} dollars from Player {1}", amount * -1, Game.GetActivePlayer().GameID);
             } else 
             {
                 message = String.Format("Bank gave {0} dollars to Player {1}", amount, Game.GetActivePlayer().GameID);
