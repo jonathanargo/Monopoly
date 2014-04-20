@@ -28,7 +28,6 @@ namespace Monopoly
         {
             this.Queue.Enqueue(rolledDouble);
             this.Queue.Dequeue();
-            Debug.WriteLine("Enqueued: {0}, ", rolledDouble);
             this.LastRollWasDouble = rolledDouble;
         }//NextDouble
 

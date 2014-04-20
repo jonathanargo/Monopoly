@@ -28,12 +28,12 @@ namespace Monopoly
             StreamReader stmReader;
             Char delimitChar = ',';
             Board resultBoard;
-            Debug.WriteLine("Attempting to create board...");
+            ui.UIDebug("Attempting to create board...");
 
             try{
                 stmReader = new StreamReader(mBoardPath);
                 resultBoard = new Board();
-                Debug.WriteLine("Board stream initalized!");
+                ui.UIDebug("Board stream initalized!");
                 for (int i = 1; i <= resultBoard.BoardSpaces.Length - 1; i++)
                 {
                     line = stmReader.ReadLine();

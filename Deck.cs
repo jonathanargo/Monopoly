@@ -38,17 +38,17 @@ namespace Monopoly
 
             String allDescriptions = Resources.CardDescriptions;
             int cardIDMod = 0; //used to assign correct cardIDs
-
+            UI ui = new UI();
             if (this.DeckType == DeckType.CommunityChest)
             {
                 Cards = new Card[17]; //wipe deck
                 allDescriptions = allDescriptions.Substring(16, allDescriptions.IndexOf("Chance")); //+14 for 'communitychest', +2 for cr and lf
-                Debug.WriteLine("Community Chest Deck initializing...");
+                ui.UIDebug("Community Chest Deck initializing...");
             } else {
                 Cards = new Card[16];
                 cardIDMod = 17; 
                 allDescriptions = allDescriptions.Substring(allDescriptions.IndexOf("Chance") + 8); //+6 for 'chance', + 2 for cr and lf
-                Debug.WriteLine("Chance Deck initializing...");
+                ui.UIDebug("Chance Deck initializing...");
             }
             
             String[] cardDescriptions = new String[Cards.Length];
@@ -62,7 +62,7 @@ namespace Monopoly
                 orderedCards[i] = new Card(i + cardIDMod, line);
             }//foreach            
             reader.Close();
-            Debug.WriteLine("Deck is now in proper order. Shuffling...");
+            ui.UIDebug("Deck is now in proper order. Shuffling...");
 
             //Begin Fisher-Yates shuffling algorithm
             Random rand = new Random();
@@ -77,8 +77,7 @@ namespace Monopoly
 
             this.Cards = orderedCards;
             this.TopCardIndex = 0;
-            Debug.WriteLine("Deck has been shuffled.");
-
+            ui.UIDebug("Deck has been shuffled.");
         }//ShuffleDeck
 
         public Card DrawCard()
@@ -90,9 +89,9 @@ namespace Monopoly
                 this.ShuffleDeck();
                 topCard = Cards[this.TopCardIndex];
             }//if
-            Debug.WriteLine(String.Format("Card was drawn. ID: {0}, Description: {1}", topCard.CardID, topCard.Description));
+            
             return topCard;
-        }
+        }//DrawCard
 
         override public string ToString(){
             String output = "";

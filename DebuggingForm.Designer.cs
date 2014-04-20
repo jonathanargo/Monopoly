@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.lbxBoardSpaces = new System.Windows.Forms.ListBox();
             this.rbtPlayer1 = new System.Windows.Forms.RadioButton();
@@ -41,6 +42,9 @@
             this.btnGoToChance = new System.Windows.Forms.Button();
             this.btnGoToUtil = new System.Windows.Forms.Button();
             this.btnGoToGo = new System.Windows.Forms.Button();
+            this.btnCopyLog = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnTruncateLog = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -170,11 +174,32 @@
             this.btnGoToGo.UseVisualStyleBackColor = true;
             this.btnGoToGo.Click += new System.EventHandler(this.btnGoToGo_Click);
             // 
+            // btnCopyLog
+            // 
+            this.btnCopyLog.Location = new System.Drawing.Point(237, 230);
+            this.btnCopyLog.Name = "btnCopyLog";
+            this.btnCopyLog.Size = new System.Drawing.Size(96, 23);
+            this.btnCopyLog.TabIndex = 16;
+            this.btnCopyLog.Text = "Copy Log";
+            this.btnCopyLog.UseVisualStyleBackColor = true;
+            // 
+            // btnTruncateLog
+            // 
+            this.btnTruncateLog.Location = new System.Drawing.Point(238, 201);
+            this.btnTruncateLog.Name = "btnTruncateLog";
+            this.btnTruncateLog.Size = new System.Drawing.Size(96, 23);
+            this.btnTruncateLog.TabIndex = 17;
+            this.btnTruncateLog.Text = "Truncate Log";
+            this.btnTruncateLog.UseVisualStyleBackColor = true;
+            this.btnTruncateLog.Click += new System.EventHandler(this.btnTruncateLog_Click);
+            // 
             // DebuggingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(345, 293);
+            this.Controls.Add(this.btnTruncateLog);
+            this.Controls.Add(this.btnCopyLog);
             this.Controls.Add(this.btnGoToGo);
             this.Controls.Add(this.btnGoToUtil);
             this.Controls.Add(this.btnGoToChance);
@@ -210,5 +235,8 @@
         private System.Windows.Forms.Button btnGoToChance;
         private System.Windows.Forms.Button btnGoToUtil;
         private System.Windows.Forms.Button btnGoToGo;
+        private System.Windows.Forms.Button btnCopyLog;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnTruncateLog;
     }
 }

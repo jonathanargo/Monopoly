@@ -27,11 +27,12 @@ namespace Monopoly
             InitializeComponent();            
             this.ReadyToStart = false;
             this.TestMode = false;
+            this.TestState = 1;
         }//Monopoly()
 
         //PROPERTIES
 
-        public GameState ActiveGame;
+        public GameState ActiveGame { get; set; }
         public GameLogic GameLogic { get { return mGameLogic; } set { mGameLogic = value; } }
         public MoneyLogic MoneyLogic { get { return mMoneyLogic; } set { mMoneyLogic = value; } }
         public CardLogic CardLogic { get { return mCardLogic; } set { mCardLogic = value; } }
@@ -39,22 +40,24 @@ namespace Monopoly
         public bool ReadyToStart { get; private set; }
         private TestFunctions Test { get; set; }
         public bool TestMode { get; private set; }
+        public int TestState { get; set; }
 
         //METHODS
 
         public void PrepareGame()
         {
             refMonopoly = this;
-            ActiveGame = new GameState();
+            ActiveGame = new GameState();   //called first, since UI needs it
             this.UI = new UI(ref refMonopoly);
-            IntializeLogic();
+            UI.WriteToLog("");
+            UI.UIDebug("A new game is being prepared");                      
+            IntializeLogic();            
             ReadyToStart = true;
-            Debug.WriteLine("Game has been prepared.");
+            UI.UIDebug("Game has been prepared.");
         }
 
         public void IntializeLogic()
         {
-            refMonopoly = this;
             GameLogic = new GameLogic(ref refMonopoly);
             CardLogic = new CardLogic(ref refMonopoly);
             MoneyLogic = new MoneyLogic(ref refMonopoly);
@@ -117,16 +120,6 @@ namespace Monopoly
         {
             form.ShowDialog(this);
         }//OpenDialog        
-
-        private void btnTest_Click(object sender, EventArgs e)
-        {
-            if (!TestMode)
-            {
-                SetTestMode();
-            }
-            //Items to be tested:
-            Test.TestUI();
-        }
 
         public void HandleOutput(String output)
         {
@@ -206,9 +199,17 @@ namespace Monopoly
                 lblPlayer2.ForeColor = Color.Green;
             }
             this.Refresh();
-        }//IndicateActivePlayer
+        }
+
+        private void Monopoly_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            UI.UIDebug("Game form is closing");
+        }
+
+        private void btnTest_Click_1(object sender, EventArgs e)
+        {
+            
+        }
 
     }//Monopoly
 }
-
-//TODO: Find out why it's not printing debug info for buying properties

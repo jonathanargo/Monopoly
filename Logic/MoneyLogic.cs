@@ -112,6 +112,10 @@ namespace Monopoly
             ChangeMoney(thisPlayer.ID, intAmt);
         }//TaxTenPercent
 
+        public int TestMethod()
+        {
+            return Monopoly.TestState;
+        }
 
     }//MoneyLogic
 }

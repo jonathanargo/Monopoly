@@ -50,8 +50,9 @@ namespace Monopoly
             {
                 if (value > 40)
                 {
+                    UI ui = new UI();
                     mPosition = value - 40;
-                    Debug.WriteLine("Player position " + value + " is greater than 40. Position set to " + (value - 40));
+                    ui.UIDebug("Player position " + value + " is greater than 40. Position set to " + (value - 40));
                 }
                 else
                 {

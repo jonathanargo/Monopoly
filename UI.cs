@@ -18,6 +18,7 @@ namespace Monopoly
 
         public UI(ref Monopoly monopoly)
         {
+            Debug.WriteLine("UI(ref Monopoly) fired");
             this.MonopolyRef = monopoly;
             this.Game = MonopolyRef.ActiveGame;
             this.HasRef = true;
@@ -29,19 +30,40 @@ namespace Monopoly
 
         public void Display(String message)
         {
-            String caption = String.Format("Player {0}: ", Game.GetActivePlayer().GameID);
+            String caption = String.Empty;
+            try
+            {
+                caption = String.Format("Player {0}: ", Game.GetActivePlayer().GameID);
+            }
+            catch (NullReferenceException ex)
+            {
+                Debug.WriteLine("Error in Display()" + ex.Message);
+            }//catch
+
             MonopolyRef.HandleOutput(caption + message);
+            UIDebug(caption + message);
         }//DisplayMessage
 
         public void DisplayNoCaption(String message)
         {
             MonopolyRef.HandleOutput(message);
+            UIDebug(message);
         }//DisplayNoHeader
 
         public void DisplayPopup(String message, String boxCaption)
         {
             Display(message);
-            MessageBox.Show(message, String.Format("Player {0}: {1}", Game.GetActivePlayer().GameID, boxCaption));
+            String caption = "Info";
+            try
+            {
+                caption = String.Format("Player {0}: {1}", Game.GetActivePlayer().GameID, boxCaption);
+            }
+            catch (NullReferenceException ex)
+            {
+                Debug.WriteLine("Null reference in DisplayPopup");
+                ex.GetType(); //just to clear "not used" error
+            }
+            MessageBox.Show(message, caption);
         }//DisplayPopup
 
         public bool BuyPropDialogue()
@@ -134,7 +156,7 @@ namespace Monopoly
             {
                 message = String.Format("Bank gave {0} dollars to Player {1}", amount, Game.GetActivePlayer().GameID);
             }//if-else
-            Debug.WriteLine(message);
+            UIDebug(message);
         }//BankExchange();
 
         public void PromptTurn()
@@ -190,6 +212,12 @@ namespace Monopoly
             DisplayPopup(msg, "You win!!!");
         }//GameOver
 
+        public void PassGo()
+        {
+            String msg = "You have passed go! Collect $200!";
+            DisplayPopup(msg, "Pass Go");
+        }
+
         public void UpdateStats()
         {
             MonopolyRef.SyncPlayerStats();
@@ -203,8 +231,10 @@ namespace Monopoly
             switch (result)
             {
                 case DialogResult.Yes:
+                    UIDebug(String.Format("UI- Player {0} used a GOOJ card", Game.GetActivePlayer().GameID));
                     return true;
                 default:
+                    UIDebug(String.Format("UI- Player {0} chose to not use a GOOJ card", Game.GetActivePlayer().GameID));
                     return false;
             }//switch
         }//bool
@@ -213,12 +243,25 @@ namespace Monopoly
         {
             message = "ERROR: " + message;
             MessageBox.Show(Monopoly.ActiveForm, message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            UIDebug(message);
         }//Error
 
         public void Error(String message, Exception ex)
         {
             message = "ERROR: " + message + Environment.NewLine + Environment.NewLine + ex.Message;
             MessageBox.Show(Monopoly.ActiveForm, message, ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            UIDebug(message + " " + ex.Message);
+        }//Error
+
+        public void ErrorNoDebug(String message)
+            //used for displaying errors with the error writer
+        {
+            message = "ERROR: " + message;
+            MessageBox.Show(Monopoly.ActiveForm, message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            DateTime now = DateTime.Now;
+            String timestamp = String.Empty;
+            timestamp += now.ToString();
+            Debug.WriteLine(timestamp + ": " + message);
         }//Error
 
         public void UnknownException(Exception ex)
@@ -237,14 +280,35 @@ namespace Monopoly
             Error("Can't call " + functionName + " from an instance of UI that doesn't have a reference to the gamestate!");
         }//UIRefError
 
-        public void UIDebug(String location)
+        public void UIDebug(String message)
         {
-            Debug.WriteLine(location);
+            DateTime now = DateTime.Now;
+            String timestamp = String.Empty;
+            timestamp += now.ToString();
+            String fullMessage = timestamp + ": " + message;
+            Debug.WriteLine(fullMessage);
+            WriteToLog(fullMessage);
         }//UIDebug
 
         public void ActivePlayerChanged()
         {
             MonopolyRef.IndicateActivePlayer();
+            Debug.WriteLine(HasRef);
         }//ActivePlayerChange
+
+        public void WriteToLog(String message)
+        {
+            try
+            {
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter("Log.txt", true))
+                {
+                    file.WriteLine(message);
+                }//using
+            }//try
+            catch (Exception ex)
+            {
+                ErrorNoDebug(ex.Message + ": Can not Write to Log");
+            }//catch
+        }
     }//UI
 }

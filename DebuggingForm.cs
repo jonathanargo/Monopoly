@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace Monopoly
 {
@@ -24,6 +25,8 @@ namespace Monopoly
             {
                 lbxBoardSpaces.Items.Add(b.Position + ": " + b.Name);
             }//foreach
+
+            toolTip1.SetToolTip(btnCopyLog, "Copies the log of the current session to a new file");
         }//DebuggingForm
 
         private Monopoly MonopolyRef { get; set; }
@@ -90,6 +93,11 @@ namespace Monopoly
             MessageBox.Show(Game.Players[SelectedID].ToString(), String.Format("Player {0} Stats", SelectedID + 1)); 
         }
 
+        private void btnTruncateLog_Click(object sender, EventArgs e)
+        {
+            File.Delete("Log.txt");
+            MonopolyRef.UI.DisplayPopup("Log has been truncated on the debug menu", "Log truncated");
+        }
 
 
 

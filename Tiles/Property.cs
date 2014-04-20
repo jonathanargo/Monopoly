@@ -42,14 +42,14 @@ namespace Monopoly.Tiles
         public void Improve(int numLevels)
         {
             int intCurLevel = (int)this.ImprovementLevel;
+            UI ui = new UI();
             if (intCurLevel + numLevels <= 5)
             {
                 this.ImprovementLevel = (ImprovementLevel)intCurLevel + numLevels;
-                Debug.WriteLine("Improvement level set to " + this.ImprovementLevel);
+                ui.UIDebug(this.Name + " improvement level set to " + this.ImprovementLevel);
             }
             else
-            {
-                UI ui = new UI();
+            {                
                 ui.Error("Improvement level can not exceed 5.");
             }//else
         }//Improve()

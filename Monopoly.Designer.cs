@@ -31,7 +31,6 @@
             this.lblPlayer1 = new System.Windows.Forms.Label();
             this.lblPlayer2 = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
-            this.btnTest = new System.Windows.Forms.Button();
             this.P1Money = new System.Windows.Forms.Label();
             this.P2Money = new System.Windows.Forms.Label();
             this.P1MoneyOut = new System.Windows.Forms.Label();
@@ -52,6 +51,7 @@
             this.lblOutput = new System.Windows.Forms.Label();
             this.btnDebug = new System.Windows.Forms.Button();
             this.btnRoll = new System.Windows.Forms.Button();
+            this.btnTest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblPlayer1
@@ -84,16 +84,6 @@
             this.btnStart.Text = "Start Game";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
-            // 
-            // btnTest
-            // 
-            this.btnTest.Location = new System.Drawing.Point(12, 41);
-            this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(75, 23);
-            this.btnTest.TabIndex = 8;
-            this.btnTest.Text = "Test";
-            this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // P1Money
             // 
@@ -258,7 +248,7 @@
             // 
             // btnDebug
             // 
-            this.btnDebug.Location = new System.Drawing.Point(12, 70);
+            this.btnDebug.Location = new System.Drawing.Point(12, 41);
             this.btnDebug.Name = "btnDebug";
             this.btnDebug.Size = new System.Drawing.Size(75, 23);
             this.btnDebug.TabIndex = 29;
@@ -277,11 +267,22 @@
             this.btnRoll.UseVisualStyleBackColor = true;
             this.btnRoll.Click += new System.EventHandler(this.btnRoll_Click);
             // 
+            // btnTest
+            // 
+            this.btnTest.Location = new System.Drawing.Point(12, 468);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(75, 23);
+            this.btnTest.TabIndex = 31;
+            this.btnTest.Text = "test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click_1);
+            // 
             // Monopoly
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(715, 503);
+            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnRoll);
             this.Controls.Add(this.btnDebug);
             this.Controls.Add(this.lblOutput);
@@ -302,13 +303,13 @@
             this.Controls.Add(this.P1MoneyOut);
             this.Controls.Add(this.P2Money);
             this.Controls.Add(this.P1Money);
-            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.lblPlayer2);
             this.Controls.Add(this.lblPlayer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Monopoly";
             this.Text = "Monopoly";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Monopoly_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Monopoly_Paint);
             this.ResumeLayout(false);
@@ -321,7 +322,6 @@
         private System.Windows.Forms.Label lblPlayer1;
         private System.Windows.Forms.Label lblPlayer2;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Label P1Money;
         private System.Windows.Forms.Label P2Money;
         private System.Windows.Forms.Label P1MoneyOut;
@@ -342,6 +342,7 @@
         private System.Windows.Forms.Label lblOutput;
         private System.Windows.Forms.Button btnDebug;
         private System.Windows.Forms.Button btnRoll;
+        private System.Windows.Forms.Button btnTest;
 
 
     }

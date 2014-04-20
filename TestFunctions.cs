@@ -45,9 +45,8 @@ namespace Monopoly
             String player1stats = player1.ToString() + Environment.NewLine + player1.PropsToString();
             String player2stats = player2.ToString() + Environment.NewLine + player2.PropsToString();
 
-            Debug.WriteLine(player1stats);
-            Debug.WriteLine("");
-            Debug.WriteLine(player2stats);
+            UI.UIDebug(player1stats);
+            UI.UIDebug(player2stats);
         }//TestPropertyBuying()
 
         public void TestError()
@@ -62,10 +61,10 @@ namespace Monopoly
             switch (result)
             {
                 case DialogResult.OK:
-                    Debug.WriteLine("10% was selected");
+                    UI.UIDebug("10% was selected");
                     break;
                 case DialogResult.Cancel:
-                    Debug.WriteLine("$200 was selected");
+                    UI.UIDebug("$200 was selected");
                     break;
             }//switch
         }
@@ -75,7 +74,7 @@ namespace Monopoly
             Player player1 = ActiveGame.Players[0];
             player1.Position = 1;
             GameLogic.AdvancePlayer(player1.ID, 4); //puts the player on income tax
-            Debug.WriteLine("player1 stats: " + player1.ToString());
+            UI.UIDebug("player1 stats: " + player1.ToString());
         }//TestIncomeTax()
 
         public void TestCards()
@@ -89,8 +88,8 @@ namespace Monopoly
             ActiveGame.ActivePlayerID = 1;
             GameLogic.AdvancePlayer(player2.ID, 22); //places on Chance
 
-            Debug.WriteLine(player1.ToString());
-            Debug.WriteLine(player2.ToString());
+            UI.UIDebug(player1.ToString());
+            UI.UIDebug(player2.ToString());
         }//TestCards()
 
         public void TestRRUtilCards()
@@ -127,31 +126,31 @@ namespace Monopoly
 
         public void DebugPlayerInfo(Player player1)
         {
-            Debug.WriteLine("Player 1 info: " + player1.ToString());
+            UI.UIDebug("Player 1 info: " + player1.ToString());
         }//DebugPlayerInfo(Player)
 
         public void DebugPlayerInfo(Player player1, Player player2)
         {
-            Debug.WriteLine("Player 1 info: " + player1.ToString());
-            Debug.WriteLine("Player 2 info: " + player2.ToString());
+            UI.UIDebug("Player 1 info: " + player1.ToString());
+            UI.UIDebug("Player 2 info: " + player2.ToString());
         }//DebugPlayerInfo(player, player)
 
         public void TestNewPropClass()
         {
             Tiles.Property prop = new Tiles.Property(5, "testprop", PropertyColor.Brown, 5, new Rent(1, 2, 3, 4, 5, 6), 7);
-            Debug.WriteLine(prop.ToString());
+            UI.UIDebug(prop.ToString());
             Tiles.BuyableSpace buyablespace = prop;
-            Debug.WriteLine("buyspace cost: " + buyablespace.Cost);
+            UI.UIDebug("buyspace cost: " + buyablespace.Cost);
             Tiles.BoardSpace boardspace = prop;
-            Debug.WriteLine("boardspace name: " + boardspace.Name);
+            UI.UIDebug("boardspace name: " + boardspace.Name);
         }//TODO Delete
 
         public void TestNewUtilandRR()
         {
             Tiles.Utility thisUtil = new Tiles.Utility(5, "Water Works");
-            Debug.WriteLine(thisUtil.ToString());
+            UI.UIDebug(thisUtil.ToString());
             Tiles.Railroad thisRR = new Tiles.Railroad(5, "Reading Rainbow");
-            Debug.WriteLine(thisRR.ToString());
+            UI.UIDebug(thisRR.ToString());
         }
 
         public void TestJailCard()
@@ -169,13 +168,6 @@ namespace Monopoly
         {
             UI.Display("test");
         }//testUi
-
-        /*TODO: 
-         * Test get out of Jail Card logic in game flow
-         * Test bankruptcy
-         * 
-         * 
-         * */
 
     }//TestFunctions
 }
