@@ -182,6 +182,7 @@
             this.btnCopyLog.TabIndex = 16;
             this.btnCopyLog.Text = "Copy Log";
             this.btnCopyLog.UseVisualStyleBackColor = true;
+            this.btnCopyLog.Click += new System.EventHandler(this.btnCopyLog_Click);
             // 
             // btnTruncateLog
             // 

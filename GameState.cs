@@ -39,6 +39,7 @@ namespace Monopoly
         public RollState RollState { get; set; }
         public bool IsStarted { get; set; }
         public int[] StartingRolls { get; set; }
+        public List<String> GameLog { get; set; }
         //METHODS
 
         public Player GetActivePlayer()
@@ -88,6 +89,11 @@ namespace Monopoly
             StartingRolls[0] = 0;
             StartingRolls[1] = 0;
         }//SetState()   
+
+        public void Log(String logMessage)
+        {
+            GameLog.Add(logMessage);
+        }//Log()
 
 
     }//class Game

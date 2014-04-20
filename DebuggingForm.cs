@@ -99,6 +99,32 @@ namespace Monopoly
             MonopolyRef.UI.DisplayPopup("Log has been truncated on the debug menu", "Log truncated");
         }
 
+        private void btnCopyLog_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                StreamReader reader = new StreamReader("Log.txt");
+                String fullLog = reader.ReadToEnd();
+                reader.Close();
+                fullLog = fullLog.Substring(fullLog.LastIndexOf("#"));
+                File.WriteAllText("GameLog.txt", fullLog);
+                MonopolyRef.UI.DisplayPopup("Log copied to GameLog.txt", "Log Copied");
+            }
+            catch (FileNotFoundException ex)
+            {
+                MonopolyRef.UI.DisplayPopup("Error in Log Copy: " + ex.Message, "Error");
+            }
+            catch (ArgumentOutOfRangeException ex)
+                //almost always as a result of truncating the log before copying it
+            {
+                StreamReader reader = new StreamReader("Log.txt");
+                String fullLog = reader.ReadToEnd();
+                reader.Close();
+                File.WriteAllText("GameLog.txt", fullLog);
+                MonopolyRef.UI.DisplayPopup("Log copied to GameLog.txt", "Log Copied");
+            }
+        }
+
 
 
 

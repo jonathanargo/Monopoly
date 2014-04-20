@@ -49,7 +49,7 @@ namespace Monopoly
             refMonopoly = this;
             ActiveGame = new GameState();   //called first, since UI needs it
             this.UI = new UI(ref refMonopoly);
-            UI.WriteToLog("");
+            UI.WriteToLog("#");
             UI.UIDebug("A new game is being prepared");                      
             IntializeLogic();            
             ReadyToStart = true;
