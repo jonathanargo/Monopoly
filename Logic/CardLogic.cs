@@ -132,7 +132,7 @@ namespace Monopoly
                     Repairs(playerID, 25, 100);
                     break;
                 case 27: //Pay 15
-                    MoneyLogic.CollectFromBank(playerID, 15);
+                    MoneyLogic.CollectFromBank(playerID, -15);
                     break;
                 case 28: //go to reading railroad
                     GameLogic.AdvancePlayerToPosition(playerID, 6);
