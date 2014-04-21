@@ -332,6 +332,7 @@ namespace Monopoly
         {
             Game.Players[playerID].Position = 11; //don't advancePlayer, don't pass go!
             Game.Players[playerID].IsJailed = true;
+            UI.GoToJail();
             //TODO: UI popup
         }//SendToJail
 
@@ -339,6 +340,7 @@ namespace Monopoly
         {
             Game.Players[playerID].IsJailed = false;
             UI.UIDebug(String.Format("Player {0} was released from jail", playerID + 1));
+            UI.ReleasedFromJail();
             //TODO: UI Popup
         }//SendToJail
 

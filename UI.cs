@@ -217,6 +217,20 @@ namespace Monopoly
             DisplayPopup(msg, "Pass Go");
         }
 
+        public void GoToJail()
+        {
+            String msg = "You are sent to Jail!";
+            String cap = String.Format("Go to Jail!");
+            DisplayPopup(msg, cap);
+        }//InJail()
+
+        public void ReleasedFromJail()
+        {
+            String msg = "You are released from jail!";
+            String cap = "Free at last!";
+            DisplayPopup(msg, cap);
+        }//ReleasedFromJail()
+
         public void UpdateStats()
         {
             MonopolyRef.SyncPlayerStats();
