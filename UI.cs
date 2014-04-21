@@ -292,6 +292,7 @@ namespace Monopoly
         public void ActivePlayerChanged()
         {
             MonopolyRef.IndicateActivePlayer();
+            UIDebug("Active player changed to " + (Game.ActivePlayerID + 1));
         }//ActivePlayerChange
 
         public void WriteToLog(String message)

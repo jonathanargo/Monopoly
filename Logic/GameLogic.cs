@@ -105,14 +105,13 @@ namespace Monopoly
             }//if
             else if (finalPosition > 40)
             {
-                finalPosition = 41 - numberOfSpaces;
+                finalPosition -= 40;
                 //Player has passed Go, so award $200
                 PassGo(playerID);
             }
-            else if (finalPosition <= 0) //to handle the -3 spaces card
-            {
-                finalPosition = 41 + numberOfSpaces;
-            }
+            //Previously had a condition for if(position < 0) to handle the -3 spaces chance card
+            //but it's unnecessary as the player can not draw a chance card within 3 spaces of Go
+
             //set endSpace after the finalspace has been determined
             Tiles.BoardSpace endSpace = Game.Board.BoardSpaces[finalPosition];
 
