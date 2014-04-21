@@ -48,7 +48,7 @@ namespace Monopoly
         {
             refMonopoly = this;
             ActiveGame = new GameState();   //called first, since UI needs it
-            this.UI = new UI(ref refMonopoly);
+            this.UI = new UI(this);
             UI.WriteToLog("#");
             UI.UIDebug("A new game is being prepared");                      
             IntializeLogic();            
@@ -58,9 +58,9 @@ namespace Monopoly
 
         public void IntializeLogic()
         {
-            GameLogic = new GameLogic(ref refMonopoly);
-            CardLogic = new CardLogic(ref refMonopoly);
-            MoneyLogic = new MoneyLogic(ref refMonopoly);
+            GameLogic = new GameLogic(this);
+            CardLogic = new CardLogic(this);
+            MoneyLogic = new MoneyLogic(this);
             GameLogic.Initialize();
             CardLogic.Initialize();
             MoneyLogic.Initialize();

@@ -9,7 +9,7 @@ namespace Monopoly
 {
     public class GameLogic
     {
-        public GameLogic(ref Monopoly monopoly)
+        public GameLogic(Monopoly monopoly)
         {
             this.MonopolyRef = monopoly;
             this.IsInitialized = false;
@@ -97,7 +97,6 @@ namespace Monopoly
             int finalPosition = Game.Players[playerID].Position + numberOfSpaces;
             int firstPosition = Game.Players[playerID].Position;
             Tiles.BoardSpace startSpace = Game.Board.BoardSpaces[firstPosition];
-            Tiles.BoardSpace endSpace = Game.Board.BoardSpaces[finalPosition];
 
             //check for >40
             if (numberOfSpaces > 79)
@@ -114,6 +113,8 @@ namespace Monopoly
             {
                 finalPosition = 41 + numberOfSpaces;
             }
+            //set endSpace after the finalspace has been determined
+            Tiles.BoardSpace endSpace = Game.Board.BoardSpaces[finalPosition];
 
             Game.Players[playerID].Position = finalPosition;
             UI.UIDebug(String.Format("Player {0} was moved {1} spaces from {2}({3}) to {4}({5})", playerID + 1, 

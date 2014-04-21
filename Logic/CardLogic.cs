@@ -13,7 +13,7 @@ namespace Monopoly
         private MoneyLogic mMoneyLogic;
         private GameLogic mGameLogic;
 
-        public CardLogic(ref Monopoly monopoly)
+        public CardLogic(Monopoly monopoly)
         {
             this.Monopoly = monopoly;
             this.IsInitialized = false;

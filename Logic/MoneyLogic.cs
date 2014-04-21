@@ -9,11 +9,11 @@ namespace Monopoly
 {
     public class MoneyLogic
     {
-        public MoneyLogic(ref Monopoly monopoly)
+        public MoneyLogic(Monopoly monopoly)
         {
             this.Monopoly = monopoly;
             this.IsInitialized = false;
-            this.UI = new UI(ref monopoly);
+            this.UI = new UI(monopoly);
         }//GameLogic
 
         private Monopoly Monopoly { get; set; }

@@ -16,7 +16,7 @@ namespace Monopoly
             //Nothing required, just for showing errors and messages
         }
 
-        public UI(ref Monopoly monopoly)
+        public UI(Monopoly monopoly)
         {
             this.MonopolyRef = monopoly;
             this.Game = MonopolyRef.ActiveGame;
