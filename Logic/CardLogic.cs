@@ -192,7 +192,7 @@ namespace Monopoly
             if ((currentPos < 13) || (currentPos >= 29)) { utilPos = 13; }
             else { utilPos = 29; }//ifelse
             GameLogic.AdvanceToPosCustom(playerID, utilPos);
-            GameLogic.LandBuyable(true);
+            
             
         }//AdvanceToUtility()
 

@@ -312,6 +312,7 @@ namespace Monopoly
             //if player will need to pass Go
             if (Game.Players[playerID].Position > position) { PassGo(playerID); }//if
             Game.Players[playerID].Position = position;
+            LandBuyable(true);
 
             //Change the active player if this player didn't roll a double, 
             //or if he landed in jail (probably for rolling 3 doubles)

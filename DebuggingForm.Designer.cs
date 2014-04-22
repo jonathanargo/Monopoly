@@ -75,6 +75,7 @@
             this.rbtPlayer1.TabStop = true;
             this.rbtPlayer1.Text = "Player 1";
             this.rbtPlayer1.UseVisualStyleBackColor = true;
+            this.rbtPlayer1.CheckedChanged += new System.EventHandler(this.rbtPlayer1_CheckedChanged);
             // 
             // rbtPlayer2
             // 

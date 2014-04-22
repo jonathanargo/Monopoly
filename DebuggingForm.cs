@@ -37,6 +37,8 @@ namespace Monopoly
         {
             if (Game.IsStarted == true)
             {
+                String msg = String.Format("Attempting to send player {0} to position {1} via the debug menu", SelectedID, lbxBoardSpaces.SelectedIndex);
+                MonopolyRef.UI.UIDebug(msg);
                 MonopolyRef.GameLogic.AdvancePlayerToPosition(SelectedID, lbxBoardSpaces.SelectedIndex);
             }
             else
@@ -75,18 +77,7 @@ namespace Monopoly
             lbxBoardSpaces.SelectedIndex = 1;
         }
 
-        private void rbtPlayer1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbtPlayer1.Checked == true)
-            {
-                SelectedID = 0;
-            }
-            else
-            {
-                SelectedID = 1;
-            }//if-else
-            MessageBox.Show(SelectedID.ToString());
-        }
+
 
         private void btnPrintStats_Click(object sender, EventArgs e)
         {
@@ -123,6 +114,18 @@ namespace Monopoly
                 File.WriteAllText("GameLog.txt", fullLog);
                 MonopolyRef.UI.DisplayPopup("Log copied to GameLog.txt", "Log Copied");
             }
+        }
+
+        private void rbtPlayer1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtPlayer1.Checked == true)
+            {
+                SelectedID = 0;
+            }
+            else
+            {
+                SelectedID = 1;
+            }//if-else
         }
 
 
