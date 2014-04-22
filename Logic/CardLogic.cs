@@ -208,7 +208,6 @@ namespace Monopoly
             else { rrPos = 36; } 
 
             GameLogic.AdvanceToPosCustom(playerID, rrPos);
-            GameLogic.LandBuyable(true);
         }//AdvanceToUtility()
 
     }//CardLogic
