@@ -43,7 +43,7 @@ namespace Monopoly
 
         private void btnImprove_Click(object sender, EventArgs e)
         {
-            if ((lbxPropList.Items.Count > 0) && (lbxPropList.SelectedIndex != null))
+            if (lbxPropList.Items.Count > 0)
             //if the box has been populated
             {
                 Tiles.Property thisProp = PropList[lbxPropList.SelectedIndex];
