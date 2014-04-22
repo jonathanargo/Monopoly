@@ -7,4 +7,4 @@ This is a project I started in 2013 to create a Monopoly engine. The goals for t
 3. To learn and use OOP best practices.
 4. To allow the project to accomade future expansion, such as networked multiplayer, singleplayer, different game boards, etc.
 
-The project is currently unfinished.
+The project is currently lacks a few details, but almost every aspect of the game has been modelled.

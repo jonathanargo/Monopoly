@@ -307,7 +307,17 @@ namespace Monopoly
         {
             MonopolyRef.IndicateActivePlayer();
             UIDebug("Active player changed to " + (Game.ActivePlayerID + 1));
-        }//ActivePlayerChange
+        }//ActivePlayerChange()
+
+        public void GameIsOver(int playerID)
+        {
+            MonopolyRef.GameOver();
+            String msg = String.Format("Congratulations, player {0}, you've won!!!", playerID + 1);
+            String cap = String.Format("Player {0} Wins!", playerID + 1);
+            DisplayPopup(msg, cap);
+
+        }//GameIsOver()
+
 
         public void WriteToLog(String message)
         {

@@ -107,8 +107,9 @@ namespace Monopoly
         {
             if (ReadyToStart)
             {
+                DisableStartButton();
                 GameLogic.StartGame();
-            }
+            }//if
             else
             {
                 PrepareGame();
@@ -208,10 +209,17 @@ namespace Monopoly
 
         private void btnImprove_Click(object sender, EventArgs e)
         {
-
             ImproveMenu improveForm = new ImproveMenu(this);
             improveForm.ShowDialog();
-        }
+        }//Improve_Click()
+
+        public void GameOver()
+        {
+            btnRoll.Enabled = false;
+            btnImprove.Enabled = false;
+            btnStart.Enabled = true;
+            PrepareGame();
+        }//GameOver()
 
     }//Monopoly
 }
