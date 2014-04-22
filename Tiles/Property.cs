@@ -24,6 +24,7 @@ namespace Monopoly.Tiles
             this.Rent = rent;
             this.ImprovementLevel = ImprovementLevel.NoImprovement; //all spaces start with no improvements
             this.MortgageVal = mortgageVal;
+            SetImprovementCost();
         }
 
 
@@ -33,6 +34,7 @@ namespace Monopoly.Tiles
         //Private Set (immutable)
         public PropertyColor Color { get { return mColor; } private set { mColor = value; } }
         public Rent Rent { get { return mRent; } private set { mRent = value; } }
+        public int ImprovementCost { get; private set; }
 
         public int CurrentRent()
         {
@@ -53,6 +55,18 @@ namespace Monopoly.Tiles
                 ui.Error("Improvement level can not exceed 5.");
             }//else
         }//Improve()
+
+        private void SetImprovementCost()
+        {
+            int improveCost;
+            if ((int)this.Color <= 1) { improveCost = 50; } //brown (0), and light blue(1)
+            else if ((int)this.Color <= 3) { improveCost = 100; } //pink(2) and orange(3)
+            else if ((int)this.Color <= 5) { improveCost = 150; } //red(4) and yellow(5)
+            else { improveCost = 200; }//green(6) and darkblue(7)
+
+            this.ImprovementCost = improveCost;
+        }
+
 
         public override string ToString()
         {

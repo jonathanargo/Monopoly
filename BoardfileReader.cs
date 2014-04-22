@@ -59,7 +59,10 @@ namespace Monopoly
                     {
                         case "Property":
                             Rent tempRent = new Rent(intValues[5], intValues[6], intValues[7], intValues[8], intValues[9], intValues[10]);
-                            resultBoard.BoardSpaces[i] = new Tiles.Property(intValues[2], strValues[1], (PropertyColor)intValues[4], intValues[3], tempRent, intValues[11]);
+                            Tiles.Property thisProp = new Tiles.Property(intValues[2], strValues[1], (PropertyColor)intValues[4], intValues[3], tempRent, intValues[11]);
+                            resultBoard.BoardSpaces[i] = thisProp;
+                            //add the property to the proper color group, see Enums for more details
+                            resultBoard.ColorGroups[(int)thisProp.Color].AddProperty(thisProp);
                             break;
                         case "Railroad":
                             resultBoard.BoardSpaces[i] = new Tiles.Railroad(intValues[2], strValues[1]);
@@ -97,8 +100,6 @@ namespace Monopoly
                     }//switch
 
                 }//for
-
-                stmReader.Close();
 
             }//try (open streamreader)         
 

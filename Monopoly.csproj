@@ -75,6 +75,12 @@
     <Compile Include="Forms\TaxDialog.Designer.cs">
       <DependentUpon>TaxDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImproveMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImproveMenu.Designer.cs">
+      <DependentUpon>ImproveMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestFunctions.cs" />
     <Compile Include="Tiles\BuyableSpace.cs" />
     <Compile Include="Tiles\Property.cs" />
@@ -116,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TaxDialog.resx">
       <DependentUpon>TaxDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImproveMenu.resx">
+      <DependentUpon>ImproveMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Monopoly.resx">
       <DependentUpon>Monopoly.cs</DependentUpon>

@@ -502,5 +502,51 @@ namespace Monopoly
             return MonopolyRef.TestState;
         }
 
+        public void BuyImprovement(Tiles.Property thisProperty)
+        {
+            //cost of improvement depends on color of property.
+            
+
+            if ((OwnsAllGroupProps(thisProperty)) && (Game.GetActivePlayer().Money >= thisProperty.ImprovementCost) && (CanBeImproved(thisProperty)))
+            {
+                MoneyLogic.ChangeMoney(Game.ActivePlayerID, -1 * thisProperty.ImprovementCost);
+                thisProperty.Improve(1);
+                UI.DisplayPopup("You have bought an improvement for your property!", "Property Improved!");
+            }
+            else if (!OwnsAllGroupProps(thisProperty))
+            {
+                String msg = String.Format("You can't buy an improvement on {0}, as you do not own all the properties in its color group!", thisProperty.Name);
+                UI.DisplayPopup(msg, "Cant Buy Improvement");
+            }
+            else if (!CanBeImproved(thisProperty))
+            {
+                UI.DisplayPopup("You can't improve that property any further!", "Can't Improve!");
+            }
+            else
+                //Has properties necessary, the prop level < 5, but not the funds
+            {
+                UI.DisplayPopup("You can't buy that improvement, since you don't have the money!", "Can't Improve!");
+            }//else
+        }//BuyImprovement
+
+        public bool OwnsAllGroupProps(Tiles.Property thisProperty)
+        {
+            ColorGroup thisGroup = Game.Board.ColorGroups[(int)thisProperty.Color];
+            //return false if any property in the group does't have the same owner,
+            //otherwise return true
+
+            foreach (Tiles.Property p in thisGroup.GroupProperties)
+            {
+                if (p.OwnerID != thisProperty.OwnerID) { return false; }//if
+            }//foreach
+            return true;
+        }//CanBuyImprovement
+
+        public bool CanBeImproved(Tiles.Property thisProp)
+        {
+            bool result = ((int)thisProp.ImprovementLevel >= 5) ? false : true;
+            return result;
+        }//CanBeImproved
+
     }//GameLogic
 }

@@ -206,9 +206,11 @@ namespace Monopoly
             UI.UIDebug("Game form is closing");
         }
 
-        private void btnTest_Click_1(object sender, EventArgs e)
+        private void btnImprove_Click(object sender, EventArgs e)
         {
-            
+
+            ImproveMenu improveForm = new ImproveMenu(this);
+            improveForm.ShowDialog();
         }
 
     }//Monopoly

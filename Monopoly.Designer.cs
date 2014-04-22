@@ -52,6 +52,7 @@
             this.btnDebug = new System.Windows.Forms.Button();
             this.btnRoll = new System.Windows.Forms.Button();
             this.btnTest = new System.Windows.Forms.Button();
+            this.btnImprove = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblPlayer1
@@ -275,13 +276,23 @@
             this.btnTest.TabIndex = 31;
             this.btnTest.Text = "test";
             this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click_1);
+            // 
+            // btnImprove
+            // 
+            this.btnImprove.Location = new System.Drawing.Point(215, 299);
+            this.btnImprove.Name = "btnImprove";
+            this.btnImprove.Size = new System.Drawing.Size(108, 23);
+            this.btnImprove.TabIndex = 32;
+            this.btnImprove.Text = "Buy Improvements";
+            this.btnImprove.UseVisualStyleBackColor = true;
+            this.btnImprove.Click += new System.EventHandler(this.btnImprove_Click);
             // 
             // Monopoly
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(715, 503);
+            this.Controls.Add(this.btnImprove);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnRoll);
             this.Controls.Add(this.btnDebug);
@@ -343,6 +354,7 @@
         private System.Windows.Forms.Button btnDebug;
         private System.Windows.Forms.Button btnRoll;
         private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Button btnImprove;
 
 
     }

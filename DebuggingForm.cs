@@ -128,6 +128,22 @@ namespace Monopoly
             }//if-else
         }
 
+        private void btnSetMoney_Click(object sender, EventArgs e)
+        {
+            if (tbxSetMoney.Text != String.Empty)
+            {
+                try
+                {
+                    Game.Players[SelectedID].Money = int.Parse(tbxSetMoney.Text);
+                    MonopolyRef.UI.DisplayPopup("Player " + (SelectedID + 1) + "s money set to " + tbxSetMoney.Text + " with debug form", "Set Money");
+                }
+                catch (InvalidCastException ex)
+                {
+                    MonopolyRef.UI.Error("Data must be numerical", ex);
+                }//catch
+            }//if
+        }//SetMoney_Click
+
 
 
 
